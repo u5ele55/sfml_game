@@ -15,15 +15,13 @@ namespace Objects{
         ) : m_position(position), m_velocity(0,0), m_isSolid(isSolid), m_spriteName(spriteName)
     {
         Graphics::SpriteManager& spriteManager = Graphics::SpriteManager::getInstance();
-
-        try {
-            std::cout << "trying to get: " << spriteName << "..\n"; 
-            sf::Sprite sprite = spriteManager.getSprite(spriteName);
-            std::cout << "got it!\n";
-            m_sprite = sprite;
-        } catch (const std::invalid_argument e) {
-            // what should i do?
-            std::cout << "ABOBA!!!!";
+        if (!spriteName.empty()) {
+            try {
+                sf::Sprite sprite = spriteManager.getSprite(spriteName);
+                m_sprite = sprite;
+            } catch (const std::invalid_argument e) {
+                std::cout << "ERROR!\n";
+            }
         }
     }
 

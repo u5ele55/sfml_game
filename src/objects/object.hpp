@@ -32,4 +32,5 @@ namespace Objects {
 		sf::Sprite m_sprite;
 	};
 }
+
 #endif

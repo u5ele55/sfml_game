@@ -12,8 +12,9 @@ namespace Objects {
         int maxHp, int maxMana, 
         int meleeAttack, int mageAttack,
         double speed, Direction facing)
-      : Object(spriteName) 
+      : Object() 
     {
+        m_spriteName = spriteName;
         m_currentHp = maxHp;
         m_maxHp = maxHp;
         m_meleeAttack = meleeAttack;
