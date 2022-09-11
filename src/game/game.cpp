@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "game.hpp"
 #include "../graphics/texture_manager.hpp"
+#include "../objects/player.hpp"
 
 #include <iostream>
 
@@ -8,10 +9,9 @@ int GameCore::execute() {
 	
 	sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
 	Graphics::TextureManager& textureManager = Graphics::TextureManager::getInstance();
-
-	Object a = Object(Graphics::Tile);
-
-	a.sprite().setTextureRect(sf::IntRect(64*3, 64*4, 64, 64));
+	window.setKeyRepeatEnabled(false);
+	Objects::Player a;
+	sf::Clock clock;
 
 	while (window.isOpen())
 	{
@@ -20,7 +20,10 @@ int GameCore::execute() {
 	    {
 	        if (event.type == sf::Event::Closed)
 	            window.close();
+			a.onEvent(event);
 	    }
+		sf::Time elapsedTime = clock.restart();
+		a.onUpdate(elapsedTime);
 	    window.clear();
 	    window.draw(a.sprite());
 	    window.display();

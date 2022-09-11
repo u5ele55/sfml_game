@@ -4,7 +4,7 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 
-#define TEXTURE_TYPES_EXIST 1
+#define TEXTURE_TYPES_EXIST 2
 
 namespace Graphics {
 

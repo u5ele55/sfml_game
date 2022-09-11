@@ -4,10 +4,13 @@ SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 EXECUTABLE = run
 
-SOURCES = main.cpp        \
+SOURCES = main.cpp   \
 	  game/game.cpp   \
 	  graphics/texture_manager.cpp \
-	  objects/object.cpp
+	  graphics/sprite_manager.cpp   \
+	  objects/object.cpp \
+	  objects/creature.cpp \
+	  objects/player.cpp  
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
