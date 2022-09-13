@@ -46,9 +46,19 @@ namespace Graphics {
             throw std::invalid_argument("Invalid sprite name: '"+name+"'");
         return m_sprites[name][0];
     }
-    std::vector<sf::Sprite> SpriteManager::getSprites(const std::string& name) {
-        if (m_sprites.count(name) == 0 || m_sprites[name].size() == 0)
-            throw std::invalid_argument("Invalid sprite name: '"+name+"'");
-        return m_sprites[name];
+    std::map<Objects::Direction, sf::Sprite> SpriteManager::getCreatureSprites(
+        const Objects::CreatureType& type
+    ){
+        std::map<Objects::CreatureType, std::string> typeToString = {
+            {Objects::CreatureType::PLAYER, "player"},
+        };
+        std::map<Objects::Direction, sf::Sprite> map = {};
+
+        for (Objects::Direction dir : Objects::directions) {
+            std::string spriteName = typeToString[type] + Objects::directionSuffix.at(dir);
+            map[dir] = getSprite( spriteName );
+        }
+        
+        return map;
     }
 }

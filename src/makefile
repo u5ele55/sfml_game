@@ -6,11 +6,12 @@ EXECUTABLE = run
 
 SOURCES = main.cpp   \
 	  game/game.cpp   \
+	  game/level_painter.cpp      \
 	  graphics/texture_manager.cpp \
 	  graphics/sprite_manager.cpp   \
-	  objects/object.cpp \
-	  objects/creature.cpp \
-	  objects/player.cpp  
+	  objects/object.cpp  \
+	  objects/player.cpp   \
+	  objects/creature.cpp  \
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

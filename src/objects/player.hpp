@@ -7,7 +7,6 @@ namespace Objects {
     class Player : public Creature {
     public:
         Player();
-        void onEvent(const sf::Event&) override;
     };
 }
 #endif

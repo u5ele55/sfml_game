@@ -2,6 +2,7 @@
 #define SPRITE_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
+#include "../objects/creature.hpp"
 
 namespace Graphics {
     class SpriteManager {
@@ -12,14 +13,11 @@ namespace Graphics {
         SpriteManager& operator=(SpriteManager&&) = delete;
 
         static SpriteManager& getInstance();
+
+        std::map<Objects::Direction, sf::Sprite> getCreatureSprites(
+            const Objects::CreatureType&);
         /// @brief 
-        /// Returns vector of sprites.
-        /// Use getSprite if object don't have any animation.
-        /// @return 
-        std::vector<sf::Sprite> getSprites(const std::string& name);
-        /// @brief 
-        /// Returns single sprite.
-        /// Use getSprites if object have animation.
+        /// Returns single sprite with given name.
         /// @return 
         sf::Sprite getSprite(const std::string& name);
     private:
