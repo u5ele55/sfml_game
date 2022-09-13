@@ -1,5 +1,6 @@
 #include "level_painter.hpp"
 #include "../graphics/sprite_manager.hpp"
+#include "../map/cell.hpp"
 #include <iostream>
 
 void LevelPainter::drawWindow(
@@ -12,7 +13,7 @@ void LevelPainter::drawWindow(
         
         auto spriteMap = spriteManager.getCreatureSprites(cr.getCreatureType());
         auto sprite = spriteMap[cr.getFacing()];
-        sprite.setPosition(cr.getPosition().x, cr.getPosition().y);
+        sprite.setPosition(cr.getPosition().x * Objects::Map::cellWidth, cr.getPosition().y * Objects::Map::cellHeight);
         window.draw(sprite);
         
     }

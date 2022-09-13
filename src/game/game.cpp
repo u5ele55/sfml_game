@@ -8,12 +8,13 @@
 int GameCore::execute() {
 	
 	sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
-	window.setKeyRepeatEnabled(false);
 	
 	sf::Clock clock;
+	
 	m_playerIndex = 0;
 	Objects::Player player;
 	m_creatures.push_back(player);
+
 	while (window.isOpen())
 	{
 		
@@ -36,38 +37,36 @@ int GameCore::execute() {
 }
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
-	for (auto creature : m_creatures) {
+	for (auto &creature : m_creatures) {
 		bool canGo = creature.increaseStepPhase(elapsedTime.asSeconds());
-		// Pass creature to CreatureController, that will change its charasteristics
+		// Pass creature to CreatureController, that will change its position
 	}
-
 }
 
 void GameCore::onEvent(const sf::Event &event) {
+	auto &player = m_creatures[m_playerIndex];
+
 	if (event.type == sf::Event::KeyPressed) {
 		bool wantToGo = false;
 		if (event.key.code == sf::Keyboard::W) {
-			m_creatures[m_playerIndex].setFacing(Objects::Direction::UP);
+			player.setFacing(Objects::Direction::UP);
 			wantToGo = true;
 		} 
 		else if (event.key.code == sf::Keyboard::A) {
-			m_creatures[m_playerIndex].setFacing(Objects::Direction::LEFT);
+			player.setFacing(Objects::Direction::LEFT);
 			wantToGo = true;
 		} 
 		else if (event.key.code == sf::Keyboard::S) {
-			m_creatures[m_playerIndex].setFacing(Objects::Direction::DOWN);
+			player.setFacing(Objects::Direction::DOWN);
 			wantToGo = true;
 		} 
 		else if (event.key.code == sf::Keyboard::D) {
-
-	std::cout << "before setFacing\n";
-			m_creatures[m_playerIndex].setFacing(Objects::Direction::RIGHT);
-			
-	std::cout << "after setFacing\n";
+			player.setFacing(Objects::Direction::RIGHT);
 			wantToGo = true;
 		}
-		if (wantToGo && m_creatures[m_playerIndex].canGo()) {
-			auto facing = m_creatures[m_playerIndex].getFacing();
+		
+		if (wantToGo && player.canGo()) {
+			auto facing = player.getFacing();
 			Common::Vector2D<int> move = {0,0};
 			switch(facing) {
 			case Objects::Direction::UP:
@@ -83,15 +82,10 @@ void GameCore::onEvent(const sf::Event &event) {
 				move = {-1, 0};
 				break;
 			}
-	std::cout << "after ifs and switch\n";
-
-			m_creatures[m_playerIndex].makeStep();
-	std::cout << "after makeStep\n";
-			auto oldPos = m_creatures[m_playerIndex].getPosition();
-
-	std::cout << "after getPosition\n";
-			m_creatures[m_playerIndex].setPosition(oldPos + move);
-	std::cout << "after setPosition\n";
+			
+			auto oldPos = player.getPosition();
+			player.setPosition(oldPos + move);
+			player.makeStep();
 		}
 	}
 }

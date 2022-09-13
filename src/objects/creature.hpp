@@ -24,7 +24,7 @@ namespace Objects {
         Creature() = delete;
         Creature( CreatureType type,
             int maxHp, int maxMana, int meleeAttack, int mageAttack,
-            double speed, Direction facing = DOWN);
+            double speed, Direction facing = DOWN, double stepPhase = 0);
 
         void setMaxHp(int hp);
         bool isAlive();
@@ -43,7 +43,7 @@ namespace Objects {
         Direction getFacing();
         CreatureType getCreatureType();
         /// @brief 
-        /// Returns true if creature entered next phase 
+        /// Returns true if creature can go 
         /// @return 
         bool increaseStepPhase(double phase);
         

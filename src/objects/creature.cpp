@@ -1,15 +1,17 @@
 #include "creature.hpp"
+#include <iostream>
 
 namespace Objects {
 
-    const double stepPause = 1000;
+    const double stepPause = 100;
     
     
     Creature::Creature(
         CreatureType type,
         int maxHp, int maxMana, 
         int meleeAttack, int mageAttack,
-        double speed, Direction facing
+        double speed, Direction facing,
+        double stepPhase
         ) : m_type(type), 
             m_currentHp(maxHp), 
             m_maxHp(maxHp), 
@@ -19,6 +21,8 @@ namespace Objects {
             m_mageAttack(mageAttack),
             m_speed(speed),
             m_facing(facing), 
+            m_stepPhase(stepPhase),
+            m_canGo(stepPhase > stepPause),
             Object() {}
     
 
@@ -46,10 +50,10 @@ namespace Objects {
 
     bool Creature::increaseStepPhase(double phase) {
         m_stepPhase += m_speed * phase;
-        if (m_stepPhase > Objects::stepPause) {
+        
+        if (m_stepPhase > Objects::stepPause)
             m_canGo = true;
-            return true;
-        }
-        return false;
+ 
+        return m_canGo;
     }
 }
