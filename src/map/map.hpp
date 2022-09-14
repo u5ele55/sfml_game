@@ -1,13 +1,25 @@
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include <SFML/Graphics.hpp>
-namespace Objects {
-    namespace Map
-    {
-        class FieldMap  {
-        public:
-            void onUpdate(const sf::Time &elapsedTime);
-            void onEvent(const sf::Event& event);
-        };
-    } // namespace Map
+#include <vector>
+#include "cell.hpp"
+
+
+namespace Map
+{
+    class FieldMap  {
+    public:
+        FieldMap();
+        FieldMap(unsigned int width, unsigned int height);
+        Cell *get(unsigned int x, unsigned int y) const;
+        Common::Vector2D<unsigned int> getSize() const;
+    private:
+        unsigned int m_width;
+        unsigned int m_height;
+        std::vector<std::vector<Cell*>> m_field;
+    };
+
+} // namespace Map
     
-} // namespace Objects
+#endif

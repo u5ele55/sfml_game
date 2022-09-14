@@ -3,18 +3,14 @@
 
 #include "cell.hpp"
 
-namespace Objects {
-    namespace Map
-    {
-        class StaticCell : public Cell {
-        public:
-            StaticCell() = delete;
-            StaticCell(
-                const std::string &spriteName, 
-                Common::Vector2D<double> position, bool isSolid = true);
-        };
-    } // namespace Map
+namespace Map
+{
+    class StaticCell : public Cell {
+    public:
+        StaticCell() = delete;
+        StaticCell(TileType type,
+            Common::Vector2D<int> position, bool isSolid = true);
+    };
+} // namespace Map
     
-} // namespace Objects
-
 #endif

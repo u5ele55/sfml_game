@@ -4,6 +4,7 @@
 #include <map>
 #include "texture_manager.hpp"
 
+
 namespace Graphics {
     SpriteManager::SpriteManager() {
         TextureManager& textureManager = TextureManager::getInstance();
@@ -60,5 +61,13 @@ namespace Graphics {
         }
         
         return map;
+    }
+
+    sf::Sprite SpriteManager::getTileSprite(const Map::TileType& type) {
+        std::map<Map::TileType, std::string> typeToString = {
+            {Map::TileType::DIRT, "dirt"},
+        };
+
+        return getSprite( typeToString[type] );
     }
 }

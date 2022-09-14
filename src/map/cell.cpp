@@ -1,12 +1,12 @@
 #include "cell.hpp"
-
-namespace Objects {
-    namespace Map
-    {
-        Cell::Cell(
-            
-            Common::Vector2D<double> position, bool isSolid)
-            : Object(position, isSolid) {}
-    } // namespace Map
+#include "../objects/object.hpp"
+namespace Map
+{
+    Cell::Cell(
+        TileType type,
+        Common::Vector2D<int> position, bool isSolid)
+        : m_type(type), Objects::Object(position, isSolid) {}
     
-} // namespace Objects
+    TileType Cell::getTileType() const { return m_type; }
+} // namespace Map
+

@@ -3,18 +3,23 @@
 
 #include "../objects/object.hpp"
 
-namespace Objects {
-    namespace Map
-    {
-        const int cellWidth = 32;
-        const int cellHeight = 32;
-        class Cell : public Object {
-        public:
-            Cell() = delete;
-            Cell(
-                Common::Vector2D<double> position, bool isSolid = true);
-        };
-    } // namespace Map
-}
+namespace Map
+{
+    enum TileType {
+        DIRT
+    };
+    const int cellWidth = 32;
+    const int cellHeight = 32;
+
+    class Cell : public Objects::Object {
+    public:
+        Cell() = delete;
+        Cell( TileType type,
+            Common::Vector2D<int> position, bool isSolid = false);
+        TileType getTileType() const;
+    private:
+        TileType m_type;
+    };
+} // namespace Map
 
 #endif

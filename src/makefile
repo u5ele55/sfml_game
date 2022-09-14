@@ -12,6 +12,9 @@ SOURCES = main.cpp   \
 	  objects/object.cpp  \
 	  objects/player.cpp   \
 	  objects/creature.cpp  \
+	  map/map.cpp   \
+	  map/cell.cpp   \
+	  map/static_cell.cpp 
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

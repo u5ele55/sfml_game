@@ -11,7 +11,7 @@ Graphics::TextureManager::TextureManager() {
         if (texture->loadFromFile(getAssetName(type)))
             m_textures[type] = texture;
         else 
-            std::cout << "ASDASD";
+            std::cout << "Couldn't load asset: " << getAssetName(type) << "\n";
     }
 }
 
@@ -23,7 +23,7 @@ std::string Graphics::TextureManager::getAssetName(const Graphics::TextureType& 
     std::string name = "";
     std::string path = "assets/textures/";
     std::map<Graphics::TextureType, std::string> typeToAsset = {
-        {Graphics::Tile, "tiles1.png"},
+        {Graphics::Tile, "tiles-pipo.png"},
         {Graphics::Player, "player.png"}
         };
     

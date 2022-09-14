@@ -8,12 +8,13 @@
 int GameCore::execute() {
 	
 	sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
-	
 	sf::Clock clock;
 	
 	m_playerIndex = 0;
 	Objects::Player player;
 	m_creatures.push_back(player);
+
+	m_map = Map::FieldMap(15, 15);
 
 	while (window.isOpen())
 	{
@@ -29,7 +30,7 @@ int GameCore::execute() {
 			onEvent(event);
 	    }
 		updateScene(elapsedTime);
-		LevelPainter::drawWindow(window, m_creatures);
+		LevelPainter::drawWindow(window, m_creatures, m_objects, m_map);
 	    
 	}
 
