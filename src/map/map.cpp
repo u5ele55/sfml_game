@@ -17,15 +17,28 @@ namespace Map
         
         for (int i = 0; i < height; i ++) {
             for (int j = 0; j < width; j ++) {
-                auto *c = new StaticCell(TileType::DIRT, {j,i}, false);
-                m_field[i][j] = c;
+                m_field[i][j] = new StaticCell(TileType::DIRT, {j,i}, false);
             }
         }
+        m_field[3][3]->setSolidity(true);
+        m_field[3][3]->setTileType(Map::TileType::STONE);
+
     }
 
-    Cell *FieldMap::get(unsigned int x, unsigned int y) const {
-        if (x >= m_width || y >= m_height) return nullptr;
-        return m_field[y][x];
+    Cell *FieldMap::get(int x, int y) const {
+        if (x < 0) {
+            x *= -1;
+            x = m_width - x % m_width;
+        }
+        if (y < 0) {
+            y *= -1;
+            y = m_height - y % m_height;
+        }
+        return m_field[y % m_height][x % m_width];
+    }
+
+    Cell *FieldMap::get(const Common::Vector2D<int> &position) const {
+        return get(position.x, position.y);
     }
 
     Common::Vector2D<unsigned int> FieldMap::getSize() const { return {m_width, m_height}; }

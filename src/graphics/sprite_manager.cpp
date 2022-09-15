@@ -66,6 +66,7 @@ namespace Graphics {
     sf::Sprite SpriteManager::getTileSprite(const Map::TileType& type) {
         std::map<Map::TileType, std::string> typeToString = {
             {Map::TileType::DIRT, "dirt"},
+            {Map::TileType::STONE, "stone"},
         };
 
         return getSprite( typeToString[type] );

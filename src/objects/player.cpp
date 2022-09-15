@@ -2,5 +2,5 @@
 #include <iostream>
 
 namespace Objects {
-    Player::Player() : Creature(CreatureType::PLAYER, 100,100,10,25, 100) {}
+    Player::Player() : Creature(CreatureType::PLAYER, 100,100,10,25, 200) {}
 }

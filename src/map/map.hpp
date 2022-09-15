@@ -12,7 +12,13 @@ namespace Map
     public:
         FieldMap();
         FieldMap(unsigned int width, unsigned int height);
-        Cell *get(unsigned int x, unsigned int y) const;
+        /// @brief 
+        /// Returns cell on position <x % width, y % height>. 
+        /// For example, if width=15, height=10, get(-2, 23) will return
+        /// cell on [13, 3].
+        /// @return 
+        Cell *get(int x, int y) const;
+        Cell *get(const Common::Vector2D<int> &position) const;
         Common::Vector2D<unsigned int> getSize() const;
     private:
         unsigned int m_width;

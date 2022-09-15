@@ -6,7 +6,7 @@
 namespace Map
 {
     enum TileType {
-        DIRT
+        DIRT, STONE
     };
     const int cellWidth = 32;
     const int cellHeight = 32;
@@ -17,6 +17,7 @@ namespace Map
         Cell( TileType type,
             Common::Vector2D<int> position, bool isSolid = false);
         TileType getTileType() const;
+        void setTileType(const TileType&);
     private:
         TileType m_type;
     };

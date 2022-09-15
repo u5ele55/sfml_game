@@ -8,5 +8,6 @@ namespace Map
         : m_type(type), Objects::Object(position, isSolid) {}
     
     TileType Cell::getTileType() const { return m_type; }
+    void Cell::setTileType(const TileType &type) { m_type = type; }
 } // namespace Map
 

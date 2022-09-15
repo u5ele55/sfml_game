@@ -30,7 +30,7 @@ int GameCore::execute() {
 			onEvent(event);
 	    }
 		updateScene(elapsedTime);
-		LevelPainter::drawWindow(window, m_creatures, m_objects, m_map);
+		LevelPainter::drawWindow(window, m_creatures, m_playerIndex, m_objects, m_map);
 	    
 	}
 
@@ -85,8 +85,12 @@ void GameCore::onEvent(const sf::Event &event) {
 			}
 			
 			auto oldPos = player.getPosition();
-			player.setPosition(oldPos + move);
-			player.makeStep();
+			const Map::Cell *cell = m_map.get(oldPos + move);
+			if (!cell->getSolidity()) {
+				// if it's not solid, then go
+				player.setPosition(cell->getPosition());
+				player.makeStep();
+			}
 		}
 	}
 }

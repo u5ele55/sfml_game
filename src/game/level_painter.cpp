@@ -1,15 +1,16 @@
 #include "level_painter.hpp"
 #include "../graphics/sprite_manager.hpp"
 #include "../map/cell.hpp"
-#include <iostream>
 
 void LevelPainter::drawWindow(
     sf::RenderWindow& window, 
     const std::vector<Objects::Creature> &creatures,
+    const int &playerIndex,
     const std::vector<Objects::Object> &objects,
     const Map::FieldMap &map) 
 {
     window.clear();
+    
 	auto &spriteManager = Graphics::SpriteManager::getInstance();
     
     const auto mapSize = map.getSize();
@@ -37,6 +38,15 @@ void LevelPainter::drawWindow(
         window.draw(sprite);
         
     }
+
+    const Common::Vector2D<int> &playerPosition = creatures[playerIndex].getPosition();  
+    sf::View view;
+    view.setCenter(
+        playerPosition.x * Map::cellWidth, 
+        playerPosition.y * Map::cellHeight
+        );
+    view.setSize(640, 480);
+    window.setView(view);
 
     window.display();
 }

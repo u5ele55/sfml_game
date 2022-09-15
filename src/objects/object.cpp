@@ -15,14 +15,14 @@ namespace Objects{
     void Object::setSolidity(bool isSolid) {
         m_isSolid = isSolid;
     }
-    bool Object::getSolidity() {
+    bool Object::getSolidity() const {
         return m_isSolid;
     }
 
     void Object::setPosition(const Common::Vector2D<int>& pos) {
         m_position = pos;
     }
-    Common::Vector2D<int> Object::getPosition() {
+    Common::Vector2D<int> Object::getPosition() const {
         return m_position;
     }
 

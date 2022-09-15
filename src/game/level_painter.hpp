@@ -11,6 +11,7 @@ public:
     static void drawWindow(
         sf::RenderWindow& window, 
         const std::vector<Objects::Creature> &creatures,
+        const int &playerIndex,
         const std::vector<Objects::Object> &objects,
         const Map::FieldMap &map
         );

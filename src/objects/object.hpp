@@ -13,10 +13,10 @@ namespace Objects {
 		virtual void onInteraction(const Object &);
 
 		void setSolidity(bool solid);
-		bool getSolidity();
+		bool getSolidity() const;
 
 		void setPosition(const Common::Vector2D<int>&);
-		Common::Vector2D<int> getPosition();
+		Common::Vector2D<int> getPosition() const;
 	protected:
 		bool m_isSolid;
 		Common::Vector2D<int> m_position;
