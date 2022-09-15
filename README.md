@@ -3,4 +3,4 @@ RPG game made with C++/SFML.
 
 Current progress:<br>
 
-![Снимок экрана от 2022-09-14 23-15-24](https://user-images.githubusercontent.com/99137907/190253851-461072f0-5404-496b-b5f3-56f49c14a191.png)
+![Снимок экрана от 2022-09-15 21-45-47](https://user-images.githubusercontent.com/99137907/190485061-1d8e27ac-d35d-4147-8474-8c4820f1f3b4.png)
