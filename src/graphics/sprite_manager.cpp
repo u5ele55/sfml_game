@@ -42,7 +42,7 @@ namespace Graphics {
         return textureManager;
     }
 
-    sf::Sprite SpriteManager::getSprite(const std::string& name) {
+    sf::Sprite SpriteManager::getSprite(const std::string &name) {
         if (m_sprites.count(name) == 0 || m_sprites[name].size() == 0)
             throw std::invalid_argument("Invalid sprite name: '"+name+"'");
         return m_sprites[name][0];
@@ -63,10 +63,11 @@ namespace Graphics {
         return map;
     }
 
-    sf::Sprite SpriteManager::getTileSprite(const Map::TileType& type) {
+    sf::Sprite SpriteManager::getTileSprite(const Map::TileType &type) {
         std::map<Map::TileType, std::string> typeToString = {
-            {Map::TileType::DIRT, "dirt"},
+            {Map::TileType::DIRT,  "dirt"},
             {Map::TileType::STONE, "stone"},
+            {Map::TileType::GRASS, "grass"},
         };
 
         return getSprite( typeToString[type] );

@@ -14,7 +14,7 @@ int GameCore::execute() {
 	Objects::Player player;
 	m_creatures.push_back(player);
 
-	m_map = Map::FieldMap(15, 15);
+	m_map = Map::FieldMap(20, 15);
 
 	while (window.isOpen())
 	{
@@ -49,6 +49,7 @@ void GameCore::onEvent(const sf::Event &event) {
 
 	if (event.type == sf::Event::KeyPressed) {
 		bool wantToGo = false;
+		auto prevFacing = player.getFacing();
 		if (event.key.code == sf::Keyboard::W) {
 			player.setFacing(Objects::Direction::UP);
 			wantToGo = true;
@@ -66,7 +67,7 @@ void GameCore::onEvent(const sf::Event &event) {
 			wantToGo = true;
 		}
 		
-		if (wantToGo && player.canGo()) {
+		if (wantToGo && player.canGo() && prevFacing == player.getFacing()) {
 			auto facing = player.getFacing();
 			Common::Vector2D<int> move = {0,0};
 			switch(facing) {

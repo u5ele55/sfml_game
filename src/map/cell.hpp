@@ -6,7 +6,7 @@
 namespace Map
 {
     enum TileType {
-        DIRT, STONE
+        DIRT, STONE, GRASS
     };
     const int cellWidth = 32;
     const int cellHeight = 32;

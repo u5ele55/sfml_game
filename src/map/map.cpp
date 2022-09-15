@@ -20,8 +20,16 @@ namespace Map
                 m_field[i][j] = new StaticCell(TileType::DIRT, {j,i}, false);
             }
         }
-        m_field[3][3]->setSolidity(true);
-        m_field[3][3]->setTileType(Map::TileType::STONE);
+        for (int i = 0; i < width; i ++) {
+            m_field[0][i]->setTileType(Map::TileType::GRASS);
+            m_field[1][i]->setTileType(Map::TileType::GRASS);
+        }
+
+        for (int i = 0; i < width/2; i ++) {
+            m_field[5][i]->setSolidity(true);
+            m_field[5][i]->setTileType(Map::TileType::STONE);
+        }
+        
 
     }
 
