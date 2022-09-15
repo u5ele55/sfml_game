@@ -9,5 +9,8 @@ namespace Map
     
     TileType Cell::getTileType() const { return m_type; }
     void Cell::setTileType(const TileType &type) { m_type = type; }
+
+    void Cell::setEvent(const Events::Event &event) { *m_event = event; }
+    void Cell::triggerEvent() { m_event->trigger(); }
 } // namespace Map
 

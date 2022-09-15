@@ -2,6 +2,7 @@
 #define CELL_HPP
 
 #include "../objects/object.hpp"
+#include "events/event.hpp"
 
 namespace Map
 {
@@ -18,8 +19,11 @@ namespace Map
             Common::Vector2D<int> position, bool isSolid = false);
         TileType getTileType() const;
         void setTileType(const TileType&);
+        void setEvent(const Events::Event &event);
+        void triggerEvent();
     private:
         TileType m_type;
+        Events::Event *m_event;
     };
 } // namespace Map
 
