@@ -1,8 +1,9 @@
 
-CC = g++
-SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system 
+CC = g++ -ID:/Programming/packages/cpp/SFML-2.5.1/include -LD:/Programming/packages/cpp/SFML-2.5.1/lib
+SFML_FLAGS = -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
+# SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-EXECUTABLE = run
+EXECUTABLE = run.exe
 
 SOURCES = main.cpp   \
 	  game/game.cpp   \
