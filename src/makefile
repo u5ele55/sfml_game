@@ -6,16 +6,18 @@ SFML_FLAGS = -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
 EXECUTABLE = run.exe
 
 SOURCES = main.cpp   \
-	  game/game.cpp   \
-	  game/level_painter.cpp      \
-	  graphics/texture_manager.cpp \
-	  graphics/sprite_manager.cpp   \
-	  objects/object.cpp  \
-	  objects/player.cpp   \
-	  objects/creature.cpp  \
-	  map/map.cpp   \
-	  map/cell.cpp   \
-	  map/static_cell.cpp 
+	  game\game.cpp   \
+	  game\game_mediator.cpp    \
+	  game\event_reader.cpp      \
+	  graphics\level_painter.cpp  \
+	  graphics\texture_manager.cpp \
+	  graphics\sprite_manager.cpp   \
+	  objects\object.cpp  \
+	  objects\player.cpp   \
+	  objects\creature.cpp  \
+	  map\map.cpp   \
+	  map\cell.cpp   \
+	  map\static_cell.cpp 
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
@@ -28,4 +30,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) -c $< -o $@
 
 clean: 
-	rm $(OBJECTS)
+	del $(OBJECTS)

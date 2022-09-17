@@ -1,8 +1,8 @@
 #include "level_painter.hpp"
-#include "../graphics/sprite_manager.hpp"
+#include "sprite_manager.hpp"
 #include "../map/cell.hpp"
 
-void LevelPainter::drawWindow(
+void Graphics::LevelPainter::drawWindow(
     sf::RenderWindow& window, 
     const std::vector<Objects::Creature> &creatures,
     const int &playerIndex,
@@ -43,7 +43,7 @@ void LevelPainter::drawWindow(
         playerPosition.x * Map::cellWidth + Map::cellWidth / 2, 
         playerPosition.y * Map::cellHeight + Map::cellHeight / 2
         );
-    view.setSize(window.getSize().x, window.getSize().y);
+    view.setSize(window.getSize().x / 2, window.getSize().y / 2);
     window.setView(view);
 
     window.display();
