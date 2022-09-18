@@ -12,6 +12,8 @@ namespace Map
     public:
         FieldMap();
         FieldMap(unsigned int width, unsigned int height);
+        FieldMap(const FieldMap& other);
+        FieldMap& operator=(FieldMap&& other);
 
         Common::Vector2D<unsigned int> getSize() const;
 

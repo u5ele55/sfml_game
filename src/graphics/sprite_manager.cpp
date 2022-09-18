@@ -47,6 +47,7 @@ namespace Graphics {
             throw std::invalid_argument("Invalid sprite name: '"+name+"'");
         return m_sprites[name][0];
     }
+
     std::map<Objects::Direction, sf::Sprite> SpriteManager::getCreatureSprites(
         const Objects::CreatureType& type
     ){

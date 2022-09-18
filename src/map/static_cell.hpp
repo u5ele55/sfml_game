@@ -8,6 +8,7 @@ namespace Map
     class StaticCell : public Cell {
     public:
         StaticCell() = delete;
+        StaticCell(const StaticCell &other);
         StaticCell(TileType type, bool isSolid = true);
     };
 } // namespace Map
