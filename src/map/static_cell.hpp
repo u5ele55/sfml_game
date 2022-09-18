@@ -8,8 +8,7 @@ namespace Map
     class StaticCell : public Cell {
     public:
         StaticCell() = delete;
-        StaticCell(TileType type,
-            Common::Vector2D<int> position, bool isSolid = true);
+        StaticCell(TileType type, bool isSolid = true);
     };
 } // namespace Map
     

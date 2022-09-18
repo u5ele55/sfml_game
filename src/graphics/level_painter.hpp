@@ -12,8 +12,8 @@ namespace Graphics
         LevelPainter() = delete;
         static void drawWindow(
             sf::RenderWindow& window, 
-            const std::vector<Objects::Creature> &creatures,
-            const int &playerIndex,
+            const Common::Vector2D<int> &playerPosition,
+            const Objects::Player &player,
             const std::vector<Objects::Object> &objects,
             const Map::FieldMap &map
             );

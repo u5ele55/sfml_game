@@ -27,27 +27,27 @@ namespace Objects {
             double speed, Direction facing = DOWN, double stepPhase = 0);
 
         void setMaxHp(int hp);
-        bool isAlive();
+        bool isAlive() const;
         void setMaxMana(int mana);
-        int getMana();
+        int getMana() const;
         void setMeleeAttack(int meleeAttack);
-        int getMeleeAttack();
+        int getMeleeAttack() const;
 
         void setHp(int hp);
         void setMana(int mana);
         void setMageAttack(int attack);
-        int getMageAttack();
+        int getMageAttack() const;
 
         void setSpeed(double speed);
         void setFacing(const Direction& );
-        Direction getFacing();
-        CreatureType getCreatureType();
+        Direction getFacing() const;
+        CreatureType getCreatureType() const;
         /// @brief 
         /// Returns true if creature can go 
         /// @return 
         bool increaseStepPhase(double phase);
         
-        bool canGo();
+        bool canGo() const;
 
         void makeStep();
     

@@ -17,7 +17,7 @@ namespace Map
         
         for (int i = 0; i < height; i ++) {
             for (int j = 0; j < width; j ++) {
-                m_field[i][j] = new StaticCell(TileType::DIRT, {j,i}, false);
+                m_field[i][j] = new StaticCell(TileType::DIRT, false);
             }
         }
         for (int i = 0; i < width; i ++) {
@@ -33,7 +33,7 @@ namespace Map
 
     }
 
-    Cell *FieldMap::get(int x, int y) const {
+    Common::Vector2D<int> FieldMap::getCoords(int x, int y) const {
         if (x < 0) {
             x *= -1;
             x = m_width - x % m_width;
@@ -42,11 +42,35 @@ namespace Map
             y *= -1;
             y = m_height - y % m_height;
         }
-        return m_field[y % m_height][x % m_width];
+        return {x % static_cast<int>(m_width), y % static_cast<int>(m_height)};
     }
 
-    Cell *FieldMap::get(const Common::Vector2D<int> &position) const {
-        return get(position.x, position.y);
+    Common::Vector2D<int> FieldMap::getCoords(const Common::Vector2D<int> &position) const {
+        return getCoords(position.x, position.y);
+    }
+
+    void FieldMap::triggerCellEvent(int x, int y) const {
+        const auto &pos = getCoords(x,y);
+        m_field[pos.y][pos.x]->triggerEvent();
+    }
+    void FieldMap::triggerCellEvent(const Common::Vector2D<int> &position) const {
+        triggerCellEvent(position.x, position.y);
+    }
+
+    bool FieldMap::getCellSolidity(int x, int y) const {
+        const auto &pos = getCoords(x,y);
+        return m_field[pos.y][pos.x]->isSolid();
+    }
+    bool FieldMap::getCellSolidity(const Common::Vector2D<int> &position) const {
+        return getCellSolidity(position.x, position.y);
+    }
+
+    TileType FieldMap::getCellType(int x, int y) const {
+        const auto &pos = getCoords(x,y);
+        return m_field[pos.y][pos.x]->getTileType();
+    }
+    TileType FieldMap::getCellType(const Common::Vector2D<int> &position) const {
+        return getCellType(position.x, position.y);
     }
 
     Common::Vector2D<unsigned int> FieldMap::getSize() const { return {m_width, m_height}; }

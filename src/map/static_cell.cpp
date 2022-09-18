@@ -2,8 +2,7 @@
 
 namespace Map
 {
-    StaticCell::StaticCell(TileType type,
-        Common::Vector2D<int> position, bool isSolid)
-        : Cell(type, position, isSolid) {}
+    StaticCell::StaticCell(TileType type, bool isSolid)
+        : Cell(type, isSolid) {}
 } // namespace Map
 

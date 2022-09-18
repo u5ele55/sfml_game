@@ -5,7 +5,7 @@ class GameCore;
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "../objects/object.hpp"
-#include "../objects/creature.hpp"
+#include "../objects/player.hpp"
 #include "../map/map.hpp"
 #include "game_mediator.hpp"
 
@@ -21,9 +21,9 @@ private:
 	std::vector<Objects::Object> m_objects;
 	Map::FieldMap m_map;
 
-	int m_playerIndex;
+	Objects::Player m_player;
+	Common::Vector2D<int> m_playerPosition;
 	GameMediator *m_notifier;
-
 
 	void closeWindow();
 	void updateScene(const sf::Time&);

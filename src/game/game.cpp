@@ -6,17 +6,13 @@
 #include "event_reader.hpp"
 #include <iostream>
 
-GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier) {
+GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}) {
 	m_window = new sf::RenderWindow(sf::VideoMode(1280, 960), "SFML works!");
 }
 
 int GameCore::execute() {
 	
 	sf::Clock clock;
-	
-	m_playerIndex = 0;
-	Objects::Player player;
-	m_creatures.push_back(player);
 
 	m_map = Map::FieldMap(20, 15);
 
@@ -27,8 +23,7 @@ int GameCore::execute() {
 
 	    m_notifier->callReader(m_window);
 		updateScene(elapsedTime);
-
-		Graphics::LevelPainter::drawWindow(*m_window, m_creatures, m_playerIndex, m_objects, m_map);
+		Graphics::LevelPainter::drawWindow(*m_window, m_playerPosition, m_player, m_objects, m_map);
 	    
 	}
 
@@ -36,6 +31,7 @@ int GameCore::execute() {
 }
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
+	m_player.increaseStepPhase(elapsedTime.asSeconds());
 	for (auto &creature : m_creatures) {
 		bool canGo = creature.increaseStepPhase(elapsedTime.asSeconds());
 		// Pass creature to CreatureController, that will return creature event
@@ -43,24 +39,22 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 }
 
 void GameCore::onEvent(const UserEvent &event) {
-	auto &player = m_creatures[m_playerIndex];
-	
 	bool wantToGo = false;
-	auto prevFacing = player.getFacing();
+	auto prevFacing = m_player.getFacing();
 	if (event == UserEvent::UP) {
-		player.setFacing(Objects::Direction::UP);
+		m_player.setFacing(Objects::Direction::UP);
 		wantToGo = true;
 	} 
 	else if (event == UserEvent::LEFT) {
-		player.setFacing(Objects::Direction::LEFT);
+		m_player.setFacing(Objects::Direction::LEFT);
 		wantToGo = true;
 	} 
 	else if (event == UserEvent::DOWN) {
-		player.setFacing(Objects::Direction::DOWN);
+		m_player.setFacing(Objects::Direction::DOWN);
 		wantToGo = true;
 	} 
 	else if (event == UserEvent::RIGHT) {
-		player.setFacing(Objects::Direction::RIGHT);
+		m_player.setFacing(Objects::Direction::RIGHT);
 		wantToGo = true;
 	}
 	else if (event == UserEvent::ESC) {
@@ -68,8 +62,8 @@ void GameCore::onEvent(const UserEvent &event) {
 		return;
 	}
 	
-	if (wantToGo && player.canGo() && prevFacing == player.getFacing()) {
-		auto facing = player.getFacing();
+	if (wantToGo && m_player.canGo() && prevFacing == m_player.getFacing()) {
+		auto facing = m_player.getFacing();
 		Common::Vector2D<int> move = {0,0};
 		
 		switch(facing) {
@@ -87,13 +81,12 @@ void GameCore::onEvent(const UserEvent &event) {
 			break;
 		}
 		
-		auto oldPos = player.getPosition();
-		const Map::Cell *cell = m_map.get(oldPos + move);
-		if (!cell->getSolidity()) {
+		const Common::Vector2D<int> &cellCoords = m_map.getCoords(m_playerPosition + move);
+		if (!m_map.getCellSolidity(cellCoords)) {
 			// if it's not solid, then go
-			player.setPosition(cell->getPosition());
-			player.makeStep();
-			m_map.get(oldPos + move)->triggerEvent();
+			m_playerPosition += move;
+			m_player.makeStep();
+			m_map.triggerCellEvent(cellCoords);
 		}
 	
 	}

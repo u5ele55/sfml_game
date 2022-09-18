@@ -3,9 +3,8 @@
 namespace Map
 {
     Cell::Cell(
-        TileType type,
-        Common::Vector2D<int> position, bool isSolid)
-        : m_type(type), m_event(nullptr), Objects::Object(position, isSolid) {}
+        TileType type, bool isSolid)
+        : m_type(type), m_event(nullptr), m_isSolid(isSolid), Objects::Object() {}
     
     TileType Cell::getTileType() const { return m_type; }
     void Cell::setTileType(const TileType &type) { m_type = type; }
@@ -15,5 +14,8 @@ namespace Map
         if (m_event != nullptr)
             m_event->trigger(); 
     }
+    
+    bool Cell::isSolid() {return m_isSolid;}
+    void Cell::setSolidity(bool solid) {m_isSolid = solid;}
 } // namespace Map
 
