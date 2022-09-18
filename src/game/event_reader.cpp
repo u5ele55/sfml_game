@@ -31,3 +31,8 @@ UserEvent SfmlEventReader::keyToEvent(const sf::Keyboard::Key &key) const {
         return NONE;
     return sfEventsToUserEvents[key];
 }
+
+
+SfmlEventReader::~SfmlEventReader() {
+    delete m_notifier;
+}

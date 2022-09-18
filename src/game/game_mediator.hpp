@@ -15,6 +15,8 @@ public:
     void notify(UserEvent event);
     void callReader(sf::RenderWindow *);
     void startGame();
+
+    ~GameMediator();
 private:
     GameCore *m_game;
     SfmlEventReader *m_eventReader;

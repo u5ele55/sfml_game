@@ -17,3 +17,9 @@ void GameMediator::notify(UserEvent event) {
 void GameMediator::callReader(sf::RenderWindow *window) {
     m_eventReader->readEvent(*window);
 }
+
+
+GameMediator::~GameMediator() {
+    delete m_eventReader;
+    delete m_game;
+}

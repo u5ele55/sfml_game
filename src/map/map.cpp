@@ -74,4 +74,13 @@ namespace Map
     }
 
     Common::Vector2D<unsigned int> FieldMap::getSize() const { return {m_width, m_height}; }
+
+
+
+    FieldMap::~FieldMap() {
+        for (int i = 0 ; i < m_field.size(); i ++) {
+            for(int j = 0; j < m_field[i].size(); j ++)
+                delete m_field[i][j];
+        }
+    }
 } // namespace Map

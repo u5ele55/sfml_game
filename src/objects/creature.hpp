@@ -7,13 +7,6 @@ namespace Objects {
     enum Direction {
         LEFT, RIGHT, UP, DOWN
     };
-    static const std::map<Direction, std::string> directionSuffix = {
-        {DOWN, "_front"},
-        {UP, "_back"},
-        {LEFT, "_left"},
-        {RIGHT, "_right"}
-    };
-    static const Direction directions[] = {LEFT, RIGHT, UP, DOWN};
 
     enum CreatureType {
         PLAYER, DOG

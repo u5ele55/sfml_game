@@ -63,7 +63,7 @@ void GameCore::onEvent(const UserEvent &event) {
 	}
 	
 	if (wantToGo && m_player.canGo() && prevFacing == m_player.getFacing()) {
-		auto facing = m_player.getFacing();
+		const auto &facing = m_player.getFacing();
 		Common::Vector2D<int> move = {0,0};
 		
 		switch(facing) {
@@ -93,3 +93,8 @@ void GameCore::onEvent(const UserEvent &event) {
 }
 
 void GameCore::closeWindow() {m_window->close();}
+
+
+GameCore::~GameCore() {
+	delete m_notifier;
+}

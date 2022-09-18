@@ -14,6 +14,8 @@ public:
 	GameCore(GameMediator *notifier);
 	int execute();
 	void onEvent(const UserEvent &);
+
+	~GameCore();
 private:
 	sf::RenderWindow *m_window;
 

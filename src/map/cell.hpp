@@ -23,6 +23,8 @@ namespace Map
 
         bool isSolid();
         void setSolidity(bool solid);
+
+        ~Cell();
     protected:
         TileType m_type;
         bool m_isSolid;

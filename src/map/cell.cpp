@@ -17,5 +17,10 @@ namespace Map
     
     bool Cell::isSolid() {return m_isSolid;}
     void Cell::setSolidity(bool solid) {m_isSolid = solid;}
+
+
+    Cell::~Cell() {
+        delete m_event;
+    }
 } // namespace Map
 

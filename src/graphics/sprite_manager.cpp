@@ -53,10 +53,19 @@ namespace Graphics {
         std::map<Objects::CreatureType, std::string> typeToString = {
             {Objects::CreatureType::PLAYER, "player"},
         };
+        
+        const std::map<Objects::Direction, std::string> directionSuffix = {
+            {Objects::DOWN, "_front"},
+            {Objects::UP, "_back"},
+            {Objects::LEFT, "_left"},
+            {Objects::RIGHT, "_right"}
+        };
+        const Objects::Direction directions[] = {Objects::LEFT, Objects::RIGHT, Objects::UP, Objects::DOWN};
+
         std::map<Objects::Direction, sf::Sprite> map = {};
 
-        for (Objects::Direction dir : Objects::directions) {
-            std::string spriteName = typeToString[type] + Objects::directionSuffix.at(dir);
+        for (Objects::Direction dir : directions) {
+            std::string spriteName = typeToString[type] + directionSuffix.at(dir);
             map[dir] = getSprite( spriteName );
         }
         

@@ -31,6 +31,8 @@ namespace Map
 
         TileType getCellType(int x, int y) const;
         TileType getCellType(const Common::Vector2D<int> &position) const;
+
+        ~FieldMap();
     private:
         unsigned int m_width;
         unsigned int m_height;
