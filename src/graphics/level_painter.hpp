@@ -7,11 +7,11 @@
 
 namespace Graphics
 {
-    const int cellWidth = 32;
-    const int cellHeight = 32;
+    const int CELL_WIDTH = 32;
+    const int CELL_HEIGHT = 32;
 
-    const int windowHeight = 1280;
-    const int windowWidth = 960;
+    const int WINDOW_HEIGHT = 960;
+    const int WINDOW_WIDTH = 1280;
 
     class LevelPainter {
     public:

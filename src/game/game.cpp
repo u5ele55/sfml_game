@@ -7,7 +7,7 @@
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}) {
-	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::windowHeight, Graphics::windowWidth), "Hello");
+	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray");
 }
 
 void GameCore::start() {

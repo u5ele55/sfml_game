@@ -21,7 +21,7 @@ SOURCES = main.cpp   \
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
-all: $(SOURCES) $(EXECUTABLE) clean
+all: $(SOURCES) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC) $(OBJECTS) -o $@ $(SFML_FLAGS)

@@ -21,8 +21,8 @@ void Graphics::LevelPainter::drawWindow(
             
             sf::Sprite sprite = spriteManager.getTileSprite(map.getCellType(cellCoords));
             sprite.setPosition(
-                cellCoords.x * cellWidth, 
-                cellCoords.y * cellHeight
+                cellCoords.x * CELL_WIDTH, 
+                cellCoords.y * CELL_HEIGHT
                 );
                 
             window.draw(sprite);
@@ -31,18 +31,18 @@ void Graphics::LevelPainter::drawWindow(
     
     auto p_sprite = spriteManager.getCreatureSprites(player.getCreatureType())[player.getFacing()];
     p_sprite.setPosition(
-        playerPosition.x * cellWidth,
-        playerPosition.y * cellHeight
+        playerPosition.x * CELL_WIDTH,
+        playerPosition.y * CELL_HEIGHT
         );
         
     window.draw(p_sprite);
 
     sf::View view;
     view.setCenter(
-        playerPosition.x * cellWidth + cellWidth / 2, 
-        playerPosition.y * cellHeight + cellHeight / 2
+        playerPosition.x * CELL_WIDTH + CELL_WIDTH / 2, 
+        playerPosition.y * CELL_HEIGHT + CELL_HEIGHT / 2
         );
-    view.setSize(window.getSize().x / 2, window.getSize().y / 2);
+    view.setSize(Graphics::WINDOW_WIDTH / 2, Graphics::WINDOW_HEIGHT / 2);
     window.setView(view);
 
     window.display();
