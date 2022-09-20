@@ -17,12 +17,14 @@ void Graphics::LevelPainter::drawWindow(
     const auto mapSize = map.getSize(); 
     for (int i = 0; i < mapSize.y; i++) {
         for (int j = 0; j < mapSize.x; j ++) {
-            const Common::Vector2D<int> cellCoords = map.getCoords(j, i);
+            const Common::Vector2D<int> &cellCoords = map.getCoords(j, i);
+            
             sf::Sprite sprite = spriteManager.getTileSprite(map.getCellType(cellCoords));
             sprite.setPosition(
                 cellCoords.x * Map::cellWidth, 
                 cellCoords.y * Map::cellHeight
                 );
+                
             window.draw(sprite);
         }
     }

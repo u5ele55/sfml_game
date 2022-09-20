@@ -1,10 +1,12 @@
 #include "map.hpp"
 #include "static_cell.hpp"
 
+#include <iostream>
+
 namespace Map
 {
-    const int baseHeight = 10;
-    const int baseWidth = 20;
+    const int baseHeight = 15;
+    const int baseWidth = 15;
     FieldMap::FieldMap() : FieldMap(baseWidth, baseHeight) {}
 
     FieldMap::FieldMap(unsigned int width, unsigned int height) 
@@ -29,8 +31,75 @@ namespace Map
             m_field[5][i]->setSolidity(true);
             m_field[5][i]->setTileType(Map::TileType::STONE);
         }
-        
+    }
 
+    FieldMap::FieldMap(const FieldMap& other) : m_height(other.m_height), m_width(other.m_width) {
+        m_field = std::vector< std::vector<Map::Cell*> >(
+            m_height, std::vector<Map::Cell*>(m_width, nullptr)
+            );
+        
+         for (int i = 0 ; i < m_height; i ++) 
+            for(int j = 0 ; j < m_width; j ++) {
+                m_field[i][j] = new Cell(TileType::DIRT);
+                *m_field[i][j] = *other.m_field[i][j];
+            }
+    }
+
+    FieldMap::FieldMap(FieldMap&& other) : m_height(other.m_height), m_width(other.m_width) {
+        m_field = std::vector< std::vector<Map::Cell*> >(
+            m_height, std::vector<Map::Cell*>(m_width, nullptr)
+            );
+        
+        for (int i = 0 ; i < m_height; i ++) 
+            for(int j = 0 ; j < m_width; j ++) {
+                m_field[i][j] = new Cell(TileType::DIRT);
+                *m_field[i][j] = *other.m_field[i][j];
+            }
+    } // TODO
+    FieldMap& FieldMap::operator=(const FieldMap& other) {
+        if (this != &other) {
+            for (int i = 0 ; i < m_field.size(); i ++) {
+                for(int j = 0; j < m_field[i].size(); j ++)
+                    delete m_field[i][j];
+            }
+            m_height = other.m_height;
+            m_width = other.m_width;
+
+            m_field = std::vector< std::vector<Map::Cell*> >(
+                m_height, std::vector<Map::Cell*>(m_width, nullptr));
+            
+            for (int i = 0 ; i < m_height; i ++) 
+                for(int j = 0 ; j < m_width; j ++) {
+                    m_field[i][j] = new Cell(TileType::GRASS);
+
+                    *m_field[i][j] = *other.m_field[i][j];
+                }
+            
+        }
+        return *this;
+    } // TODO
+
+    FieldMap& FieldMap::operator=(FieldMap &&other) {
+        if (this != &other) {
+            for (int i = 0 ; i < m_field.size(); i ++) {
+                for(int j = 0; j < m_field[i].size(); j ++)
+                    delete m_field[i][j];
+            }
+            m_height = other.m_height;
+            m_width = other.m_width;
+
+            m_field = std::vector< std::vector<Map::Cell*> >(
+                m_height, std::vector<Map::Cell*>(m_width, nullptr));
+            
+            for (int i = 0 ; i < m_height; i ++) 
+                for(int j = 0 ; j < m_width; j ++) {
+                    m_field[i][j] = new Cell(TileType::GRASS);
+
+                    *m_field[i][j] = *other.m_field[i][j];
+                }
+            
+        }
+        return *this;
     }
 
     Common::Vector2D<int> FieldMap::getCoords(int x, int y) const {
@@ -78,6 +147,7 @@ namespace Map
 
 
     FieldMap::~FieldMap() {
+        std::cout << "Destructor of map called\n";
         for (int i = 0 ; i < m_field.size(); i ++) {
             for(int j = 0; j < m_field[i].size(); j ++)
                 delete m_field[i][j];

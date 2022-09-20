@@ -38,7 +38,7 @@ namespace Objects {
         /// @brief 
         /// Returns true if creature can go 
         /// @return 
-        bool increaseStepPhase(double phase);
+        bool increaseStepPhase(const double& phase);
         
         bool canGo() const;
 

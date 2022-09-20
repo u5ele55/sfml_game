@@ -24,6 +24,7 @@ UserEvent SfmlEventReader::keyToEvent(const sf::Keyboard::Key &key) const {
         {sf::Keyboard::S, DOWN},
         {sf::Keyboard::D, RIGHT},
         {sf::Keyboard::W, UP},
+        {sf::Keyboard::E, USE},
         
     };
 
