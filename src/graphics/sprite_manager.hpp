@@ -19,12 +19,12 @@ namespace Graphics {
             const Objects::CreatureType&);
 
         sf::Sprite getTileSprite(const Map::TileType&);
+    private:
+        SpriteManager();
         /// @brief 
         /// Returns single sprite with given name.
         /// @return 
         sf::Sprite getSprite(const std::string& name);
-    private:
-        SpriteManager();
 
         std::map<std::string, std::vector<sf::Sprite>> m_sprites;
     };

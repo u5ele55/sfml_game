@@ -34,7 +34,6 @@ namespace Map
     }
 
     FieldMap::FieldMap(const FieldMap& other) : m_height(other.m_height), m_width(other.m_width) {
-        std::cout << "in constructor &other\n";
         m_field = std::vector< std::vector<Map::Cell*> >(
             m_height, std::vector<Map::Cell*>(m_width, nullptr)
             );
@@ -46,9 +45,7 @@ namespace Map
     }
 
     FieldMap& FieldMap::operator=(FieldMap &&other) {
-        std::cout << "before if in map=\n";
         if (this != &other) {
-            std::cout << "in operator=\n";
             for (int i = 0 ; i < m_field.size(); i ++) {
                 for(int j = 0; j < m_field[i].size(); j ++)
                     delete m_field[i][j];
@@ -58,16 +55,14 @@ namespace Map
 
             m_field = std::vector< std::vector<Map::Cell*> >(
                 m_height, std::vector<Map::Cell*>(m_width, nullptr));
-            std::cout << "going to copy now\n";
-            for (int i = 0 ; i < m_height; i ++) {
+            
+            for (int i = 0 ; i < m_height; i ++) 
                 for(int j = 0 ; j < m_width; j ++) {
-                    std::cout << "copying " << i << " " << j << '\n';
                     m_field[i][j] = new Cell(TileType::GRASS);
 
                     *m_field[i][j] = *other.m_field[i][j];
                 }
-            }
-            std::cout << "copied\n";
+            
         }
         return *this;
     }
@@ -117,6 +112,7 @@ namespace Map
 
 
     FieldMap::~FieldMap() {
+        std::cout << "Destructor of map called\n";
         for (int i = 0 ; i < m_field.size(); i ++) {
             for(int j = 0; j < m_field[i].size(); j ++)
                 delete m_field[i][j];

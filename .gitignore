@@ -1,4 +1,5 @@
 
-.vscode/
+.vscode
 src/run
 src/run.exe
+*.o

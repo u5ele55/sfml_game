@@ -48,7 +48,7 @@ namespace Objects {
         m_stepPhase = 0;
     }
 
-    bool Creature::increaseStepPhase(double phase) {
+    bool Creature::increaseStepPhase(const double& phase) {
         m_stepPhase += m_speed * phase;
         
         if (m_stepPhase > Objects::stepPause)

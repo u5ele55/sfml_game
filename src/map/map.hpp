@@ -13,6 +13,8 @@ namespace Map
         FieldMap();
         FieldMap(unsigned int width, unsigned int height);
         FieldMap(const FieldMap& other);
+        FieldMap(FieldMap&& tmp); // TODO
+        FieldMap& operator=(const FieldMap& other); // TODO
         FieldMap& operator=(FieldMap&& other);
 
         Common::Vector2D<unsigned int> getSize() const;
@@ -23,6 +25,11 @@ namespace Map
         /// cell on [13, 3].
         /// @return 
         Common::Vector2D<int> getCoords(int x, int y) const;
+        /// @brief 
+        /// Returns cell on position <x % width, y % height>. 
+        /// For example, if width=15, height=10, get(Vector2D(-2, 23)) will return
+        /// cell on [13, 3].
+        /// @return 
         Common::Vector2D<int> getCoords(const Common::Vector2D<int> &position) const;
 
         void triggerCellEvent(int x, int y) const;

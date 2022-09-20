@@ -7,6 +7,7 @@ namespace Map
         public:
             virtual void trigger();
         };
+        
     } // namespace Events
     
 } // namespace Map

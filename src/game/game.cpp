@@ -7,15 +7,13 @@
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}) {
-	m_window = new sf::RenderWindow(sf::VideoMode(1280, 960), "SFML works!");
+	m_window = new sf::RenderWindow(sf::VideoMode(1280, 960), "Hello");
 }
 
-int GameCore::execute() {
+void GameCore::start() {
 	
 	sf::Clock clock;
-	std::cout << "Creating map..\n";
-	m_map = Map::FieldMap(20, 15);
-	std::cout << "Map created\n";
+	m_map = Map::FieldMap(15, 15);
 
 	while (m_window->isOpen())
 	{
@@ -27,8 +25,6 @@ int GameCore::execute() {
 		Graphics::LevelPainter::drawWindow(*m_window, m_playerPosition, m_player, m_objects, m_map);
 	    
 	}
-
-	return 0;
 }
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
@@ -61,7 +57,6 @@ void GameCore::onEvent(const UserEvent &event) {
 		wantToGo = true;
 		break;
 	case UserEvent::USE:
-		std::cout << "USE called\n";
 		m_map = Map::FieldMap(10,10);
 		break;
 	case UserEvent::ESC:
@@ -102,10 +97,7 @@ void GameCore::onEvent(const UserEvent &event) {
 	}
 }
 
-void GameCore::closeWindow() {m_window->close();}
-
-
-GameCore::~GameCore() {
-	delete m_notifier;
-	delete m_window;
+void GameCore::closeWindow() {
+	m_window->close();
+	std::cout << "Window closed\n";
 }
