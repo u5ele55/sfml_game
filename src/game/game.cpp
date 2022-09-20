@@ -57,7 +57,7 @@ void GameCore::onEvent(const UserEvent &event) {
 		wantToGo = true;
 		break;
 	case UserEvent::USE:
-		m_map = Map::FieldMap(10,10);
+		m_map = Map::FieldMap(10,10);;
 		break;
 	case UserEvent::ESC:
 		closeWindow();
