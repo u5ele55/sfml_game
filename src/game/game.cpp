@@ -7,7 +7,7 @@
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}) {
-	m_window = new sf::RenderWindow(sf::VideoMode(1280, 960), "Hello");
+	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::windowHeight, Graphics::windowWidth), "Hello");
 }
 
 void GameCore::start() {

@@ -22,8 +22,7 @@ namespace Objects {
             m_speed(speed),
             m_facing(facing), 
             m_stepPhase(stepPhase),
-            m_canGo(stepPhase > stepPause),
-            Object() {}
+            m_canGo(stepPhase > stepPause) {}
     
 
     void Creature::setHp(int hp) {m_currentHp = hp;}

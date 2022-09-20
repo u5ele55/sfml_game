@@ -8,7 +8,6 @@ namespace Objects {
 	class Object {
 	public:
 		explicit Object();
-		explicit Object(Common::Vector2D<int> position, bool isSolid = true);
 		
 		virtual void onInteraction(const Object &);
 	};

@@ -9,8 +9,6 @@ namespace Map
     enum TileType {
         DIRT, STONE, GRASS
     };
-    const int cellWidth = 32;
-    const int cellHeight = 32;
 
     class Cell : public Objects::Object {
     public:

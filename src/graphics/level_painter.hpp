@@ -7,6 +7,12 @@
 
 namespace Graphics
 {
+    const int cellWidth = 32;
+    const int cellHeight = 32;
+
+    const int windowHeight = 1280;
+    const int windowWidth = 960;
+
     class LevelPainter {
     public:
         LevelPainter() = delete;
