@@ -6,9 +6,12 @@
 #include "event_reader.hpp"
 #include <iostream>
 
-GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}), m_map(Map::FieldMap(10,16)) {
-	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray");
-}
+GameCore::GameCore(GameMediator *notifier)
+	: m_notifier(notifier), 
+	m_playerPosition({1,1}), 
+	m_map(Map::FieldMap(10,16)),
+	m_window(new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray"))
+	{}
 
 void GameCore::start() {
 	
