@@ -52,10 +52,10 @@ namespace Map
         
         for (int i = 0 ; i < m_height; i ++) 
             for(int j = 0 ; j < m_width; j ++) {
-                m_field[i][j] = new Cell(TileType::DIRT);
-                *m_field[i][j] = *other.m_field[i][j];
+                std::swap(m_field[i][j], other.m_field[i][j]);
             }
     } // TODO
+
     FieldMap& FieldMap::operator=(const FieldMap& other) {
         if (this != &other) {
             for (int i = 0 ; i < m_field.size(); i ++) {
@@ -71,10 +71,8 @@ namespace Map
             for (int i = 0 ; i < m_height; i ++) 
                 for(int j = 0 ; j < m_width; j ++) {
                     m_field[i][j] = new Cell(TileType::GRASS);
-
                     *m_field[i][j] = *other.m_field[i][j];
                 }
-            
         }
         return *this;
     } // TODO
@@ -93,9 +91,7 @@ namespace Map
             
             for (int i = 0 ; i < m_height; i ++) 
                 for(int j = 0 ; j < m_width; j ++) {
-                    m_field[i][j] = new Cell(TileType::GRASS);
-
-                    *m_field[i][j] = *other.m_field[i][j];
+                    std::swap(m_field[i][j], other.m_field[i][j]);
                 }
             
         }
@@ -147,7 +143,6 @@ namespace Map
 
 
     FieldMap::~FieldMap() {
-        std::cout << "Destructor of map called\n";
         for (int i = 0 ; i < m_field.size(); i ++) {
             for(int j = 0; j < m_field[i].size(); j ++)
                 delete m_field[i][j];

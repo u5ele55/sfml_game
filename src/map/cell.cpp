@@ -23,7 +23,6 @@ namespace Map
 
 
     Cell::~Cell() {
-        std::cout << "Destructor of cell called\n";
         delete m_event;
     }
 } // namespace Map

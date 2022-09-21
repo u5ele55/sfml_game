@@ -6,14 +6,15 @@
 #include "event_reader.hpp"
 #include <iostream>
 
-GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}) {
+GameCore::GameCore(GameMediator *notifier) : m_notifier(notifier), m_playerPosition({1,1}), m_map(Map::FieldMap(10,16)) {
 	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray");
 }
 
 void GameCore::start() {
 	
 	sf::Clock clock;
-	m_map = Map::FieldMap(15, 15);
+	
+	Graphics::LevelPainter lvlPainter(*m_window);
 
 	while (m_window->isOpen())
 	{
@@ -22,7 +23,7 @@ void GameCore::start() {
 
 	    m_notifier->callReader(m_window);
 		updateScene(elapsedTime);
-		Graphics::LevelPainter::drawWindow(*m_window, m_playerPosition, m_player, m_objects, m_map);
+		lvlPainter.drawWindow(m_playerPosition, m_player, m_objects, m_map);
 	    
 	}
 }

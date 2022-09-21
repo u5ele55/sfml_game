@@ -15,15 +15,17 @@ namespace Graphics
 
     class LevelPainter {
     public:
-        LevelPainter() = delete;
-        static void drawWindow(
-            sf::RenderWindow& window, 
+        LevelPainter(sf::RenderWindow& window);
+        void drawWindow(
             const Common::Vector2D<int> &playerPosition,
             const Objects::Player &player,
             const std::vector<Objects::Object> &objects,
             const Map::FieldMap &map
             );
-
+    private:
+        sf::RenderWindow& window;
+        Common::Vector2D<int> prevPlayerPosition;
+        sf::View view;
     };
 } // namespace Graphics
 
