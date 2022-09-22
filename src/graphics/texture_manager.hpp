@@ -4,7 +4,7 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 
-#define TEXTURE_TYPES_EXIST 2
+#define TEXTURE_TYPES_EXIST 3
 
 namespace Graphics {
 
@@ -12,7 +12,8 @@ namespace Graphics {
         Tile,
         Player,
         Enemy,
-        Item
+        Item,
+        Button
     };
     extern const TextureType existingTypes[TEXTURE_TYPES_EXIST];
 

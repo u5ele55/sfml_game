@@ -5,6 +5,10 @@
 
 namespace Map
 {
+    const MapType existingMapTypes[EXISTING_MAP_TYPES] = {
+        Overworld, Dungeon
+    };
+
     const int baseHeight = 15;
     const int baseWidth = 15;
     FieldMap::FieldMap() : FieldMap(baseWidth, baseHeight) {}
@@ -12,6 +16,9 @@ namespace Map
     FieldMap::FieldMap(unsigned int width, unsigned int height) 
     : m_width(width), m_height(height) 
     {
+        if (m_width > 200 || m_height > 200) {
+            throw std::invalid_argument("Sizes of a map must be positive and less than 200!");
+        }
         m_field = std::vector<std::vector<Cell*>>(
             height,
             std::vector<Cell*>(width, nullptr)

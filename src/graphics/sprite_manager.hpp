@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "../objects/creature.hpp"
-#include "../map/cell.hpp"
+#include "../map/map.hpp"
 
 namespace Graphics {
     class SpriteManager {
@@ -17,7 +17,8 @@ namespace Graphics {
 
         std::map<Objects::Direction, sf::Sprite> getCreatureSprites(
             const Objects::CreatureType&);
-
+        
+        sf::Sprite getMapButtonSprite(const Map::MapType&);
         sf::Sprite getTileSprite(const Map::TileType&);
     private:
         SpriteManager();

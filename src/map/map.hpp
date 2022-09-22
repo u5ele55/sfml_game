@@ -5,9 +5,16 @@
 #include <vector>
 #include "cell.hpp"
 
+#define EXISTING_MAP_TYPES 2
 
 namespace Map
 {
+    enum MapType {
+        Overworld, Dungeon
+    };
+
+    extern const MapType existingMapTypes[EXISTING_MAP_TYPES];
+
     class FieldMap  {
     public:
         FieldMap();

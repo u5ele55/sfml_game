@@ -9,9 +9,10 @@ SOURCES = main.cpp   \
 	  game\game.cpp   \
 	  game\game_mediator.cpp    \
 	  game\event_reader.cpp      \
-	  graphics\level_painter.cpp  \
-	  graphics\texture_manager.cpp \
-	  graphics\sprite_manager.cpp   \
+	  graphics\dialogs\choose_map_dialog.cpp  \
+	  graphics\level_painter.cpp   \
+	  graphics\texture_manager.cpp  \
+	  graphics\sprite_manager.cpp    \
 	  objects\object.cpp  \
 	  objects\player.cpp   \
 	  objects\creature.cpp  \

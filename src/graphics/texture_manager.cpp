@@ -2,7 +2,7 @@
 #include <iostream>
 
 const Graphics::TextureType Graphics::existingTypes[TEXTURE_TYPES_EXIST] = {
-    Graphics::Tile, Graphics::Player
+    Graphics::Tile, Graphics::Player, Graphics::Button
 };
 
 Graphics::TextureManager::TextureManager() {
@@ -24,7 +24,8 @@ std::string Graphics::TextureManager::getAssetName(const Graphics::TextureType& 
     std::string path = "assets/textures/";
     std::map<Graphics::TextureType, std::string> typeToAsset = {
         {Graphics::Tile, "tiles-pipo.png"},
-        {Graphics::Player, "player.png"}
+        {Graphics::Player, "player.png"},
+        {Graphics::Button, "buttons.png"}
         };
     
     if (typeToAsset.count(type) != 0)

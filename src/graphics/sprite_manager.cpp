@@ -4,14 +4,14 @@
 #include <map>
 #include "texture_manager.hpp"
 
-
 namespace Graphics {
     SpriteManager::SpriteManager() {
         TextureManager& textureManager = TextureManager::getInstance();
         std::string path = "assets/textures/";
         std::map<TextureType, std::string> typeFilenames = {
             {Player, "player_sprites"},
-            {Tile, "tiles"}
+            {Tile, "tiles"},
+            {Button, "buttons"}
         };
         for (TextureType type : existingTypes) {
             std::string spriteFile = path+typeFilenames[type];
@@ -78,6 +78,15 @@ namespace Graphics {
             {Map::TileType::DIRT,  "dirt"},
             {Map::TileType::STONE, "stone"},
             {Map::TileType::GRASS, "grass"},
+        };
+
+        return getSprite( typeToString[type] );
+    }
+
+    sf::Sprite SpriteManager::getMapButtonSprite(const Map::MapType &type) {
+        std::map<Map::MapType, std::string> typeToString = {
+            {Map::MapType::Overworld, "overworld"},
+            {Map::MapType::Dungeon, "dungeon"}
         };
 
         return getSprite( typeToString[type] );

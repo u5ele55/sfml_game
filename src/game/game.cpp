@@ -4,19 +4,34 @@
 #include "../map/cell.hpp"
 #include "../graphics/level_painter.hpp"
 #include "event_reader.hpp"
+#include "../graphics/dialogs/choose_map_dialog.hpp"
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier)
 	: m_notifier(notifier), 
-	m_playerPosition({1,1}), 
-	m_map(Map::FieldMap(10,16)),
-	m_window(new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray"))
-	{}
+	  m_playerPosition({1,1})
+	  {}
 
 void GameCore::start() {
 	
 	sf::Clock clock;
-	
+
+	Graphics::ChooseMapDialog chooseDialog;
+	Map::MapType mapType = chooseDialog.showDialog();
+
+	switch (mapType)
+	{
+	case Map::Dungeon:
+		m_map = Map::FieldMap(10,10);
+		break;
+	case Map::Overworld:
+		m_map = Map::FieldMap(15,15);
+		break;
+	default:
+		break;
+	}
+
+	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray");
 	Graphics::LevelPainter lvlPainter(*m_window);
 
 	while (m_window->isOpen())
@@ -61,7 +76,6 @@ void GameCore::onEvent(const UserEvent &event) {
 		wantToGo = true;
 		break;
 	case UserEvent::USE:
-		m_map = Map::FieldMap(10,10);;
 		break;
 	case UserEvent::ESC:
 		closeWindow();
@@ -97,7 +111,6 @@ void GameCore::onEvent(const UserEvent &event) {
 			m_player.makeStep();
 			m_map.triggerCellEvent(cellCoords);
 		}
-	
 	}
 }
 
