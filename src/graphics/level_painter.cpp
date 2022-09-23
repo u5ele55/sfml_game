@@ -18,21 +18,20 @@ namespace Graphics
     }
 
     void LevelPainter::drawWindow(
-        const Common::Vector2D<int> &playerPosition,
-        const Objects::Player &player,
+        const Common::CreatureWrapper &player,
         const std::vector<Objects::Object> &objects,
         const Map::FieldMap &map) 
     {
         window.clear();
         
-        if (prevPlayerPosition != playerPosition) {
+        if (prevPlayerPosition != player.position) {
             view.setCenter(
-                playerPosition.x * CELL_WIDTH + CELL_WIDTH / 2, 
-                playerPosition.y * CELL_HEIGHT + CELL_HEIGHT / 2
+                player.position.x * CELL_WIDTH + CELL_WIDTH / 2, 
+                player.position.y * CELL_HEIGHT + CELL_HEIGHT / 2
                 );
             
             window.setView(view);
-            prevPlayerPosition = playerPosition;
+            prevPlayerPosition = player.position;
         }
 
         sf::Vector2f topLeft = view.getCenter() - sf::Vector2f(view.getSize().x / 2, view.getSize().y / 2);
@@ -54,10 +53,10 @@ namespace Graphics
             }
         }
         
-        auto p_sprite = spriteManager.getCreatureSprites(player.getCreatureType())[player.getFacing()];
+        auto p_sprite = spriteManager.getCreatureSprites(player.creature.getCreatureType())[player.creature.getFacing()];
         p_sprite.setPosition(
-            playerPosition.x * CELL_WIDTH,
-            playerPosition.y * CELL_HEIGHT
+            player.position.x * CELL_WIDTH,
+            player.position.y * CELL_HEIGHT
             );    
         window.draw(p_sprite);
 
@@ -67,11 +66,11 @@ namespace Graphics
         text.setFont(*font);
         text.setCharacterSize(14); 
 
-        text.setString("HP: " + std::to_string(player.getHp()) + "/" + std::to_string(player.getMaxHp()));
+        text.setString("HP: " + std::to_string(player.creature.getHp()) + "/" + std::to_string(player.creature.getMaxHp()));
         text.setPosition(topLeft + sf::Vector2f(leftOffset, topOffset));
         window.draw(text);
 
-        text.setString("Mana: " + std::to_string(player.getMana()) + "/" + std::to_string(player.getMaxMana()));
+        text.setString("Mana: " + std::to_string(player.creature.getMana()) + "/" + std::to_string(player.creature.getMaxMana()));
         text.setPosition(topLeft + sf::Vector2f(leftOffset, topOffset + text.getLocalBounds().height));
         window.draw(text);
 

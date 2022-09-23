@@ -11,7 +11,7 @@
 
 GameCore::GameCore(GameMediator *notifier)
 	: m_notifier(notifier), 
-	  m_playerPosition({1,1})
+	  m_player(Common::Vector2D<int>{1,1}, Objects::Player())
 	  {}
 
 void GameCore::start() {
@@ -62,13 +62,13 @@ void GameCore::start() {
 
 	    m_notifier->callReader(m_window);
 		updateScene(elapsedTime);
-		lvlPainter.drawWindow(m_playerPosition, m_player, m_objects, m_map);
+		lvlPainter.drawWindow(m_player, m_objects, m_map);
 	    
 	}
 }
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
-	m_player.increaseStepPhase(elapsedTime.asSeconds());
+	m_player.creature.increaseStepPhase(elapsedTime.asSeconds());
 	// for (auto &creature : m_creatures) {
 	// 	bool canGo = creature.increaseStepPhase(elapsedTime.asSeconds());
 	// 	// Pass creature to CreatureController, that will return creature event
@@ -77,23 +77,23 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 
 void GameCore::onEvent(const UserEvent &event) {
 	bool wantToGo = false;
-	auto prevFacing = m_player.getFacing();
+	auto prevFacing = m_player.creature.getFacing();
 	switch (event)
 	{
 	case UserEvent::UP:
-		m_player.setFacing(Objects::Direction::UP);
+		m_player.creature.setFacing(Objects::Direction::UP);
 		wantToGo = true;
 		break;
 	case UserEvent::LEFT:
-		m_player.setFacing(Objects::Direction::LEFT);
+		m_player.creature.setFacing(Objects::Direction::LEFT);
 		wantToGo = true;
 		break;
 	case UserEvent::DOWN:
-		m_player.setFacing(Objects::Direction::DOWN);
+		m_player.creature.setFacing(Objects::Direction::DOWN);
 		wantToGo = true;
 		break;
 	case UserEvent::RIGHT:
-		m_player.setFacing(Objects::Direction::RIGHT);
+		m_player.creature.setFacing(Objects::Direction::RIGHT);
 		wantToGo = true;
 		break;
 	case UserEvent::USE:
@@ -105,8 +105,8 @@ void GameCore::onEvent(const UserEvent &event) {
 		break;
 	}
 	
-	if (wantToGo && m_player.canGo() && prevFacing == m_player.getFacing()) {
-		const auto &facing = m_player.getFacing();
+	if (wantToGo && m_player.creature.canGo() && prevFacing == m_player.creature.getFacing()) {
+		const auto &facing = m_player.creature.getFacing();
 		Common::Vector2D<int> move = {0,0};
 		
 		switch(facing) {
@@ -124,12 +124,12 @@ void GameCore::onEvent(const UserEvent &event) {
 			break;
 		}
 		
-		const Common::Vector2D<int> &cellCoords = m_map.getCoords(m_playerPosition + move);
+		const Common::Vector2D<int> &cellCoords = m_map.getCoords(m_player.position + move);
 
 		if (!m_map.getCellSolidity(cellCoords)) {
 			// if it's not solid, then go
-			m_playerPosition = cellCoords;
-			m_player.makeStep();
+			m_player.position = cellCoords;
+			m_player.creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
 		}
 	}

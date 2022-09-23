@@ -2,7 +2,7 @@
 #define LEVEL_PAINTER_HPP
 
 #include <SFML/Graphics.hpp>
-#include "../objects/player.hpp"
+#include "../common/creature_wrapper.hpp"
 #include "../map/map.hpp"
 
 namespace Graphics
@@ -17,8 +17,7 @@ namespace Graphics
     public:
         LevelPainter(sf::RenderWindow& window);
         void drawWindow(
-            const Common::Vector2D<int> &playerPosition,
-            const Objects::Player &player,
+            const Common::CreatureWrapper &player,
             const std::vector<Objects::Object> &objects,
             const Map::FieldMap &map
             );

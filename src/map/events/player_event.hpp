@@ -2,15 +2,15 @@
 #define PLAYER_EVENT_HPP
 
 #include "event.hpp"
-#include "../../objects/player.hpp"
+#include "../../common/creature_wrapper.hpp"
 
 namespace Map::Events
 {
     class PlayerEvent : public Event {
     public:
-        PlayerEvent(Objects::Player &);
+        PlayerEvent(Common::CreatureWrapper &);
     protected:
-        Objects::Player &m_player;
+        Common::CreatureWrapper &m_player;
     };
 } // namespace Map
 

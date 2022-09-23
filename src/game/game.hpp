@@ -5,7 +5,7 @@ class GameCore;
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "../objects/object.hpp"
-#include "../objects/player.hpp"
+#include "../common/creature_wrapper.hpp"
 #include "../map/map.hpp"
 #include "game_mediator.hpp"
 
@@ -19,8 +19,7 @@ private:
 
 	std::vector<Objects::Object> m_objects;
 	Map::FieldMap m_map;
-	Objects::Player m_player;
-	Common::Vector2D<int> m_playerPosition;
+	Common::CreatureWrapper m_player;
 	
 	GameMediator *m_notifier;
 

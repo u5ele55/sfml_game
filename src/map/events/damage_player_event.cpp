@@ -2,10 +2,10 @@
 
 namespace Map::Events
 {
-    DamagePlayerEvent::DamagePlayerEvent(Objects::Player &player, int damage) 
+    DamagePlayerEvent::DamagePlayerEvent(Common::CreatureWrapper &player, int damage) 
       : PlayerEvent(player), m_damage(damage) {}
 
     void DamagePlayerEvent::trigger() {
-        m_player.setHp(m_player.getHp() - m_damage);
+        m_player.creature.setHp(m_player.creature.getHp() - m_damage);
     }
 } // namespace Map::Events
