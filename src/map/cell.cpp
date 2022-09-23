@@ -1,5 +1,6 @@
 #include "cell.hpp"
 #include "../objects/object.hpp"
+#include "events/event.hpp"
 
 #include <iostream>
 
@@ -12,10 +13,14 @@ namespace Map
     TileType Cell::getTileType() const { return m_type; }
     void Cell::setTileType(const TileType &type) { m_type = type; }
 
-    void Cell::setEvent(const Events::Event &event) { *m_event = event; }
+    void Cell::setEvent(Events::Event *event) { 
+        m_event = event; 
+    }
+
     void Cell::triggerEvent() { 
-        if (m_event != nullptr)
+        if (m_event != nullptr) {
             m_event->trigger(); 
+        }
     }
     
     bool Cell::isSolid() {return m_isSolid;}

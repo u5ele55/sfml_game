@@ -1,3 +1,5 @@
+#ifndef EVENT_HPP
+#define EVENT_HPP
 
 namespace Map
 {
@@ -5,9 +7,10 @@ namespace Map
     {
         class Event {
         public:
-            virtual void trigger();
-        };
-        
+            virtual void trigger() = 0;
+        };  
     } // namespace Events
     
 } // namespace Map
+
+#endif

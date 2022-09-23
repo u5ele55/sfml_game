@@ -38,6 +38,10 @@ namespace Objects {
     int Creature::getMeleeAttack() const {return m_meleeAttack;}
     int Creature::getMageAttack() const {return m_mageAttack;}
     int Creature::getMana() const {return m_currentMana;}
+    int Creature::getMaxMana() const {return m_maxMana;}
+    int Creature::getMaxHp() const {return m_maxHp;}
+    int Creature::getHp() const {return m_currentHp;}
+
     CreatureType Creature::getCreatureType() const {return m_type;}
 
     bool Creature::canGo() const {return m_canGo;}

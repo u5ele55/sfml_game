@@ -16,8 +16,8 @@ namespace Map
     FieldMap::FieldMap(unsigned int width, unsigned int height) 
     : m_width(width), m_height(height) 
     {
-        if (m_width > 200 || m_height > 200) {
-            throw std::invalid_argument("Sizes of a map must be positive and less than 200!");
+        if (m_width > 200 || m_height > 200 ||  m_height < 6) {
+            throw std::invalid_argument("Sizes of a map must be positive and less than 200, also height should be at least 6!");
         }
         m_field = std::vector<std::vector<Cell*>>(
             height,
@@ -147,7 +147,15 @@ namespace Map
 
     Common::Vector2D<unsigned int> FieldMap::getSize() const { return {m_width, m_height}; }
 
-
+    void FieldMap::setCell(int x, int y, Cell *cell) {
+        const auto &pos = getCoords(x,y);
+        delete m_field[pos.y][pos.x];
+        m_field[pos.y][pos.x] = new Cell(*cell);
+        *m_field[pos.y][pos.x] = *cell;
+    }
+    void FieldMap::setCell(const Common::Vector2D<int> &position, Cell *cell) {
+        setCell(position.x, position.y, cell);
+    }
 
     FieldMap::~FieldMap() {
         for (int i = 0 ; i < m_field.size(); i ++) {

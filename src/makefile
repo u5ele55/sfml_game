@@ -18,7 +18,12 @@ SOURCES = main.cpp   \
 	  objects\creature.cpp  \
 	  map\map.cpp   \
 	  map\cell.cpp   \
-	  map\static_cell.cpp 
+	  map\static_cell.cpp \
+	  map\events\map_event.cpp \
+	  map\events\player_event.cpp \
+	  map\events\change_cell_event.cpp \
+	  map\events\damage_player_event.cpp
+
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

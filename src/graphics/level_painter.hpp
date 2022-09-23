@@ -22,10 +22,12 @@ namespace Graphics
             const std::vector<Objects::Object> &objects,
             const Map::FieldMap &map
             );
+        ~LevelPainter();
     private:
         sf::RenderWindow& window;
         Common::Vector2D<int> prevPlayerPosition;
         sf::View view;
+        sf::Font *font;
     };
 } // namespace Graphics
 

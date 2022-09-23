@@ -5,6 +5,8 @@
 #include "../graphics/level_painter.hpp"
 #include "event_reader.hpp"
 #include "../graphics/dialogs/choose_map_dialog.hpp"
+#include "../map/events/change_cell_event.hpp"
+#include "../map/events/damage_player_event.hpp"
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier)
@@ -13,14 +15,11 @@ GameCore::GameCore(GameMediator *notifier)
 	  {}
 
 void GameCore::start() {
-	
-	sf::Clock clock;
 
 	Graphics::ChooseMapDialog chooseDialog;
 	Map::MapType mapType = chooseDialog.showDialog();
 
-	switch (mapType)
-	{
+	switch (mapType) {
 	case Map::Dungeon:
 		m_map = Map::FieldMap(10,10);
 		break;
@@ -31,9 +30,31 @@ void GameCore::start() {
 		break;
 	}
 
-	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray");
+	Map::Cell *a = new Map::Cell(Map::GRASS);
+	Map::Cell *b = new Map::Cell(Map::STONE, true);
+	std::vector<Map::Events::CellData> data = {
+		{{2,1}, b},
+		{{2,3}, b},
+		{{3,1}, b},
+		{{3,3}, b},
+		{{1,2}, b},
+		{{4,2}, b},
+		{{2,2}, new Map::Cell(Map::DIRT)}
+	};
+
+	auto *e = new Map::Events::ChangeCellsEvent(m_map, data);
+	a->setEvent(e);
+	m_map.setCell({2,2}, a);
+
+	Map::Cell *c = new Map::Cell(Map::DIRT);
+	auto *e2 = new Map::Events::DamagePlayerEvent(m_player, 15);
+	c->setEvent(e2);
+	m_map.setCell({3,2}, c);
+
+	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray", sf::Style::Close);
 	Graphics::LevelPainter lvlPainter(*m_window);
 
+	sf::Clock clock;
 	while (m_window->isOpen())
 	{
 		

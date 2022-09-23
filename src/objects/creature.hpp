@@ -20,9 +20,12 @@ namespace Objects {
             double speed, Direction facing = DOWN, double stepPhase = 0);
 
         void setMaxHp(int hp);
+        int getMaxHp() const;
+        int getHp() const;
         bool isAlive() const;
         void setMaxMana(int mana);
         int getMana() const;
+        int getMaxMana() const;
         void setMeleeAttack(int meleeAttack);
         int getMeleeAttack() const;
 

@@ -16,7 +16,7 @@ namespace Map
         Cell( TileType type, bool isSolid = false);
         TileType getTileType() const;
         void setTileType(const TileType&);
-        void setEvent(const Events::Event &event);
+        void setEvent(Events::Event *event);
         void triggerEvent();
 
         bool isSolid();
