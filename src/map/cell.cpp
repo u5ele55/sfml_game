@@ -1,11 +1,14 @@
 #include "cell.hpp"
 #include "../objects/object.hpp"
 #include "events/event.hpp"
+#include "events/change_cell_event.hpp"
 
 #include <iostream>
 
 namespace Map
 {
+    FieldMap a;
+    Cell::Cell() : Cell(TileType::DIRT) {}
     Cell::Cell(
         TileType type, bool isSolid)
         : m_type(type), m_event(nullptr), m_isSolid(isSolid), Objects::Object() {}
@@ -14,7 +17,7 @@ namespace Map
     void Cell::setTileType(const TileType &type) { m_type = type; }
 
     void Cell::setEvent(Events::Event *event) { 
-        m_event = event; 
+        m_event = event;
     }
 
     void Cell::triggerEvent() { 

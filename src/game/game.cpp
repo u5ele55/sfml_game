@@ -20,6 +20,7 @@ void GameCore::start() {
 	Map::MapType mapType = chooseDialog.showDialog();
 
 	switch (mapType) {
+	// Later: delegate map generation to some map generator
 	case Map::Dungeon:
 		m_map = Map::FieldMap(10,10);
 		break;
@@ -30,8 +31,8 @@ void GameCore::start() {
 		break;
 	}
 
-	Map::Cell *a = new Map::Cell(Map::GRASS);
-	Map::Cell *b = new Map::Cell(Map::STONE, true);
+	Map::Cell a = Map::Cell(Map::GRASS);
+	Map::Cell b = Map::Cell(Map::STONE, true);
 	std::vector<Map::Events::CellData> data = {
 		{{2,1}, b},
 		{{2,3}, b},
@@ -39,16 +40,14 @@ void GameCore::start() {
 		{{3,3}, b},
 		{{1,2}, b},
 		{{4,2}, b},
-		{{2,2}, new Map::Cell(Map::DIRT)}
+		{{2,2}, Map::Cell(Map::DIRT)}
 	};
 
-	auto *e = new Map::Events::ChangeCellsEvent(m_map, data);
-	a->setEvent(e);
+	a.setEvent(new Map::Events::ChangeCellsEvent(m_map, data));
 	m_map.setCell({2,2}, a);
 
-	Map::Cell *c = new Map::Cell(Map::DIRT);
-	auto *e2 = new Map::Events::DamagePlayerEvent(m_player, 15);
-	c->setEvent(e2);
+	Map::Cell c = Map::Cell(Map::DIRT);
+	c.setEvent(new Map::Events::DamagePlayerEvent(m_player, 15));
 	m_map.setCell({3,2}, c);
 
 	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray", sf::Style::Close);
@@ -107,7 +106,7 @@ void GameCore::onEvent(const UserEvent &event) {
 	
 	if (wantToGo && m_player.creature.canGo() && prevFacing == m_player.creature.getFacing()) {
 		const auto &facing = m_player.creature.getFacing();
-		Common::Vector2D<int> move = {0,0};
+		Common::Vector2D<int> move{0,0};
 		
 		switch(facing) {
 		case Objects::Direction::UP:

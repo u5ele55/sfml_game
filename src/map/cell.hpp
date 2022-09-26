@@ -12,7 +12,7 @@ namespace Map
 
     class Cell : public Objects::Object {
     public:
-        Cell() = delete;
+        Cell();
         Cell( TileType type, bool isSolid = false);
         TileType getTileType() const;
         void setTileType(const TileType&);

@@ -147,13 +147,13 @@ namespace Map
 
     Common::Vector2D<unsigned int> FieldMap::getSize() const { return {m_width, m_height}; }
 
-    void FieldMap::setCell(int x, int y, Cell *cell) {
+    void FieldMap::setCell(int x, int y, const Cell &cell) {
         const auto &pos = getCoords(x,y);
         delete m_field[pos.y][pos.x];
-        m_field[pos.y][pos.x] = new Cell(*cell);
-        *m_field[pos.y][pos.x] = *cell;
+        m_field[pos.y][pos.x] = new Cell;
+        *m_field[pos.y][pos.x] = cell;
     }
-    void FieldMap::setCell(const Common::Vector2D<int> &position, Cell *cell) {
+    void FieldMap::setCell(const Common::Vector2D<int> &position, const Cell &cell) {
         setCell(position.x, position.y, cell);
     }
 

@@ -8,7 +8,7 @@ namespace Map::Events
 {
     struct CellData {
         Common::Vector2D<int> position;
-        Cell *cell;
+        Cell cell;
     };
     class ChangeCellsEvent : public MapEvent {
     public:
