@@ -9,9 +9,9 @@ namespace Graphics {
         TextureManager& textureManager = TextureManager::getInstance();
         std::string path = "assets/textures/";
         std::map<TextureType, std::string> typeFilenames = {
-            {Player, "player_sprites"},
-            {Tile, "tiles"},
-            {Button, "buttons"}
+            {TextureType::Player, "player_sprites"},
+            {TextureType::Tile, "tiles"},
+            {TextureType::Button, "buttons"}
         };
         for (TextureType type : existingTypes) {
             std::string spriteFile = path+typeFilenames[type];
@@ -56,12 +56,14 @@ namespace Graphics {
         };
         
         const std::map<Objects::Direction, std::string> directionSuffix = {
-            {Objects::DOWN, "_front"},
-            {Objects::UP, "_back"},
-            {Objects::LEFT, "_left"},
-            {Objects::RIGHT, "_right"}
+            {Objects::Direction::DOWN, "_front"},
+            {Objects::Direction::UP, "_back"},
+            {Objects::Direction::LEFT, "_left"},
+            {Objects::Direction::RIGHT, "_right"}
         };
-        const Objects::Direction directions[] = {Objects::LEFT, Objects::RIGHT, Objects::UP, Objects::DOWN};
+        const Objects::Direction directions[] = {
+            Objects::Direction::LEFT, Objects::Direction::RIGHT, Objects::Direction::UP, Objects::Direction::DOWN
+            };
 
         std::map<Objects::Direction, sf::Sprite> map = {};
 

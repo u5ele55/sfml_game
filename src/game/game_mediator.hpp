@@ -2,7 +2,7 @@
 #define GAME_MEDIATOR_HPP
 
 class GameMediator;
-enum UserEvent {
+enum class UserEvent {
     NONE, ESC, RIGHT, LEFT, UP, DOWN, USE
 };
 

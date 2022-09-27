@@ -8,7 +8,7 @@
 
 namespace Graphics {
 
-    enum TextureType {
+    enum class TextureType {
         Tile,
         Player,
         Enemy,

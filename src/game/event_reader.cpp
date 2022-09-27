@@ -12,24 +12,24 @@ void SfmlEventReader::readEvent(sf::RenderWindow &window) {
         }
 
         if (event.type == sf::Event::Closed)
-            m_notifier->notify(ESC);
+            m_notifier->notify(UserEvent::ESC);
     }
 }
 
 UserEvent SfmlEventReader::keyToEvent(const sf::Keyboard::Key &key) const {
     std::map<sf::Keyboard::Key, UserEvent> sfEventsToUserEvents = {
-        {sf::Keyboard::Escape, ESC},
-        {sf::Keyboard::W, UP},
-        {sf::Keyboard::A, LEFT},
-        {sf::Keyboard::S, DOWN},
-        {sf::Keyboard::D, RIGHT},
-        {sf::Keyboard::W, UP},
-        {sf::Keyboard::E, USE},
+        {sf::Keyboard::Escape, UserEvent::ESC},
+        {sf::Keyboard::W, UserEvent::UP},
+        {sf::Keyboard::A, UserEvent::LEFT},
+        {sf::Keyboard::S, UserEvent::DOWN},
+        {sf::Keyboard::D, UserEvent::RIGHT},
+        {sf::Keyboard::W, UserEvent::UP},
+        {sf::Keyboard::E, UserEvent::USE},
         
     };
 
     if (sfEventsToUserEvents.count(key) == 0)
-        return NONE;
+        return UserEvent::NONE;
     return sfEventsToUserEvents[key];
 }
 

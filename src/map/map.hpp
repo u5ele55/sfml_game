@@ -9,7 +9,7 @@
 
 namespace Map
 {
-    enum MapType {
+    enum class MapType {
         Overworld, Dungeon
     };
 

@@ -21,18 +21,18 @@ void GameCore::start() {
 
 	switch (mapType) {
 	// Later: delegate map generation to some map generator
-	case Map::Dungeon:
+	case Map::MapType::Dungeon:
 		m_map = Map::FieldMap(10,10);
 		break;
-	case Map::Overworld:
+	case Map::MapType::Overworld:
 		m_map = Map::FieldMap(15,15);
 		break;
 	default:
 		break;
 	}
 
-	Map::Cell a = Map::Cell(Map::GRASS);
-	Map::Cell b = Map::Cell(Map::STONE, true);
+	Map::Cell a = Map::Cell(Map::TileType::GRASS);
+	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
 	std::vector<Map::Events::CellData> data = {
 		{{2,1}, b},
 		{{2,3}, b},
@@ -40,17 +40,19 @@ void GameCore::start() {
 		{{3,3}, b},
 		{{1,2}, b},
 		{{4,2}, b},
-		{{2,2}, Map::Cell(Map::DIRT)}
+		{{2,2}, Map::Cell(Map::TileType::DIRT)}
 	};
 
 	a.setEvent(new Map::Events::ChangeCellsEvent(m_map, data));
 	m_map.setCell({2,2}, a);
 
-	Map::Cell c = Map::Cell(Map::DIRT);
+	Map::Cell c = Map::Cell(Map::TileType::DIRT);
 	c.setEvent(new Map::Events::DamagePlayerEvent(m_player, 15));
 	m_map.setCell({3,2}, c);
 
-	m_window = new sf::RenderWindow(sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray", sf::Style::Close);
+	m_window = new sf::RenderWindow(
+		sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray", sf::Style::Close
+		);
 	Graphics::LevelPainter lvlPainter(*m_window);
 
 	sf::Clock clock;
@@ -123,7 +125,7 @@ void GameCore::onEvent(const UserEvent &event) {
 			break;
 		}
 		
-		const Common::Vector2D<int> &cellCoords = m_map.getCoords(m_player.position + move);
+		const auto &cellCoords = m_map.getCoords(m_player.position + move);
 
 		if (!m_map.getCellSolidity(cellCoords)) {
 			// if it's not solid, then go

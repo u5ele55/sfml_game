@@ -24,7 +24,7 @@ namespace Graphics
 	Map::MapType ChooseMapDialog::showDialog() {
 		sf::RenderWindow window(sf::VideoMode(m_width, m_height), "Choose your map", sf::Style::Close);
 
-		Map::MapType res = Map::Dungeon;
+		Map::MapType res = Map::MapType::Dungeon;
 		bool notClosed = true;
 
 		while(window.isOpen() && notClosed) {

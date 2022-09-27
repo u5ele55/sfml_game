@@ -4,11 +4,11 @@
 #include "object.hpp"
 
 namespace Objects {
-    enum Direction {
+    enum class Direction {
         LEFT, RIGHT, UP, DOWN
     };
 
-    enum CreatureType {
+    enum class CreatureType {
         PLAYER, DOG
     };
     
@@ -17,7 +17,7 @@ namespace Objects {
         Creature() = delete;
         Creature( CreatureType type,
             int maxHp, int maxMana, int meleeAttack, int mageAttack,
-            double speed, Direction facing = DOWN, double stepPhase = 0);
+            double speed, Direction facing = Direction::DOWN, double stepPhase = 0);
 
         void setMaxHp(int hp);
         int getMaxHp() const;

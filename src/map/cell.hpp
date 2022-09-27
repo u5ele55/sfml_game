@@ -6,7 +6,7 @@
 
 namespace Map
 {
-    enum TileType {
+    enum class TileType {
         DIRT, STONE, GRASS
     };
 

@@ -6,7 +6,7 @@
 namespace Map
 {
     const MapType existingMapTypes[EXISTING_MAP_TYPES] = {
-        Overworld, Dungeon
+        MapType::Overworld, MapType::Dungeon
     };
 
     const int baseHeight = 15;
