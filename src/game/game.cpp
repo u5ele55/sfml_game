@@ -12,6 +12,7 @@
 #include "../map/events/win_event.hpp"
 #include "../map/events/change_map_event.hpp"
 #include "../map/events/player_speed_multiplier_event.hpp"
+#include "../map/events/player_heal_event.hpp"
 
 #include <iostream>
 
@@ -162,6 +163,14 @@ void GameCore::setMapEvents() {
 	Map::Cell *d = new Map::Cell(Map::TileType::STONE);
 	d->setEvent(new Map::Events::ChangeMapEvent(m_player, {1,1}, m_map, Map::FieldMap(12,12)));
 	m_map.setCell({3,4}, *d);
+
+	Map::Cell *n = new Map::Cell(Map::TileType::GRASS);
+	n->setEvent(new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
+	m_map.setCell({4,4}, *n);
+
+	Map::Cell *m = new Map::Cell(Map::TileType::GRASS);
+	m->setEvent(new Map::Events::PlayerHealEvent(m_player));
+	m_map.setCell({4,6}, *m);
 
 	Map::Cell *w = new Map::Cell(Map::TileType::DIRT);
 	w->setEvent(new Map::Events::WinStateEvent(m_state));

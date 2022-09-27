@@ -9,15 +9,15 @@ SOURCES = main.cpp   \
 	  game\game.cpp   \
 	  game\game_mediator.cpp    \
 	  game\event_reader.cpp      \
+	  graphics\level_painter.cpp  \
+	  graphics\texture_manager.cpp \
+	  graphics\sprite_manager.cpp   \
 	  graphics\dialogs\choose_map_dialog.cpp  \
-	  graphics\level_painter.cpp   \
-	  graphics\texture_manager.cpp  \
-	  graphics\sprite_manager.cpp    \
 	  objects\object.cpp  \
 	  objects\player.cpp   \
 	  objects\creature.cpp  \
-	  map\map.cpp   \
-	  map\cell.cpp   \
+	  map\map.cpp \
+	  map\cell.cpp \
 	  map\static_cell.cpp \
 	  map\events\map_event.cpp \
 	  map\events\win_event.cpp \
@@ -25,7 +25,8 @@ SOURCES = main.cpp   \
 	  map\events\state_event.cpp \
 	  map\events\player_event.cpp \
 	  map\events\change_map_event.cpp \
-	  map\events\change_cell_event.cpp \
+	  map\events\player_heal_event.cpp \
+	  map\events\change_cell_event.cpp  \
 	  map\events\damage_player_event.cpp \
 	  map\events\player_speed_multiplier_event.cpp
 
