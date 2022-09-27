@@ -36,7 +36,6 @@ namespace Graphics
 				// Handle btn taps
 				if (event.type == sf::Event::MouseButtonPressed) {
 					const auto &pos = sf::Mouse::getPosition(window);
-					//std::cout << pos.x << ' ' << pos.y << '\n';
 
 					for(const MapTypeButton &btn : m_buttons) {
 						const auto& rect = btn.sprite.getGlobalBounds();

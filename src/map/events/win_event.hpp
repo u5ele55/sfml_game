@@ -1,0 +1,16 @@
+#ifndef WIN_EVENT_HPP
+#define WIN_EVENT_HPP
+
+#include "state_event.hpp"
+#include "../../game/game_state.hpp"
+
+namespace Map::Events
+{
+    class WinStateEvent : public StateEvent {
+    public:
+        WinStateEvent(GameState &state);
+        void trigger() final;
+    };
+} // namespace Map::Events
+
+#endif

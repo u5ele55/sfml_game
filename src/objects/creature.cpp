@@ -34,6 +34,7 @@ namespace Objects {
     void Creature::setSpeed(double speed) {m_speed = speed;}
     void Creature::setFacing(const Direction& direction) {m_facing = direction;}
     Direction Creature::getFacing() const {return m_facing;}
+    double Creature::getSpeed() const {return m_speed;}
     bool Creature::isAlive() const {return m_currentHp > 0;}
     int Creature::getMeleeAttack() const {return m_meleeAttack;}
     int Creature::getMageAttack() const {return m_mageAttack;}

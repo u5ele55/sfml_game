@@ -20,9 +20,14 @@ SOURCES = main.cpp   \
 	  map\cell.cpp   \
 	  map\static_cell.cpp \
 	  map\events\map_event.cpp \
+	  map\events\win_event.cpp \
+	  map\events\lose_event.cpp \
+	  map\events\state_event.cpp \
 	  map\events\player_event.cpp \
+	  map\events\change_map_event.cpp \
 	  map\events\change_cell_event.cpp \
-	  map\events\damage_player_event.cpp
+	  map\events\damage_player_event.cpp \
+	  map\events\player_speed_multiplier_event.cpp
 
 
 OBJECTS = $(SOURCES:.cpp=.o)

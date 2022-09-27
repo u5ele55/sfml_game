@@ -2,16 +2,16 @@
 #define STATE_EVENT_HPP
 
 #include "event.hpp"
+#include "../../game/game_state.hpp"
 
 namespace Map::Events
 {
     class StateEvent : public Event {
     public:
-        StateEvent( int &state );
-    private:
-        int &m_state;
+        StateEvent( GameState &state );
+    protected:
+        GameState &m_state;
     };
 } // namespace Map::Events
-
 
 #endif

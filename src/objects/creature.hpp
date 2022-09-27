@@ -35,6 +35,7 @@ namespace Objects {
         int getMageAttack() const;
 
         void setSpeed(double speed);
+        double getSpeed() const;
         void setFacing(const Direction& );
         Direction getFacing() const;
         CreatureType getCreatureType() const;

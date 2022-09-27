@@ -5,13 +5,20 @@
 #include "../graphics/level_painter.hpp"
 #include "event_reader.hpp"
 #include "../graphics/dialogs/choose_map_dialog.hpp"
+
 #include "../map/events/change_cell_event.hpp"
 #include "../map/events/damage_player_event.hpp"
+#include "../map/events/lose_event.hpp"
+#include "../map/events/win_event.hpp"
+#include "../map/events/change_map_event.hpp"
+#include "../map/events/player_speed_multiplier_event.hpp"
+
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier)
 	: m_notifier(notifier), 
-	  m_player(Common::Vector2D<int>{1,1}, Objects::Player())
+	  m_player(Common::Vector2D<int>{1,1}, Objects::Player()),
+	  m_state(GameState::PLAYING)
 	  {}
 
 void GameCore::start() {
@@ -31,27 +38,10 @@ void GameCore::start() {
 		break;
 	}
 
-	Map::Cell a = Map::Cell(Map::TileType::GRASS);
-	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
-	std::vector<Map::Events::CellData> data = {
-		{{2,1}, b},
-		{{2,3}, b},
-		{{3,1}, b},
-		{{3,3}, b},
-		{{1,2}, b},
-		{{4,2}, b},
-		{{2,2}, Map::Cell(Map::TileType::DIRT)}
-	};
-
-	a.setEvent(new Map::Events::ChangeCellsEvent(m_map, data));
-	m_map.setCell({2,2}, a);
-
-	Map::Cell c = Map::Cell(Map::TileType::DIRT);
-	c.setEvent(new Map::Events::DamagePlayerEvent(m_player, 15));
-	m_map.setCell({3,2}, c);
+	setMapEvents();
 
 	m_window = new sf::RenderWindow(
-		sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "Cat Tray", sf::Style::Close
+		sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "LitterBox", sf::Style::Close
 		);
 	Graphics::LevelPainter lvlPainter(*m_window);
 
@@ -70,10 +60,18 @@ void GameCore::start() {
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
 	m_player.creature.increaseStepPhase(elapsedTime.asSeconds());
-	// for (auto &creature : m_creatures) {
-	// 	bool canGo = creature.increaseStepPhase(elapsedTime.asSeconds());
-	// 	// Pass creature to CreatureController, that will return creature event
-	// }
+
+	if (m_player.creature.getHp() <= 0)
+		m_state = GameState::LOSS;
+
+	if (m_state == GameState::WIN) {
+		std::cout << "You win!\n";
+		closeWindow();
+	} 
+	else if (m_state == GameState::LOSS) {
+		std::cout << "Loser!\n";
+		closeWindow();
+	}
 }
 
 void GameCore::onEvent(const UserEvent &event) {
@@ -139,4 +137,33 @@ void GameCore::onEvent(const UserEvent &event) {
 void GameCore::closeWindow() {
 	m_window->close();
 	std::cout << "Window closed\n";
+}
+
+void GameCore::setMapEvents() {
+	Map::Cell *a = new Map::Cell(Map::TileType::GRASS);
+	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
+	std::vector<Map::Events::CellData> data = {
+		{{2,1}, b},
+		{{2,3}, b},
+		{{3,1}, b},
+		{{3,3}, b},
+		{{1,2}, b},
+		{{4,2}, b},
+		{{2,2}, Map::Cell(Map::TileType::DIRT)}
+	};
+
+	a->setEvent(new Map::Events::ChangeCellsEvent(m_map, data));
+	m_map.setCell({2,2}, *a);
+
+	Map::Cell *c = new Map::Cell(Map::TileType::DIRT);
+	c->setEvent(new Map::Events::DamagePlayerEvent(m_player, 20));
+	m_map.setCell({3,2}, *c);
+
+	Map::Cell *d = new Map::Cell(Map::TileType::STONE);
+	d->setEvent(new Map::Events::ChangeMapEvent(m_player, {1,1}, m_map, Map::FieldMap(12,12)));
+	m_map.setCell({3,4}, *d);
+
+	Map::Cell *w = new Map::Cell(Map::TileType::DIRT);
+	w->setEvent(new Map::Events::WinStateEvent(m_state));
+	m_map.setCell({-1,-1}, *w);
 }
