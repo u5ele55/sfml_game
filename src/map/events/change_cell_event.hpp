@@ -15,6 +15,7 @@ namespace Map::Events
         ChangeCellsEvent(const ChangeCellsEvent &) = delete;
         ChangeCellsEvent(ChangeCellsEvent&&) = delete;
         ChangeCellsEvent(FieldMap &map, const std::vector<CellData> &newCells);
+        ~ChangeCellsEvent();
         void trigger() final;
     private:
         std::vector<CellData> m_newCells;

@@ -8,4 +8,5 @@ namespace Map::Events
     void LoseStateEvent::trigger() {
         m_state = GameState::LOSS;
     }
+    LoseStateEvent::~LoseStateEvent() {}
 } // namespace Map::Events

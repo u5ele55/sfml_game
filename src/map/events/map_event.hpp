@@ -9,6 +9,7 @@ namespace Map::Events
     class MapEvent : public Event {
     public:
         MapEvent(FieldMap &);
+        ~MapEvent();
     protected:
         FieldMap &m_map;
     };

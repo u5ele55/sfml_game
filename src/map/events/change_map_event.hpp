@@ -12,6 +12,7 @@ namespace Map::Events
         ChangeMapEvent(
             Common::CreatureWrapper &player, const Common::Vector2D<int> &playerPosition,
             Map::FieldMap &map, const Map::FieldMap &newMap);
+        ~ChangeMapEvent();
         void trigger() final;
     private:
         Common::CreatureWrapper &m_player;

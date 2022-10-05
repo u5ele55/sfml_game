@@ -10,6 +10,7 @@ namespace Map::Events
         DamagePlayerEvent(const DamagePlayerEvent &) = delete;
         DamagePlayerEvent(DamagePlayerEvent&&) = delete;
         DamagePlayerEvent(Common::CreatureWrapper &, int);
+        ~DamagePlayerEvent();
         void trigger() final;
     private:
         int m_damage;

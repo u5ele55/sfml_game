@@ -1,4 +1,5 @@
 #include "player_speed_multiplier_event.hpp"
+#include <iostream>
 
 namespace Map::Events
 {
@@ -11,5 +12,8 @@ namespace Map::Events
         if (newSpeed > 1000) newSpeed = 1000;
         
         m_player.creature.setSpeed(newSpeed);
+    }
+    PlayerSpeedMultiplierEvent::~PlayerSpeedMultiplierEvent() {
+        std::cout << "~PlayerSpeedMultiplierEvent\n";
     }
 } // namespace Map::Events

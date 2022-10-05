@@ -8,6 +8,7 @@ namespace Map::Events
     class PlayerSpeedMultiplierEvent : public PlayerEvent {
     public:
         PlayerSpeedMultiplierEvent(Common::CreatureWrapper &player, double multiplier);
+        ~PlayerSpeedMultiplierEvent();
         void trigger() final;
     private:
         double m_mlt;

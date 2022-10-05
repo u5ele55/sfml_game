@@ -8,4 +8,5 @@ namespace Map::Events
         if (m_player.creature.getHp() != maxHp)
             m_player.creature.setHp(maxHp);
     }
+    PlayerHealEvent::~PlayerHealEvent() {}
 } // namespace Map::Events

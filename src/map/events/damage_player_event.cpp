@@ -8,4 +8,5 @@ namespace Map::Events
     void DamagePlayerEvent::trigger() {
         m_player.creature.setHp(m_player.creature.getHp() - m_damage);
     }
+    DamagePlayerEvent::~DamagePlayerEvent() {}
 } // namespace Map::Events

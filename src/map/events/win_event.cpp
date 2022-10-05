@@ -8,4 +8,5 @@ namespace Map::Events
     void WinStateEvent::trigger() {
         m_state = GameState::WIN;
     }
+    WinStateEvent::~WinStateEvent() {}
 } // namespace Map::Events

@@ -9,6 +9,7 @@ namespace Map::Events
     class StateEvent : public Event {
     public:
         StateEvent( GameState &state );
+        ~StateEvent();
     protected:
         GameState &m_state;
     };

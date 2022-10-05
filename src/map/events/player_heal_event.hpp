@@ -8,6 +8,7 @@ namespace Map::Events
     class PlayerHealEvent : public PlayerEvent {
     public:
         PlayerHealEvent(Common::CreatureWrapper &player);
+        ~PlayerHealEvent();
         void trigger() final;
     };
 } // namespace Map::Events

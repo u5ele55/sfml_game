@@ -1,3 +1,8 @@
 #include "map_event.hpp"
 
-Map::Events::MapEvent::MapEvent(FieldMap &map) : m_map(map) {}
+namespace Map::Events
+{
+    MapEvent::MapEvent(FieldMap &map) : m_map(map) {}
+    MapEvent::~MapEvent() {}
+} // namespace Map::Events
+

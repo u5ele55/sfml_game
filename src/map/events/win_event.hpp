@@ -9,6 +9,7 @@ namespace Map::Events
     class WinStateEvent : public StateEvent {
     public:
         WinStateEvent(GameState &state);
+        ~WinStateEvent();
         void trigger() final;
     };
 } // namespace Map::Events

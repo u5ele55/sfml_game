@@ -9,6 +9,7 @@ namespace Map::Events
     public:
         LoseStateEvent(GameState &state);
         void trigger() final;
+        ~LoseStateEvent();
     };
 
 } // namespace Map::Events

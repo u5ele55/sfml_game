@@ -9,6 +9,7 @@ namespace Map::Events
     class PlayerEvent : public Event {
     public:
         PlayerEvent(Common::CreatureWrapper &);
+        ~PlayerEvent();
     protected:
         Common::CreatureWrapper &m_player;
     };

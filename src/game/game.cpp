@@ -161,7 +161,9 @@ void GameCore::setMapEvents() {
 	m_map.setCell({3,2}, *c);
 
 	Map::Cell *d = new Map::Cell(Map::TileType::STONE);
-	d->setEvent(new Map::Events::ChangeMapEvent(m_player, {1,1}, m_map, Map::FieldMap(12,12)));
+	auto newMap = Map::FieldMap(12,12);
+	//newMap.setCell({1,2}, Map::Cell(Map::TileType::DIRT));
+	d->setEvent(new Map::Events::ChangeMapEvent(m_player, {1,1}, m_map, newMap));
 	m_map.setCell({3,4}, *d);
 
 	Map::Cell *n = new Map::Cell(Map::TileType::GRASS);

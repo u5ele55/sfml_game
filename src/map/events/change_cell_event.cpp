@@ -10,4 +10,5 @@ namespace Map::Events
             m_map.setCell(newCell.position, newCell.cell);
         }
     }
+    ChangeCellsEvent::~ChangeCellsEvent() {}
 } // namespace Map::Events
