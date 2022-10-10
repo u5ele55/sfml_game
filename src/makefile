@@ -18,7 +18,6 @@ SOURCES = main.cpp   \
 	  objects\creature.cpp  \
 	  map\map.cpp \
 	  map\cell.cpp \
-	  map\static_cell.cpp \
 	  map\events\event.cpp \
 	  map\events\map_event.cpp \
 	  map\events\win_event.cpp \

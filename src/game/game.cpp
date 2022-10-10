@@ -26,17 +26,24 @@ void GameCore::start() {
 
 	Graphics::ChooseMapDialog chooseDialog;
 	Map::MapType mapType = chooseDialog.showDialog();
-
-	switch (mapType) {
-	// Later: delegate map generation to some map generator
-	case Map::MapType::Dungeon:
-		m_map = Map::FieldMap(10,10);
-		break;
-	case Map::MapType::Overworld:
-		m_map = Map::FieldMap(15,15);
-		break;
-	default:
-		break;
+	try {
+		switch (mapType) {
+		// Later: delegate map generation to some map generator
+		case Map::MapType::Dungeon:
+			m_map = Map::FieldMap(10,10);
+			break;
+		case Map::MapType::Overworld:
+			m_map = Map::FieldMap(15,15);
+			break;
+		default:
+			break;
+		}
+	} catch(std::invalid_argument e) {
+		std::cout << e.what();
+		return;
+	} catch (...) {
+		std::cout << "Wrong map choice\n";
+		return;
 	}
 
 	setMapEvents();
@@ -62,11 +69,11 @@ void GameCore::start() {
 void GameCore::updateScene(const sf::Time &elapsedTime) {
 	m_player.creature.increaseStepPhase(elapsedTime.asSeconds());
 
-	if (m_player.creature.getHp() <= 0)
+	if (!m_player.creature.isAlive())
 		m_state = GameState::LOSS;
 
 	if (m_state == GameState::WIN) {
-		std::cout << "You win!\n";
+		std::cout << "You won!\n";
 		closeWindow();
 	} 
 	else if (m_state == GameState::LOSS) {
@@ -141,7 +148,6 @@ void GameCore::closeWindow() {
 }
 
 void GameCore::setMapEvents() {
-	Map::Cell *a = new Map::Cell(Map::TileType::GRASS);
 	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
 	std::vector<Map::Events::CellData> data = {
 		{{2,1}, b},
@@ -153,22 +159,22 @@ void GameCore::setMapEvents() {
 		{{2,2}, Map::Cell(Map::TileType::DIRT)}
 	};
 
-	a->setEvent(new Map::Events::ChangeCellsEvent(m_map, data));
-	m_map.setCell({2,2}, *a);
+	m_map.setCellEvent({2,2}, new Map::Events::ChangeCellsEvent(m_map, data));
+	m_map.setCellEvent({3,2}, new Map::Events::DamagePlayerEvent(m_player, 20));
+	
+	Map::FieldMap newMap = Map::FieldMap(6,8);
 
-	Map::Cell *c = new Map::Cell(Map::TileType::DIRT);
-	c->setEvent(new Map::Events::DamagePlayerEvent(m_player, 20));
-	m_map.setCell({3,2}, *c);
+	Map::Cell d = Map::Cell(Map::TileType::STONE);
 
-	Map::Cell *d = new Map::Cell(Map::TileType::STONE);
-	auto newMap = Map::FieldMap(12,12);
-	//newMap.setCell({1,2}, Map::Cell(Map::TileType::DIRT));
-	d->setEvent(new Map::Events::ChangeMapEvent(m_player, {1,1}, m_map, newMap));
-	m_map.setCell({3,4}, *d);
+	newMap.setCell({3,3}, d);
+	newMap.setCellEvent({3,3}, new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
 
-	Map::Cell *n = new Map::Cell(Map::TileType::GRASS);
-	n->setEvent(new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
-	m_map.setCell({4,4}, *n);
+	Map::Events::Event *ev = new Map::Events::ChangeMapEvent(m_player, {1,2}, m_map, newMap);
+	
+	m_map.setCellEvent({3,4}, ev);
+	
+	m_map.setCell({4,4}, Map::Cell(Map::TileType::GRASS));
+	m_map.setCellEvent({4,4}, new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
 
 	Map::Cell *m = new Map::Cell(Map::TileType::GRASS);
 	m->setEvent(new Map::Events::PlayerHealEvent(m_player));

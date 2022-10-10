@@ -39,8 +39,8 @@ namespace Map
         /// @return 
         Common::Vector2D<int> getCoords(const Common::Vector2D<int> &position) const;
 
-        void triggerCellEvent(int x, int y) const;
-        void triggerCellEvent(const Common::Vector2D<int> &position) const;
+        void triggerCellEvent(int x, int y);
+        void triggerCellEvent(const Common::Vector2D<int> &position);
 
         bool getCellSolidity(int x, int y) const;
         bool getCellSolidity(const Common::Vector2D<int> &position) const;
@@ -51,11 +51,14 @@ namespace Map
         void setCell(int x, int y, const Cell &cell);
         void setCell(const Common::Vector2D<int> &position, const Cell &cell);
 
+        void setCellEvent(int x, int y, Events::Event *event);
+        void setCellEvent(const Common::Vector2D<int> &position, Events::Event *event);
+
         ~FieldMap();
     private:
         unsigned int m_width;
         unsigned int m_height;
-        std::vector<std::vector<Cell*>> m_field;
+        std::vector<std::vector<Cell>> m_field;
     };
 
 } // namespace Map

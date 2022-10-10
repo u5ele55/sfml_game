@@ -13,7 +13,5 @@ namespace Map::Events
         
         m_player.creature.setSpeed(newSpeed);
     }
-    PlayerSpeedMultiplierEvent::~PlayerSpeedMultiplierEvent() {
-        std::cout << "~PlayerSpeedMultiplierEvent\n";
-    }
+    PlayerSpeedMultiplierEvent::~PlayerSpeedMultiplierEvent() {}
 } // namespace Map::Events

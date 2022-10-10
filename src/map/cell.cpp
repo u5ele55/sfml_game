@@ -9,8 +9,7 @@ namespace Map
 {
     FieldMap a;
     Cell::Cell() : Cell(TileType::DIRT) {}
-    Cell::Cell(
-        TileType type, bool isSolid)
+    Cell::Cell(TileType type, bool isSolid)
         : m_type(type), m_event(nullptr), m_isSolid(isSolid), Objects::Object() {}
     
     TileType Cell::getTileType() const { return m_type; }
@@ -20,18 +19,28 @@ namespace Map
         m_event = event;
     }
 
+    Events::Event *Cell::getEvent() const {
+        return m_event;
+    }
+
     void Cell::triggerEvent() { 
         if (m_event != nullptr) {
             m_event->trigger(); 
         }
     }
     
-    bool Cell::isSolid() {return m_isSolid;}
+    bool Cell::isSolid() const {return m_isSolid;}
     void Cell::setSolidity(bool solid) {m_isSolid = solid;}
-
-
-    Cell::~Cell() {
-        delete m_event;
+    Cell Cell::copy() const {
+        Cell a;
+        
+        a.setTileType(m_type);
+        a.setSolidity(m_isSolid);
+        a.setEvent(m_event);
+        
+        return a;
     }
+
+    Cell::~Cell() {}
 } // namespace Map
 

@@ -5,9 +5,7 @@
 namespace Map::Events
 {
     PlayerEvent::PlayerEvent(Common::CreatureWrapper &player) : m_player(player) {}
-    PlayerEvent::~PlayerEvent() {
-        std::cout << "~PlayerEvent\n";
-    }
+    PlayerEvent::~PlayerEvent() {}
 } // namespace Map::Events
 
 

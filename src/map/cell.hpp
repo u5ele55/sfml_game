@@ -15,12 +15,14 @@ namespace Map
         Cell();
         Cell( TileType type, bool isSolid = false);
         TileType getTileType() const;
+        Events::Event *getEvent() const;
         void setTileType(const TileType&);
         void setEvent(Events::Event *event);
         void triggerEvent();
 
-        bool isSolid();
+        bool isSolid() const;
         void setSolidity(bool solid);
+        Cell copy() const;
 
         ~Cell();
     protected:

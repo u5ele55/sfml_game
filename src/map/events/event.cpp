@@ -3,7 +3,5 @@
 
 namespace Map::Events
 {
-    Event::~Event() {
-        std::cout << "~Event\n";
-    }
+    Event::~Event() {}
 } // namespace Map::Events
