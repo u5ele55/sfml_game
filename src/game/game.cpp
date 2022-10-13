@@ -148,6 +148,7 @@ void GameCore::closeWindow() {
 }
 
 void GameCore::setMapEvents() {
+
 	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
 	std::vector<Map::Events::CellData> data = {
 		{{2,1}, b},
@@ -176,8 +177,28 @@ void GameCore::setMapEvents() {
 	m_map.setCell({4,4}, Map::Cell(Map::TileType::GRASS));
 	m_map.setCellEvent({4,4}, new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
 
+
+	m_map.setCell(-2, -1, Map::Cell(Map::TileType::STONE, true));
+	m_map.setCell(-1, -2, Map::Cell(Map::TileType::STONE, true));
+	m_map.setCell(0, -1, Map::Cell(Map::TileType::STONE, true));
+	m_map.setCell(-1, 0, Map::Cell(Map::TileType::STONE, true));
+
+	std::vector<Map::Events::CellData> data_gates = {
+		{{-2, -1}, Map::Cell(Map::TileType::GRASS)},
+		{{-1, -2}, Map::Cell(Map::TileType::GRASS)},
+		{{0, -1}, Map::Cell(Map::TileType::GRASS)},
+		{{-1, 0}, Map::Cell(Map::TileType::GRASS)},
+	};
+
+	for (auto &cellData : data_gates) {
+		Map::Cell cell = cellData.cell;
+		cell.setSolidity(true);
+		cell.setTileType(Map::TileType::STONE);
+		m_map.setCell(cellData.position, cell);
+	}
+
 	Map::Cell *m = new Map::Cell(Map::TileType::GRASS);
-	m->setEvent(new Map::Events::PlayerHealEvent(m_player));
+	m->setEvent(new Map::Events::ChangeCellsEvent(m_map, data_gates));
 	m_map.setCell({4,6}, *m);
 
 	Map::Cell *w = new Map::Cell(Map::TileType::DIRT);
