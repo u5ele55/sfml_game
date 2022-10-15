@@ -9,7 +9,8 @@ namespace Log
     }
 
     void FileLogger::update(const Message &message) {
-        file << formMessage(message) << '\n';
+        if (logTypeAvailable(message.type()))
+            file << formMessage(message) << '\n';
     }
 
     FileLogger::~FileLogger() {

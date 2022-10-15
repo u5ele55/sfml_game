@@ -11,10 +11,13 @@ GameMediator::GameMediator() {
     auto *logger = new Log::FileLogger("log.txt");
     m_loggers.push_back(logger);
     m_game->subscribe(logger);
+    logger->addLogType(Log::LogType::CriticalState);
     
     auto *loggerC = new Log::ConsoleLogger;
     m_loggers.push_back(loggerC);
     m_game->subscribe(loggerC);
+    loggerC->addLogType(Log::LogType::GameState);
+    loggerC->addLogType(Log::LogType::ObjectState);
 }
 
 void GameMediator::startGame() { 

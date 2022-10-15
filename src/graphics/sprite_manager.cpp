@@ -22,7 +22,6 @@ namespace Graphics {
                 std::string spriteName;
                 int spriteCnt;
                 in >> spriteName >> spriteCnt;
-                std::cout << spriteName << " " << spriteCnt << '\n'; 
                 m_sprites[spriteName] = std::vector<sf::Sprite>(spriteCnt, sf::Sprite());
                 sf::Texture *texture = textureManager.getTexture(type);
 

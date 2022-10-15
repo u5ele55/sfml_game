@@ -156,6 +156,11 @@ namespace Map
         setCellEvent(position.x, position.y, event);
     }
 
+    std::ostream &operator<<(std::ostream &stream, const FieldMap &map) {
+        stream << "<FieldMap " << map.m_height << " x " << map.m_width << ">";
+
+        return stream;
+    }
 
     FieldMap::~FieldMap() {
     }

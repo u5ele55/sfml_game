@@ -60,4 +60,14 @@ namespace Objects {
  
         return m_canGo;
     }
+
+    std::ostream &operator<<(std::ostream &stream, const Creature& creature) {
+        stream << "<Creature type=" << (int)creature.m_type 
+            << " hp: " << creature.m_currentHp << "/" << creature.m_maxHp 
+            << " mana: " << creature.m_currentMana << "/" << creature.m_maxMana
+            << " facing=" << (int)creature.m_facing
+            << " speed=" << creature.m_speed
+               << ">"; 
+        return stream;
+    }
 }

@@ -55,6 +55,8 @@ namespace Map
         void setCellEvent(int x, int y, Events::Event *event);
         void setCellEvent(const Common::Vector2D<int> &position, Events::Event *event);
 
+        friend std::ostream &operator<<(std::ostream &stream, const FieldMap &map);
+
         ~FieldMap();
     private:
         unsigned int m_width;

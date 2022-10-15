@@ -189,14 +189,14 @@ void GameCore::setMapEvents() {
 
 	m_map.setCell(-2, -1, Map::Cell(Map::TileType::STONE, true));
 	m_map.setCell(-1, -2, Map::Cell(Map::TileType::STONE, true));
-	m_map.setCell(0, -1, Map::Cell(Map::TileType::STONE, true));
-	m_map.setCell(-1, 0, Map::Cell(Map::TileType::STONE, true));
+	m_map.setCell( 0, -1, Map::Cell(Map::TileType::STONE, true));
+	m_map.setCell(-1,  0, Map::Cell(Map::TileType::STONE, true));
 
 	std::vector<Map::Events::CellData> data_gates = {
 		{{-2, -1}, Map::Cell(Map::TileType::GRASS)},
 		{{-1, -2}, Map::Cell(Map::TileType::GRASS)},
-		{{0, -1}, Map::Cell(Map::TileType::GRASS)},
-		{{-1, 0}, Map::Cell(Map::TileType::GRASS)},
+		{{ 0, -1}, Map::Cell(Map::TileType::GRASS)},
+		{{-1,  0}, Map::Cell(Map::TileType::GRASS)},
 	};
 
 	for (auto cellData : data_gates) {

@@ -47,6 +47,8 @@ namespace Objects {
         bool canGo() const;
 
         void makeStep();
+
+        friend std::ostream &operator<<(std::ostream &stream, const Creature& creature);
     
     protected:
         int m_currentHp;
