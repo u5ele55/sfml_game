@@ -7,7 +7,6 @@
 
 namespace Map
 {
-    FieldMap a;
     Cell::Cell() : Cell(TileType::DIRT) {}
     Cell::Cell(TileType type, bool isSolid)
         : m_type(type), m_event(nullptr), m_isSolid(isSolid), Objects::Object() {}
@@ -42,5 +41,13 @@ namespace Map
     }
 
     Cell::~Cell() {}
+
+    std::ostream &operator<<(std::ostream &stream, const Cell &cell) {
+
+        stream << "<Cell type=" << (int)cell.getTileType() << " solid=" << cell.isSolid() 
+               << " contains_event=" << !(cell.getEvent() == nullptr) << ">";
+
+        return stream;
+    }
 } // namespace Map
 

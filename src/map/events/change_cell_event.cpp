@@ -9,6 +9,7 @@ namespace Map::Events
         for (const auto &newCell : m_newCells) {
             m_map.setCell(newCell.position, newCell.cell);
         }
+        notify(Log::Message(Log::LogType::ObjectState, "ChangeCellsEvent triggered"));
     }
     ChangeCellsEvent::~ChangeCellsEvent() {}
 } // namespace Map::Events

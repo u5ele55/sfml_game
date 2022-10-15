@@ -7,6 +7,7 @@ namespace Map::Events
     WinStateEvent::WinStateEvent(GameState &state) : StateEvent(state) {}
     void WinStateEvent::trigger() {
         m_state = GameState::WIN;
+        notify(Log::Message(Log::LogType::ObjectState, "WinStateEvent triggered"));
     }
     WinStateEvent::~WinStateEvent() {}
 } // namespace Map::Events

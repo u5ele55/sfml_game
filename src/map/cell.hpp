@@ -3,6 +3,7 @@
 
 #include "../objects/object.hpp"
 #include "events/event.hpp"
+#include <iostream>
 
 namespace Map
 {
@@ -23,6 +24,8 @@ namespace Map
         bool isSolid() const;
         void setSolidity(bool solid);
         Cell copy() const;
+
+        friend std::ostream &operator<<(std::ostream &stream, const Cell &cell);
 
         ~Cell();
     protected:

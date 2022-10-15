@@ -14,6 +14,8 @@
 #include "../map/events/player_speed_multiplier_event.hpp"
 #include "../map/events/player_heal_event.hpp"
 
+#include "../log/console_logger.hpp"
+
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier)
@@ -135,12 +137,11 @@ void GameCore::onEvent(const UserEvent &event) {
 		const auto &cellCoords = m_map.getCoords(m_player.position + move);
 
 		if (!m_map.getCellSolidity(cellCoords)) {
-			// if it's not solid, then go
 			m_player.position = cellCoords;
 			m_player.creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
-			std::string x = std::to_string(m_player.position.x);
-			std::string y = std::to_string(m_player.position.y);
+			std::string x = std::to_string(m_player.position.x),
+						y = std::to_string(m_player.position.y);
        		notify(Log::Message(Log::LogType::ObjectState, "Player position : ["+x+", "+y+"]"));
 		} else {
         	notify(Log::Message(Log::LogType::CriticalState, "Player tries to pass through solid cell"));
@@ -154,6 +155,7 @@ void GameCore::closeWindow() {
 }
 
 void GameCore::setMapEvents() {
+	Map::Events::Event *ev;
 
 	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
 	std::vector<Map::Events::CellData> data = {
@@ -165,23 +167,24 @@ void GameCore::setMapEvents() {
 		{{4,2}, b},
 		{{2,2}, Map::Cell(Map::TileType::DIRT)}
 	};
-
-	m_map.setCellEvent({2,2}, new Map::Events::ChangeCellsEvent(m_map, data));
-	m_map.setCellEvent({3,2}, new Map::Events::DamagePlayerEvent(m_player, 20));
+	ev = new Map::Events::ChangeCellsEvent(m_map, data); ev->copySubscriptions(this);
+	m_map.setCellEvent({2,2}, ev);
+	ev = new Map::Events::DamagePlayerEvent(m_player, 20); ev->copySubscriptions(this);
+	m_map.setCellEvent({3,2}, ev);
 	
 	Map::FieldMap newMap = Map::FieldMap(6,8);
-
 	Map::Cell d = Map::Cell(Map::TileType::STONE);
 
 	newMap.setCell({3,3}, d);
-	newMap.setCellEvent({3,3}, new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
+	ev = new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2); ev->copySubscriptions(this);
+	newMap.setCellEvent({3,3}, ev);
 
-	Map::Events::Event *ev = new Map::Events::ChangeMapEvent(m_player, {1,2}, m_map, newMap);
-	
+	ev = new Map::Events::ChangeMapEvent(m_player, {1,2}, m_map, newMap); ev->copySubscriptions(this);
 	m_map.setCellEvent({3,4}, ev);
 	
 	m_map.setCell({4,4}, Map::Cell(Map::TileType::GRASS));
-	m_map.setCellEvent({4,4}, new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2));
+	ev = new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2); ev->copySubscriptions(this);
+	m_map.setCellEvent({4,4}, ev);
 
 
 	m_map.setCell(-2, -1, Map::Cell(Map::TileType::STONE, true));
@@ -204,10 +207,14 @@ void GameCore::setMapEvents() {
 	}
 
 	Map::Cell m = Map::Cell(Map::TileType::GRASS);
-	m.setEvent(new Map::Events::ChangeCellsEvent(m_map, data_gates));
+	ev = new Map::Events::ChangeCellsEvent(m_map, data_gates);
+	ev->copySubscriptions(this);
+	m.setEvent(ev);
 	m_map.setCell({4,6}, m);
 
 	Map::Cell w = Map::Cell(Map::TileType::DIRT);
-	w.setEvent(new Map::Events::WinStateEvent(m_state));
+	ev = new Map::Events::WinStateEvent(m_state);
+	ev->copySubscriptions(this);
+	w.setEvent(ev);
 	m_map.setCell({-1,-1}, w);
 }

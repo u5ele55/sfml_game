@@ -2,7 +2,6 @@
 
 namespace Log
 {
-
     void Observable::subscribe(Observer *observer) {
         for (int i = 0; i < listeners.size(); i ++) 
             if (observer == listeners[i]) {
@@ -17,6 +16,12 @@ namespace Log
                 return;
             }
         
+    }
+    void Observable::copySubscriptions(Observable *other) {
+        if (other == nullptr)
+            return;
+        for (auto *obs : other->listeners) 
+            listeners.push_back(obs);
     }
     void Observable::notify(const Message &message) {
         for (Observer *obs : listeners)

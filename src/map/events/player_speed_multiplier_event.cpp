@@ -12,6 +12,10 @@ namespace Map::Events
         if (newSpeed > 1000) newSpeed = 1000;
         
         m_player.creature.setSpeed(newSpeed);
+        notify(Log::Message(
+            Log::LogType::ObjectState, 
+            "PlayerSpeedMultiplierEvent triggered, newSpeed="+std::to_string(newSpeed))
+            );
     }
     PlayerSpeedMultiplierEvent::~PlayerSpeedMultiplierEvent() {}
 } // namespace Map::Events

@@ -11,6 +11,8 @@ namespace Map::Events
     void ChangeMapEvent::trigger() {
         m_map = m_newMap;
         m_player.position = m_playerPosition;
+        
+        notify(Log::Message(Log::LogType::ObjectState, "ChangeMapEvent triggered"));
     }
     
     ChangeMapEvent::~ChangeMapEvent() {}
