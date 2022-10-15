@@ -23,7 +23,7 @@ GameCore::GameCore(GameMediator *notifier)
 	  {}
 
 void GameCore::start() {
-
+	notify(Log::Message(Log::LogType::GameState, "Game started"));
 	Graphics::ChooseMapDialog chooseDialog;
 	Map::MapType mapType = chooseDialog.showDialog();
 	notify(Log::Message(Log::LogType::GameState, "Map choosen"));
@@ -46,7 +46,6 @@ void GameCore::start() {
         notify(Log::Message(Log::LogType::CriticalState, "Wrong map choice"));
 		return;
 	}
-
 	setMapEvents();
 
 	m_window = new sf::RenderWindow(
@@ -64,6 +63,8 @@ void GameCore::start() {
 		lvlPainter.drawWindow(m_player, m_objects, m_map);
 	    
 	}
+	delete m_window;
+	m_notifier->gameEnded();
 }
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
@@ -138,7 +139,9 @@ void GameCore::onEvent(const UserEvent &event) {
 			m_player.position = cellCoords;
 			m_player.creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
-       		notify(Log::Message(Log::LogType::ObjectState, "Player position changed"));
+			std::string x = std::to_string(m_player.position.x);
+			std::string y = std::to_string(m_player.position.y);
+       		notify(Log::Message(Log::LogType::ObjectState, "Player position : ["+x+", "+y+"]"));
 		} else {
         	notify(Log::Message(Log::LogType::CriticalState, "Player tries to pass through solid cell"));
 		}
@@ -193,7 +196,7 @@ void GameCore::setMapEvents() {
 		{{-1, 0}, Map::Cell(Map::TileType::GRASS)},
 	};
 
-	for (auto &cellData : data_gates) {
+	for (auto cellData : data_gates) {
 		Map::Cell cell = cellData.cell;
 		cell.setSolidity(true);
 		cell.setTileType(Map::TileType::STONE);

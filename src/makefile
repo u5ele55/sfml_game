@@ -32,6 +32,7 @@ SOURCES = main.cpp   \
 	  log\message.cpp \
 	  log\logger.cpp   \
 	  log\observable.cpp \
+	  log\file_logger.cpp \
 	  log\console_logger.cpp 
 
 

@@ -18,6 +18,7 @@ namespace Map
     : m_width(width), m_height(height) 
     {
         if (m_width > 200 || m_height > 200 ||  m_height < 6) {
+            notify(Log::Message(Log::LogType::CriticalState, "Field initialized with wrong sizes"));
             throw std::invalid_argument("Sizes of a map must be positive and less than 200, also height should be at least 6!");
         }
         m_field = std::vector<std::vector<Cell>>(
@@ -41,8 +42,6 @@ namespace Map
             m_field[5][i].setSolidity(true);
             m_field[5][i].setTileType(Map::TileType::STONE);
         }
-        
-        subscribe(new Log::ConsoleLogger);
     }
 
     FieldMap::FieldMap(const FieldMap& other) : m_height(other.m_height), m_width(other.m_width) {

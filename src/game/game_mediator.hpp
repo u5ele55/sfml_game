@@ -8,16 +8,21 @@ enum class UserEvent {
 
 #include "event_reader.hpp"
 #include "game.hpp"
+#include "../log/logger.hpp"
+#include <vector>
 
 class GameMediator {
 public:
     GameMediator();
+    ~GameMediator();
     void notify(UserEvent event);
     void callReader(sf::RenderWindow *);
     void startGame();
+    void gameEnded();
 private:
     GameCore *m_game;
     SfmlEventReader *m_eventReader;
+    std::vector<Log::Logger*> m_loggers;
 };
 
 #endif

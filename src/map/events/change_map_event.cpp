@@ -12,5 +12,6 @@ namespace Map::Events
         m_map = m_newMap;
         m_player.position = m_playerPosition;
     }
+    
     ChangeMapEvent::~ChangeMapEvent() {}
 } // namespace Map::Events

@@ -11,8 +11,6 @@ public:
     SfmlEventReader() = delete;
     SfmlEventReader(GameMediator *notifier);
     void readEvent(sf::RenderWindow &window);
-
-    ~SfmlEventReader();
 private:
     GameMediator *m_notifier;
     UserEvent keyToEvent(const sf::Keyboard::Key &) const;

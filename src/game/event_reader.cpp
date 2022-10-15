@@ -19,21 +19,18 @@ void SfmlEventReader::readEvent(sf::RenderWindow &window) {
 UserEvent SfmlEventReader::keyToEvent(const sf::Keyboard::Key &key) const {
     std::map<sf::Keyboard::Key, UserEvent> sfEventsToUserEvents = {
         {sf::Keyboard::Escape, UserEvent::ESC},
+
         {sf::Keyboard::W, UserEvent::UP},
         {sf::Keyboard::A, UserEvent::LEFT},
         {sf::Keyboard::S, UserEvent::DOWN},
         {sf::Keyboard::D, UserEvent::RIGHT},
-        {sf::Keyboard::W, UserEvent::UP},
+        
         {sf::Keyboard::E, UserEvent::USE},
         
     };
 
     if (sfEventsToUserEvents.count(key) == 0)
         return UserEvent::NONE;
+        
     return sfEventsToUserEvents[key];
-}
-
-
-SfmlEventReader::~SfmlEventReader() {
-    delete m_notifier;
 }
