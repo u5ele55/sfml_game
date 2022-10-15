@@ -10,8 +10,9 @@ class GameCore;
 #include "../map/map.hpp"
 #include "game_mediator.hpp"
 #include "game_state.hpp"
+#include "../log/observable.hpp"
 
-class GameCore {
+class GameCore : public Log::Observable {
 public:
 	GameCore(GameMediator *notifier);
 	void start();

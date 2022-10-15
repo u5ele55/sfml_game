@@ -28,7 +28,11 @@ SOURCES = main.cpp   \
 	  map\events\player_heal_event.cpp \
 	  map\events\change_cell_event.cpp  \
 	  map\events\damage_player_event.cpp \
-	  map\events\player_speed_multiplier_event.cpp
+	  map\events\player_speed_multiplier_event.cpp \
+	  log\message.cpp \
+	  log\logger.cpp   \
+	  log\observable.cpp \
+	  log\console_logger.cpp 
 
 
 OBJECTS = $(SOURCES:.cpp=.o)

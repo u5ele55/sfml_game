@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "cell.hpp"
+#include "../log/observable.hpp"
 
 #define EXISTING_MAP_TYPES 2
 
@@ -15,7 +16,7 @@ namespace Map
 
     extern const MapType existingMapTypes[EXISTING_MAP_TYPES];
 
-    class FieldMap  {
+    class FieldMap : public Log::Observable {
     public:
         FieldMap();
         FieldMap(unsigned int width, unsigned int height);

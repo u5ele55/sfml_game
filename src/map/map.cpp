@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "../log/console_logger.hpp"
+
 namespace Map
 {
     const MapType existingMapTypes[EXISTING_MAP_TYPES] = {
@@ -39,6 +41,8 @@ namespace Map
             m_field[5][i].setSolidity(true);
             m_field[5][i].setTileType(Map::TileType::STONE);
         }
+        
+        subscribe(new Log::ConsoleLogger);
     }
 
     FieldMap::FieldMap(const FieldMap& other) : m_height(other.m_height), m_width(other.m_width) {

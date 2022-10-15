@@ -26,6 +26,7 @@ void GameCore::start() {
 
 	Graphics::ChooseMapDialog chooseDialog;
 	Map::MapType mapType = chooseDialog.showDialog();
+	notify(Log::Message(Log::LogType::GameState, "Map choosen"));
 	try {
 		switch (mapType) {
 		// Later: delegate map generation to some map generator
@@ -39,10 +40,10 @@ void GameCore::start() {
 			break;
 		}
 	} catch(std::invalid_argument e) {
-		std::cout << e.what();
+		notify(Log::Message(Log::LogType::CriticalState, e.what()));
 		return;
 	} catch (...) {
-		std::cout << "Wrong map choice\n";
+        notify(Log::Message(Log::LogType::CriticalState, "Wrong map choice"));
 		return;
 	}
 
@@ -58,7 +59,6 @@ void GameCore::start() {
 	{
 		
 		sf::Time elapsedTime = clock.restart();
-
 	    m_notifier->callReader(m_window);
 		updateScene(elapsedTime);
 		lvlPainter.drawWindow(m_player, m_objects, m_map);
@@ -73,11 +73,11 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 		m_state = GameState::LOSS;
 
 	if (m_state == GameState::WIN) {
-		std::cout << "You won!\n";
+		notify(Log::Message(Log::LogType::GameState, "Win!"));
 		closeWindow();
 	} 
 	else if (m_state == GameState::LOSS) {
-		std::cout << "Loser!\n";
+		notify(Log::Message(Log::LogType::GameState, "Loss!"));
 		closeWindow();
 	}
 }
@@ -138,13 +138,16 @@ void GameCore::onEvent(const UserEvent &event) {
 			m_player.position = cellCoords;
 			m_player.creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
+       		notify(Log::Message(Log::LogType::ObjectState, "Player position changed"));
+		} else {
+        	notify(Log::Message(Log::LogType::CriticalState, "Player tries to pass through solid cell"));
 		}
 	}
 }
 
 void GameCore::closeWindow() {
 	m_window->close();
-	std::cout << "Window closed\n";
+	notify(Log::Message(Log::LogType::GameState, "Window closed"));
 }
 
 void GameCore::setMapEvents() {
@@ -197,11 +200,11 @@ void GameCore::setMapEvents() {
 		m_map.setCell(cellData.position, cell);
 	}
 
-	Map::Cell *m = new Map::Cell(Map::TileType::GRASS);
-	m->setEvent(new Map::Events::ChangeCellsEvent(m_map, data_gates));
-	m_map.setCell({4,6}, *m);
+	Map::Cell m = Map::Cell(Map::TileType::GRASS);
+	m.setEvent(new Map::Events::ChangeCellsEvent(m_map, data_gates));
+	m_map.setCell({4,6}, m);
 
-	Map::Cell *w = new Map::Cell(Map::TileType::DIRT);
-	w->setEvent(new Map::Events::WinStateEvent(m_state));
-	m_map.setCell({-1,-1}, *w);
+	Map::Cell w = Map::Cell(Map::TileType::DIRT);
+	w.setEvent(new Map::Events::WinStateEvent(m_state));
+	m_map.setCell({-1,-1}, w);
 }
