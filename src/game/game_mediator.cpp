@@ -8,12 +8,12 @@ GameMediator::GameMediator() {
     m_eventReader = new SfmlEventReader(this);
     m_game = new GameCore(this);
 
-    auto *logger = new Log::FileLogger("log.txt");
+    Log::Logger *logger = new Log::FileLogger("log.txt");
     m_loggers.push_back(logger);
     m_game->subscribe(logger);
     logger->addLogType(Log::LogType::CriticalState);
     
-    auto *loggerC = new Log::ConsoleLogger;
+    Log::Logger *loggerC = new Log::ConsoleLogger;
     m_loggers.push_back(loggerC);
     m_game->subscribe(loggerC);
     loggerC->addLogType(Log::LogType::GameState);
@@ -38,6 +38,7 @@ void GameMediator::callReader(sf::RenderWindow *window) {
 }
 
 GameMediator::~GameMediator() {
-    for (auto *logger : m_loggers)
+    for (Log::Logger *logger : m_loggers) {
         delete logger;
+    }
 }

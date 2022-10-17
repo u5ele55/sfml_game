@@ -13,6 +13,7 @@ namespace Log
 
     class Logger : public Observer {
     public:
+        virtual ~Logger() = default;
         void addLogType(const LogType &type);
         void deleteLogType(const LogType &type);
     protected:
