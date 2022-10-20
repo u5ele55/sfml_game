@@ -17,7 +17,6 @@ namespace Log
         void addLogType(const LogType &type);
         void deleteLogType(const LogType &type);
     protected:
-        std::string formMessage(const Message &message) const;
         bool logTypeAvailable(const LogType &type) const;
     private:
         std::vector<LogType> m_types;

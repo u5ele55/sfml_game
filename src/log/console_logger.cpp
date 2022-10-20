@@ -7,7 +7,7 @@ namespace Log
 
 void ConsoleLogger::update(const Message &message) {
     if (logTypeAvailable(message.type()))
-        std::cout << formMessage(message) << '\n';
+        std::cout << message << '\n';
 }
 
 } // namespace Log

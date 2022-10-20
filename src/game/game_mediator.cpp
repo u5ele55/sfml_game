@@ -8,6 +8,9 @@ GameMediator::GameMediator() {
     m_eventReader = new SfmlEventReader(this);
     m_game = new GameCore(this);
 
+    // Logger pool
+    // Class which stores all messages
+
     Log::Logger *logger = new Log::FileLogger("log.txt");
     m_loggers.push_back(logger);
     m_game->subscribe(logger);

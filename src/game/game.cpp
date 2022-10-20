@@ -135,16 +135,18 @@ void GameCore::onEvent(const UserEvent &event) {
 		}
 		
 		const auto &cellCoords = m_map.getCoords(m_player.position + move);
+		std::string x = std::to_string(cellCoords.x),
+					y = std::to_string(cellCoords.y);
+		std::string pos = "["+x+", "+y+"]";
 
 		if (!m_map.getCellSolidity(cellCoords)) {
 			m_player.position = cellCoords;
 			m_player.creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
-			std::string x = std::to_string(m_player.position.x),
-						y = std::to_string(m_player.position.y);
-       		notify(Log::Message(Log::LogType::ObjectState, "Player position : ["+x+", "+y+"]"));
+			
+       		notify(Log::Message(Log::LogType::ObjectState, "Player position : "+pos));
 		} else {
-        	notify(Log::Message(Log::LogType::CriticalState, "Player tries to pass through solid cell"));
+        	notify(Log::Message(Log::LogType::CriticalState, "Player tries to pass through solid cell " + pos));
 		}
 	}
 }

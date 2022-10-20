@@ -11,7 +11,10 @@ namespace Log
         Message(LogType type, std::string message);
 
         LogType type() const;
-        std::string message() const;
+        std::string content() const;
+
+        friend std::ostream& operator<<(std::ostream& stream, const Message &msg);
+
     private:
         LogType m_type;
         std::string m_msg;
