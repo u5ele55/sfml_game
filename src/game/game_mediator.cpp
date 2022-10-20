@@ -1,6 +1,7 @@
 #include "game_mediator.hpp"
 #include "../log/console_logger.hpp"
 #include "../log/file_logger.hpp"
+#include "../log/logger_pool.hpp"
 
 #include <iostream>
 
@@ -8,19 +9,20 @@ GameMediator::GameMediator() {
     m_eventReader = new SfmlEventReader(this);
     m_game = new GameCore(this);
 
-    // Logger pool
-    // Class which stores all messages
+    // Logger pool : Singleton ?
 
     Log::Logger *logger = new Log::FileLogger("log.txt");
-    m_loggers.push_back(logger);
     m_game->subscribe(logger);
     logger->addLogType(Log::LogType::CriticalState);
     
     Log::Logger *loggerC = new Log::ConsoleLogger;
-    m_loggers.push_back(loggerC);
     m_game->subscribe(loggerC);
     loggerC->addLogType(Log::LogType::GameState);
     loggerC->addLogType(Log::LogType::ObjectState);
+
+    auto &loggerPool = Log::LoggerPool::getInstance();
+    loggerPool.addLogger(logger);
+    loggerPool.addLogger(loggerC);
 }
 
 void GameMediator::startGame() { 
@@ -40,8 +42,4 @@ void GameMediator::callReader(sf::RenderWindow *window) {
     m_eventReader->readEvent(*window);
 }
 
-GameMediator::~GameMediator() {
-    for (Log::Logger *logger : m_loggers) {
-        delete logger;
-    }
-}
+GameMediator::~GameMediator() {}

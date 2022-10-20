@@ -22,7 +22,6 @@ public:
 private:
     GameCore *m_game;
     SfmlEventReader *m_eventReader;
-    std::vector<Log::Logger*> m_loggers;
 };
 
 #endif
