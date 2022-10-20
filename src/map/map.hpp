@@ -16,7 +16,7 @@ namespace Map
 
     extern const MapType existingMapTypes[EXISTING_MAP_TYPES];
 
-    class FieldMap : public Log::Observable {
+    class FieldMap {
     public:
         FieldMap();
         FieldMap(unsigned int width, unsigned int height);

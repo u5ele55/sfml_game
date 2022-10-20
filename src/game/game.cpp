@@ -16,6 +16,8 @@
 
 #include "../log/console_logger.hpp"
 #include "../log/messages/player_messages.hpp"
+#include "../log/messages/game_states_messages.hpp"
+
 
 #include <iostream>
 
@@ -26,10 +28,10 @@ GameCore::GameCore(GameMediator *notifier)
 	  {}
 
 void GameCore::start() {
-	notify(Log::Message(Log::LogType::GameState, "Game started"));
+	notify(Log::GameStateMessages::gameStarted());
 	Graphics::ChooseMapDialog chooseDialog;
 	Map::MapType mapType = chooseDialog.showDialog();
-	notify(Log::Message(Log::LogType::GameState, "Map choosen"));
+	notify(Log::GameStateMessages::mapChoosen());
 	try {
 		switch (mapType) {
 		// Later: delegate map generation to some map generator
@@ -43,10 +45,10 @@ void GameCore::start() {
 			break;
 		}
 	} catch(std::invalid_argument e) {
-		notify(Log::Message(Log::LogType::CriticalState, e.what()));
+		notify(Log::GameStateMessages::errorOnMapChoice(e.what()));
 		return;
 	} catch (...) {
-        notify(Log::Message(Log::LogType::CriticalState, "Wrong map choice"));
+        notify(Log::GameStateMessages::wrongMapChoice());
 		return;
 	}
 	setMapEvents();
@@ -77,11 +79,11 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 		m_state = GameState::LOSS;
 
 	if (m_state == GameState::WIN) {
-		notify(Log::Message(Log::LogType::GameState, "Win!"));
+		notify(Log::GameStateMessages::win());
 		closeWindow();
 	} 
 	else if (m_state == GameState::LOSS) {
-		notify(Log::Message(Log::LogType::GameState, "Loss!"));
+		notify(Log::GameStateMessages::lose());
 		closeWindow();
 	}
 }
@@ -152,7 +154,7 @@ void GameCore::onEvent(const UserEvent &event) {
 
 void GameCore::closeWindow() {
 	m_window->close();
-	notify(Log::Message(Log::LogType::GameState, "Window closed"));
+	notify(Log::GameStateMessages::windowClosed());
 }
 
 void GameCore::setMapEvents() {

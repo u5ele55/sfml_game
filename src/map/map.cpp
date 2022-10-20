@@ -18,7 +18,6 @@ namespace Map
     : m_width(width), m_height(height) 
     {
         if (m_width > 200 || m_height > 200 ||  m_height < 6) {
-            notify(Log::Message(Log::LogType::CriticalState, "Field initialized with wrong sizes"));
             throw std::invalid_argument("Sizes of a map must be positive and less than 200, also height should be at least 6!");
         }
         m_field = std::vector<std::vector<Cell>>(
