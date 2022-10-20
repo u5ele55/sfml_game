@@ -1,4 +1,5 @@
 #include "player_heal_event.hpp"
+#include "../../log/messages/event_messages.hpp"
 
 namespace Map::Events
 {
@@ -7,7 +8,7 @@ namespace Map::Events
         int maxHp = m_player.creature.getMaxHp();
         if (m_player.creature.getHp() != maxHp)
             m_player.creature.setHp(maxHp);
-        notify(Log::Message(Log::LogType::ObjectState, "PlayerHealEvent triggered"));
+        notify(Log::EventMessages::healPlayer());
     }
     PlayerHealEvent::~PlayerHealEvent() {}
 } // namespace Map::Events

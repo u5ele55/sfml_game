@@ -33,7 +33,9 @@ SOURCES = main.cpp   \
 	  log\logger.cpp   \
 	  log\observable.cpp \
 	  log\file_logger.cpp \
-	  log\console_logger.cpp 
+	  log\console_logger.cpp\
+	  log\messages\player_messages.cpp \
+	  log\messages\event_messages.cpp
 
 
 OBJECTS = $(SOURCES:.cpp=.o)

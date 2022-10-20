@@ -1,5 +1,5 @@
 #include "change_map_event.hpp"
-#include <iostream>
+#include "../../log/messages/event_messages.hpp"
 
 namespace Map::Events
 {
@@ -12,7 +12,7 @@ namespace Map::Events
         m_map = m_newMap;
         m_player.position = m_playerPosition;
         
-        notify(Log::Message(Log::LogType::ObjectState, "ChangeMapEvent triggered"));
+        notify(Log::EventMessages::changeMap());
     }
     
     ChangeMapEvent::~ChangeMapEvent() {}

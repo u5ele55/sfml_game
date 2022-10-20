@@ -15,6 +15,7 @@
 #include "../map/events/player_heal_event.hpp"
 
 #include "../log/console_logger.hpp"
+#include "../log/messages/player_messages.hpp"
 
 #include <iostream>
 
@@ -135,18 +136,16 @@ void GameCore::onEvent(const UserEvent &event) {
 		}
 		
 		const auto &cellCoords = m_map.getCoords(m_player.position + move);
-		std::string x = std::to_string(cellCoords.x),
-					y = std::to_string(cellCoords.y);
-		std::string pos = "["+x+", "+y+"]";
+		
 
 		if (!m_map.getCellSolidity(cellCoords)) {
 			m_player.position = cellCoords;
 			m_player.creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
 			
-       		notify(Log::Message(Log::LogType::ObjectState, "Player position : "+pos));
+       		notify(Log::PlayerMessages::changedPosition(cellCoords));
 		} else {
-        	notify(Log::Message(Log::LogType::CriticalState, "Player tries to pass through solid cell " + pos));
+        	notify(Log::PlayerMessages::triesToPassSolidCell(cellCoords));
 		}
 	}
 }
