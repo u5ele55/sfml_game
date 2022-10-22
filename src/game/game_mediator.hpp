@@ -14,7 +14,6 @@ enum class UserEvent {
 class GameMediator {
 public:
     GameMediator();
-    ~GameMediator();
     void notify(UserEvent event);
     void callReader(sf::RenderWindow *);
     void startGame();

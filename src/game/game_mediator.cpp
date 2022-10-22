@@ -9,8 +9,6 @@ GameMediator::GameMediator() {
     m_eventReader = new SfmlEventReader(this);
     m_game = new GameCore(this);
 
-    // Logger pool : Singleton ?
-
     Log::Logger *logger = new Log::FileLogger("log.txt");
     m_game->subscribe(logger);
     logger->addLogType(Log::LogType::CriticalState);
@@ -41,5 +39,3 @@ void GameMediator::notify(UserEvent event) {
 void GameMediator::callReader(sf::RenderWindow *window) {
     m_eventReader->readEvent(*window);
 }
-
-GameMediator::~GameMediator() {}
