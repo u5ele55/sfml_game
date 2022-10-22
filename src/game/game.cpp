@@ -86,6 +86,7 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 		notify(Log::GameStateMessages::lose());
 		closeWindow();
 	}
+	
 }
 
 void GameCore::onEvent(const UserEvent &event) {
