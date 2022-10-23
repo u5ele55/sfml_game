@@ -2,11 +2,9 @@
 #define GAME_MEDIATOR_HPP
 
 class GameMediator;
-enum class UserEvent {
-    NONE, ESC, RIGHT, LEFT, UP, DOWN, USE
-};
 
-#include "event_reader.hpp"
+#include "sfml_event_reader.hpp"
+#include "controls/user_event.hpp"
 #include "game.hpp"
 #include "../log/logger.hpp"
 #include <vector>
@@ -21,6 +19,8 @@ public:
 private:
     GameCore *m_game;
     SfmlEventReader *m_eventReader;
+
+    void configureLogging();
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "event_reader.hpp"
+#include "sfml_event_reader.hpp"
 
 SfmlEventReader::SfmlEventReader(GameMediator *notifier) : m_notifier(notifier) {}
 

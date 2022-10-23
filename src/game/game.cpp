@@ -3,7 +3,6 @@
 #include "../objects/player.hpp"
 #include "../map/cell.hpp"
 #include "../graphics/level_painter.hpp"
-#include "event_reader.hpp"
 #include "../graphics/dialogs/choose_map_dialog.hpp"
 
 #include "../map/events/change_cell_event.hpp"
@@ -15,6 +14,7 @@
 #include "../map/events/player_heal_event.hpp"
 
 #include "../log/console_logger.hpp"
+#include "../log/logger_pool.hpp"
 #include "../log/messages/player_messages.hpp"
 #include "../log/messages/game_states_messages.hpp"
 
@@ -140,7 +140,6 @@ void GameCore::onEvent(const UserEvent &event) {
 		
 		const auto &cellCoords = m_map.getCoords(m_player.position + move);
 		
-
 		if (!m_map.getCellSolidity(cellCoords)) {
 			m_player.position = cellCoords;
 			m_player.creature.makeStep();
@@ -171,8 +170,10 @@ void GameCore::setMapEvents() {
 		{{4,2}, b},
 		{{2,2}, Map::Cell(Map::TileType::DIRT)}
 	};
+
 	ev = new Map::Events::ChangeCellsEvent(m_map, data); ev->copySubscriptions(this);
 	m_map.setCellEvent({2,2}, ev);
+
 	ev = new Map::Events::DamagePlayerEvent(m_player, 20); ev->copySubscriptions(this);
 	m_map.setCellEvent({3,2}, ev);
 	
@@ -189,12 +190,6 @@ void GameCore::setMapEvents() {
 	m_map.setCell({4,4}, Map::Cell(Map::TileType::GRASS));
 	ev = new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2); ev->copySubscriptions(this);
 	m_map.setCellEvent({4,4}, ev);
-
-
-	m_map.setCell(-2, -1, Map::Cell(Map::TileType::STONE, true));
-	m_map.setCell(-1, -2, Map::Cell(Map::TileType::STONE, true));
-	m_map.setCell( 0, -1, Map::Cell(Map::TileType::STONE, true));
-	m_map.setCell(-1,  0, Map::Cell(Map::TileType::STONE, true));
 
 	std::vector<Map::Events::CellData> data_gates = {
 		{{-2, -1}, Map::Cell(Map::TileType::GRASS)},
