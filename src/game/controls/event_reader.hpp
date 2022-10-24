@@ -3,7 +3,7 @@
 
 namespace Controls
 {
-    template <typename T>
+    template <typename ... T>
     class EventReader; 
 }
 
@@ -12,12 +12,12 @@ namespace Controls
 
 namespace Controls
 {
-    template <typename T>
+    template <typename ... T>
     class EventReader {
     public:
         EventReader(GameMediator *notifier, ControlsStorage controls);
         
-        virtual void readEvent(T &args) = 0;
+        virtual void readEvent(T& ... args) const = 0;
     protected:
         GameMediator *m_notifier;
         Controls::ControlsStorage m_controls;

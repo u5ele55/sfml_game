@@ -7,7 +7,7 @@ namespace Controls
     SfmlEventReader::SfmlEventReader(GameMediator *notifier, ControlsStorage controls) 
         : EventReader<sf::RenderWindow>(notifier, controls) {}
 
-    void SfmlEventReader::readEvent(sf::RenderWindow &window) {
+    void SfmlEventReader::readEvent(sf::RenderWindow &window) const {
         sf::Event event;
     
         while (window.pollEvent(event))

@@ -10,7 +10,7 @@ namespace Controls
     public:
         SfmlEventReader() = delete;
         SfmlEventReader(GameMediator *notifier, Controls::ControlsStorage controls);
-        void readEvent(sf::RenderWindow &window);
+        void readEvent(sf::RenderWindow &window) const override;
     };
 } // namespace Controls
 
