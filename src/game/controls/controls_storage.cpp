@@ -1,6 +1,8 @@
 #include "controls_storage.hpp"
 #include <fstream>
 #include <map>
+#include <vector>
+#include <iostream>
 
 namespace Controls
 {
@@ -35,7 +37,10 @@ namespace Controls
     }
 
     UserEvent ControlsStorage::userEventFromChar(char key) const {
-        return m_binds[key];
+        if (m_binds.count(key))
+            return m_binds.at(key);
+            
+        return UserEvent::NONE;
     } 
 
     std::pair<char, UserEvent> ControlsStorage::process(const std::string &line) {
@@ -61,17 +66,17 @@ namespace Controls
                     break;
                 }
             
-
             name += std::tolower(line[i]);
         }
 
         if (divIndex == -1)
             return {0, UserEvent::NONE};
         
-        for (int i = divIndex; i < line.size(); i ++) 
-            if (line[i] != ' ')
-                return {line[i], ans};
-        
+        for (int i = divIndex+1; i < line.size(); i ++) 
+            if (line[i] != ' ') {
+                return {std::tolower(line[i]), ans};
+            }
+            
         return {0, UserEvent::NONE};
     }
 } // namespace Controls

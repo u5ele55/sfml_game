@@ -5,16 +5,16 @@ class SfmlEventReader;
 
 #include <SFML/Graphics.hpp>
 #include "game_mediator.hpp"
-#include "controls/user_event.hpp"
+#include "controls/controls_storage.hpp"
 
 class SfmlEventReader {
 public:
     SfmlEventReader() = delete;
-    SfmlEventReader(GameMediator *notifier);
+    SfmlEventReader(GameMediator *notifier, Controls::ControlsStorage controls);
     void readEvent(sf::RenderWindow &window);
 private:
     GameMediator *m_notifier;
-    UserEvent keyToEvent(const sf::Keyboard::Key &) const;
+    Controls::ControlsStorage m_controls;
 };
 
 #endif

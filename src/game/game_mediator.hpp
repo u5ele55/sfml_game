@@ -6,7 +6,6 @@ class GameMediator;
 #include "sfml_event_reader.hpp"
 #include "controls/user_event.hpp"
 #include "game.hpp"
-#include "../log/logger.hpp"
 #include <vector>
 
 class GameMediator {

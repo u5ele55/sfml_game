@@ -2,14 +2,14 @@
 #define CONTROLS_STORAGE_HPP
 
 #include "user_event.hpp"
-#include <vector>
+#include <map>
 #include <string>
 
 namespace Controls
 {
     class ControlsStorage {
     private:
-        std::vector<char, UserEvent> m_binds;
+        std::map<char, UserEvent> m_binds;
         std::pair<char, UserEvent> process(const std::string &line);
     public:
         ControlsStorage();

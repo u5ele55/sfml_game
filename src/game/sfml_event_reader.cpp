@@ -1,6 +1,9 @@
 #include "sfml_event_reader.hpp"
+#include "controls/sfml_key_binder.hpp"
 
-SfmlEventReader::SfmlEventReader(GameMediator *notifier) : m_notifier(notifier) {}
+
+SfmlEventReader::SfmlEventReader(GameMediator *notifier, Controls::ControlsStorage controls) 
+    : m_notifier(notifier), m_controls(controls) {}
 
 void SfmlEventReader::readEvent(sf::RenderWindow &window) {
     sf::Event event;
@@ -8,29 +11,11 @@ void SfmlEventReader::readEvent(sf::RenderWindow &window) {
     while (window.pollEvent(event))
     {
         if (event.type == sf::Event::KeyPressed) {
-            m_notifier->notify(keyToEvent(event.key.code));
+            char key = Controls::SfmlKeyBinder::keyToChar(event.key.code);
+            m_notifier->notify(m_controls.userEventFromChar(key));
         }
 
         if (event.type == sf::Event::Closed)
             m_notifier->notify(UserEvent::ESC);
     }
-}
-
-UserEvent SfmlEventReader::keyToEvent(const sf::Keyboard::Key &key) const {
-    std::map<sf::Keyboard::Key, UserEvent> sfEventsToUserEvents = {
-        {sf::Keyboard::Escape, UserEvent::ESC},
-
-        {sf::Keyboard::W, UserEvent::UP},
-        {sf::Keyboard::A, UserEvent::LEFT},
-        {sf::Keyboard::S, UserEvent::DOWN},
-        {sf::Keyboard::D, UserEvent::RIGHT},
-        
-        {sf::Keyboard::E, UserEvent::USE},
-        
-    };
-
-    if (sfEventsToUserEvents.count(key) == 0)
-        return UserEvent::NONE;
-        
-    return sfEventsToUserEvents[key];
 }

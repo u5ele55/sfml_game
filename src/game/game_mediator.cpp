@@ -6,7 +6,7 @@
 #include <iostream>
 
 GameMediator::GameMediator() {
-    m_eventReader = new SfmlEventReader(this);
+    m_eventReader = new SfmlEventReader(this, Controls::ControlsStorage("controls.txt"));
     m_game = new GameCore(this);
     configureLogging();
 }
@@ -34,10 +34,12 @@ void GameMediator::configureLogging() {
     std::cout << "Enter 0 to skip, 1 to add ConsoleLogger, 2 to add FileLogger\n";
     int choice;
     std::cin >> choice;
+
     while (choice) {
         
         std::string filename;
         Log::Logger *logger;
+        bool err = false;
         switch (choice)
         {
         case 1:
@@ -49,23 +51,25 @@ void GameMediator::configureLogging() {
             logger = new Log::FileLogger(filename);
             break;
         default:
+            err = true;
             std::cout << "Invalid choice\n";
             break;
         }
-        
-        std::cout << "To make logger log levels, input sum of numbers next to log level that"
+        if (!err) {
+            std::cout << "To make logger log levels, input sum of numbers next to log level that"
                   << " should be logged : GameState - 1; ObjectState - 2; CriticalState - 4: ";
-        int sum;
-        std::cin >> sum;
-        if (sum & 1)
-            logger->addLogType(Log::LogType::GameState);
-        if (sum/2 & 1)
-            logger->addLogType(Log::LogType::ObjectState);
-        if (sum/4 & 1)
-            logger->addLogType(Log::LogType::CriticalState);
-        m_game->subscribe(logger);
-        
-        loggerPool.addLogger(logger);
+            int sum;
+            std::cin >> sum;
+            if (sum & 1)
+                logger->addLogType(Log::LogType::GameState);
+            if (sum/2 & 1)
+                logger->addLogType(Log::LogType::ObjectState);
+            if (sum/4 & 1)
+                logger->addLogType(Log::LogType::CriticalState);
+            m_game->subscribe(logger);
+            
+            loggerPool.addLogger(logger);
+        }
 
         std::cout << "Enter 0 to skip, 1 to add ConsoleLogger, 2 to add FileLogger\n";
         std::cin >> choice;

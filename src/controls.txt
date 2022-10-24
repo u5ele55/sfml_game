@@ -1,0 +1,6 @@
+up: i
+left: J
+right: l
+down: k
+esc: e
+use: p
