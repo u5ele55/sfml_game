@@ -3,8 +3,9 @@
 
 class GameMediator;
 
-#include "sfml_event_reader.hpp"
+#include "controls/event_reader.hpp"
 #include "controls/user_event.hpp"
+#include "controls/controls_storage.hpp"
 #include "game.hpp"
 #include <vector>
 
@@ -17,7 +18,7 @@ public:
     void gameEnded();
 private:
     GameCore *m_game;
-    SfmlEventReader *m_eventReader;
+    Controls::EventReader<sf::RenderWindow> *m_eventReader;
 
     void configureLogging();
 };

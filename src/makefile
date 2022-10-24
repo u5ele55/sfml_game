@@ -8,7 +8,8 @@ EXECUTABLE = run.exe
 SOURCES = main.cpp   \
 	  game\game.cpp   \
 	  game\game_mediator.cpp    \
-	  game\sfml_event_reader.cpp \
+	  game\controls\event_reader.cpp \
+	  game\controls\sfml_event_reader.cpp \
 	  game\controls\sfml_key_binder.cpp \
 	  game\controls\controls_storage.cpp \
 	  graphics\level_painter.cpp  \

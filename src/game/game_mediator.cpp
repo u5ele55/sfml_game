@@ -1,12 +1,12 @@
 #include "game_mediator.hpp"
+#include "controls/sfml_event_reader.hpp"
 #include "../log/console_logger.hpp"
 #include "../log/file_logger.hpp"
 #include "../log/logger_pool.hpp"
-
 #include <iostream>
 
 GameMediator::GameMediator() {
-    m_eventReader = new SfmlEventReader(this, Controls::ControlsStorage("controls.txt"));
+    m_eventReader = new Controls::SfmlEventReader(this, Controls::ControlsStorage("controls.txt"));
     m_game = new GameCore(this);
     configureLogging();
 }
