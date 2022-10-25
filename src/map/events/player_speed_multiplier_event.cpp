@@ -5,6 +5,7 @@ namespace Map::Events
 {
     PlayerSpeedMultiplierEvent::PlayerSpeedMultiplierEvent(Common::CreatureWrapper &player, double multiplier)
         : PlayerEvent(player), m_mlt(multiplier) {}
+        
     void PlayerSpeedMultiplierEvent::trigger() {
         double newSpeed = m_player.creature.getSpeed() * m_mlt;
 
