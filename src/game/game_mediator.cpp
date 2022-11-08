@@ -6,7 +6,13 @@
 #include <iostream>
 
 GameMediator::GameMediator() {
-    m_eventReader = new Controls::SfmlEventReader(this, Controls::ControlsStorage("controls.txt"));
+    Controls::ControlsStorage storage;
+    try {
+        storage = Controls::ControlsStorage("controls.txt");
+    } catch (std::invalid_argument &e) {
+        // storage is already created with default configuration
+    }
+    m_eventReader = new Controls::SfmlEventReader(this, storage);
     m_game = new GameCore(this);
     configureLogging();
 }

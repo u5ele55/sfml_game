@@ -13,6 +13,10 @@
 #include "../map/events/player_speed_multiplier_event.hpp"
 #include "../map/events/player_heal_event.hpp"
 
+#include "../map/generation/map_generator.hpp"
+#include "../map/generation/rules/obstacles_rule.hpp"
+#include "../map/generation/rules/field_size_rule.hpp"
+
 #include "../log/console_logger.hpp"
 #include "../log/logger_pool.hpp"
 #include "../log/messages/player_messages.hpp"
@@ -33,16 +37,19 @@ void GameCore::start() {
 	Map::MapType mapType = chooseDialog.showDialog();
 	notify(Log::GameStateMessages::mapChoosen());
 	try {
-		switch (mapType) {
-		// Later: delegate map generation to some map generator
-		case Map::MapType::Dungeon:
-			m_map = Map::FieldMap(10,10);
-			break;
-		case Map::MapType::Overworld:
-			m_map = Map::FieldMap(15,15);
-			break;
-		default:
-			break;
+		if (mapType == Map::MapType::Dungeon) {
+			Map::MapGenerator<
+				Map::ObstaclesRule<Map::ObstaclesVariant::ROOMS>,
+				Map::FieldSizeRule<10,10>
+				> mg;
+			m_map = mg.generate();
+		}
+		else if (mapType == Map::MapType::Overworld) {
+			Map::MapGenerator<
+				Map::ObstaclesRule<Map::ObstaclesVariant::SPIRAL>,
+				Map::FieldSizeRule<15,15>
+				> mg;
+			m_map = mg.generate();
 		}
 	} catch(std::invalid_argument e) {
 		notify(Log::GameStateMessages::errorOnMapChoice(e.what()));

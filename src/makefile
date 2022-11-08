@@ -1,5 +1,5 @@
 
-CC = g++ -ID:/Programming/packages/cpp/SFML-2.5.1/include -LD:/Programming/packages/cpp/SFML-2.5.1/lib
+CC = g++ -ID:/Programming/packages/cpp/SFML-2.5.1/include -LD:/Programming/packages/cpp/SFML-2.5.1/lib -std=c++17
 SFML_FLAGS = -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
 # SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 

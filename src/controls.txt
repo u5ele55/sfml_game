@@ -1,6 +1,6 @@
-up: i
-left: J
-right: l
-down: k
+up: w
+left: a
+right: d
+down: s
 esc: e
 use: p

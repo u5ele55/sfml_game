@@ -9,8 +9,6 @@ class GameMediator;
 #include "game.hpp"
 #include <vector>
 
-// Maybe i need to create mediator interface with template pack?
-
 class GameMediator {
 public:
     GameMediator();

@@ -25,22 +25,6 @@ namespace Map
             std::vector<Cell>(width, Cell())
             );
         
-        for (int i = 0; i < height; i ++) {
-            for (int j = 0; j < width; j ++) {
-                m_field[i][j] = Cell(TileType::DIRT, false);
-            }
-        }
-        for (int i = 0; i < width; i ++) {
-            if (i & 1)
-            m_field[0][i].setTileType(Map::TileType::GRASS);
-            else
-            m_field[1][i].setTileType(Map::TileType::GRASS);
-        }
-
-        for (int i = 0; i < width/2; i ++) {
-            m_field[5][i].setSolidity(true);
-            m_field[5][i].setTileType(Map::TileType::STONE);
-        }
     }
 
     FieldMap::FieldMap(const FieldMap& other) : m_height(other.m_height), m_width(other.m_width) {
