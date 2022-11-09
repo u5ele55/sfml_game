@@ -4,7 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "cell.hpp"
+#include "../common/creature_wrapper.hpp"
+#include "../objects/player.hpp"
 #include "../log/observable.hpp"
+#include "../game/game_state.hpp"
 
 #define EXISTING_MAP_TYPES 2
 
@@ -18,11 +21,14 @@ namespace Map
 
     class FieldMap {
     public:
+        GameState *state;
+        Common::CreatureWrapper *player;
+
         FieldMap();
-        FieldMap(unsigned int width, unsigned int height);
+        FieldMap(unsigned int width, unsigned int height, Common::Vector2D<int> startPlayerPosition = {1,1});
         FieldMap(const FieldMap& other);
-        FieldMap(FieldMap&& tmp); // TODO
-        FieldMap& operator=(const FieldMap& other); // TODO
+        FieldMap(FieldMap&& tmp); 
+        FieldMap& operator=(const FieldMap& other); 
         FieldMap& operator=(FieldMap&& other);
 
         Common::Vector2D<unsigned int> getSize() const;
@@ -62,6 +68,7 @@ namespace Map
         unsigned int m_width;
         unsigned int m_height;
         std::vector<std::vector<Cell>> m_field;
+        
     };
 
 } // namespace Map

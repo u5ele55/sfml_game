@@ -6,7 +6,6 @@ class GameCore;
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "../objects/object.hpp"
-#include "../common/creature_wrapper.hpp"
 #include "../map/map.hpp"
 #include "game_mediator.hpp"
 #include "game_state.hpp"
@@ -26,11 +25,8 @@ private:
 
 	std::vector<Objects::Object> m_objects;
 	Map::FieldMap m_map;
-	Common::CreatureWrapper m_player;
 	
 	GameMediator *m_notifier;
-
-	GameState m_state;
 };
 
 #endif

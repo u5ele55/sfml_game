@@ -16,6 +16,9 @@
 #include "../map/generation/map_generator.hpp"
 #include "../map/generation/rules/obstacles_rule.hpp"
 #include "../map/generation/rules/field_size_rule.hpp"
+#include "../map/generation/rules/player_position_rule.hpp"
+#include "../map/generation/rules/win_position_rule.hpp"
+#include "../map/generation/rules/damage_event_frequency_rule.hpp"
 
 #include "../log/console_logger.hpp"
 #include "../log/logger_pool.hpp"
@@ -26,9 +29,7 @@
 #include <iostream>
 
 GameCore::GameCore(GameMediator *notifier)
-	: m_notifier(notifier), 
-	  m_player(Common::Vector2D<int>{1,1}, Objects::Player()),
-	  m_state(GameState::PLAYING)
+	: m_notifier(notifier)
 	  {}
 
 void GameCore::start() {
@@ -40,15 +41,21 @@ void GameCore::start() {
 		if (mapType == Map::MapType::Dungeon) {
 			Map::MapGenerator<
 				Map::ObstaclesRule<Map::ObstaclesVariant::ROOMS>,
-				Map::FieldSizeRule<10,10>
+				Map::FieldSizeRule<10,10>,
+				Map::DamageEventFrequencyRule<50, 5>,
+				Map::WinEventPositionRule<-2,-2>,
+				Map::PlayerPositionRule<2,2>
 				> mg;
 			m_map = mg.generate();
 		}
 		else if (mapType == Map::MapType::Overworld) {
+			
 			Map::MapGenerator<
 				Map::ObstaclesRule<Map::ObstaclesVariant::SPIRAL>,
-				Map::FieldSizeRule<15,15>
-				> mg;
+				Map::FieldSizeRule<8,12>, 
+				Map::WinEventPositionRule<(8-1)/2,12/2>,
+				Map::PlayerPositionRule<1,1>
+				> mg; 
 			m_map = mg.generate();
 		}
 	} catch(std::invalid_argument e) {
@@ -58,7 +65,8 @@ void GameCore::start() {
         notify(Log::GameStateMessages::wrongMapChoice());
 		return;
 	}
-	setMapEvents();
+	
+	//setMapEvents();
 
 	m_window = new sf::RenderWindow(
 		sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "LitterBox", sf::Style::Close
@@ -72,7 +80,7 @@ void GameCore::start() {
 		sf::Time elapsedTime = clock.restart();
 	    m_notifier->callReader(m_window);
 		updateScene(elapsedTime);
-		lvlPainter.drawWindow(m_player, m_objects, m_map);
+		lvlPainter.drawWindow(*m_map.player, m_objects, m_map);
 	    
 	}
 	delete m_window;
@@ -80,16 +88,16 @@ void GameCore::start() {
 }
 
 void GameCore::updateScene(const sf::Time &elapsedTime) {
-	m_player.creature.increaseStepPhase(elapsedTime.asSeconds());
+	m_map.player->creature.increaseStepPhase(elapsedTime.asSeconds());
 
-	if (!m_player.creature.isAlive())
-		m_state = GameState::LOSS;
+	if (!m_map.player->creature.isAlive())
+		*m_map.state = GameState::LOSS;
 
-	if (m_state == GameState::WIN) {
+	if (*m_map.state == GameState::WIN) {
 		notify(Log::GameStateMessages::win());
 		closeWindow();
 	} 
-	else if (m_state == GameState::LOSS) {
+	else if (*m_map.state == GameState::LOSS) {
 		notify(Log::GameStateMessages::lose());
 		closeWindow();
 	}
@@ -98,23 +106,23 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 
 void GameCore::onEvent(const UserEvent &event) {
 	bool wantToGo = false;
-	auto prevFacing = m_player.creature.getFacing();
+	auto prevFacing = m_map.player->creature.getFacing();
 	switch (event)
 	{
 	case UserEvent::UP:
-		m_player.creature.setFacing(Objects::Direction::UP);
+		m_map.player->creature.setFacing(Objects::Direction::UP);
 		wantToGo = true;
 		break;
 	case UserEvent::LEFT:
-		m_player.creature.setFacing(Objects::Direction::LEFT);
+		m_map.player->creature.setFacing(Objects::Direction::LEFT);
 		wantToGo = true;
 		break;
 	case UserEvent::DOWN:
-		m_player.creature.setFacing(Objects::Direction::DOWN);
+		m_map.player->creature.setFacing(Objects::Direction::DOWN);
 		wantToGo = true;
 		break;
 	case UserEvent::RIGHT:
-		m_player.creature.setFacing(Objects::Direction::RIGHT);
+		m_map.player->creature.setFacing(Objects::Direction::RIGHT);
 		wantToGo = true;
 		break;
 	case UserEvent::USE:
@@ -126,8 +134,8 @@ void GameCore::onEvent(const UserEvent &event) {
 		break;
 	}
 	
-	if (wantToGo && m_player.creature.canGo() && prevFacing == m_player.creature.getFacing()) {
-		const auto &facing = m_player.creature.getFacing();
+	if (wantToGo && m_map.player->creature.canGo() && prevFacing == m_map.player->creature.getFacing()) {
+		const auto &facing = m_map.player->creature.getFacing();
 		Common::Vector2D<int> move{0,0};
 		
 		switch(facing) {
@@ -145,11 +153,11 @@ void GameCore::onEvent(const UserEvent &event) {
 			break;
 		}
 		
-		const auto &cellCoords = m_map.getCoords(m_player.position + move);
+		const auto &cellCoords = m_map.getCoords(m_map.player->position + move);
 		
 		if (!m_map.getCellSolidity(cellCoords)) {
-			m_player.position = cellCoords;
-			m_player.creature.makeStep();
+			m_map.player->position = cellCoords;
+			m_map.player->creature.makeStep();
 			m_map.triggerCellEvent(cellCoords);
 			
        		notify(Log::PlayerMessages::changedPosition(cellCoords));
@@ -181,22 +189,22 @@ void GameCore::setMapEvents() {
 	ev = new Map::Events::ChangeCellsEvent(m_map, data); ev->copySubscriptions(this);
 	m_map.setCellEvent({2,2}, ev);
 
-	ev = new Map::Events::DamagePlayerEvent(m_player, 20); ev->copySubscriptions(this);
+	ev = new Map::Events::DamagePlayerEvent(*m_map.player, 20); ev->copySubscriptions(this);
 	m_map.setCellEvent({3,2}, ev);
 	
 	Map::FieldMap newMap = Map::FieldMap(6,8);
 	Map::Cell d = Map::Cell(Map::TileType::STONE);
 
 	newMap.setCell({3,3}, d);
-	ev = new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2); ev->copySubscriptions(this);
+	ev = new Map::Events::PlayerSpeedMultiplierEvent(*m_map.player, 2); ev->copySubscriptions(this);
 	newMap.setCellEvent({3,3}, ev);
 
-	ev = new Map::Events::ChangeMapEvent(m_player, {1,2}, m_map, newMap); ev->copySubscriptions(this);
+	ev = new Map::Events::ChangeMapEvent(*m_map.player, {1,2}, m_map, newMap); ev->copySubscriptions(this);
 	m_map.setCellEvent({3,4}, ev);
 	
 	m_map.setCell({4,4}, Map::Cell(Map::TileType::GRASS));
-	ev = new Map::Events::PlayerSpeedMultiplierEvent(m_player, 2); ev->copySubscriptions(this);
-	m_map.setCellEvent({4,4}, ev);
+	ev = new Map::Events::PlayerSpeedMultiplierEvent(*m_map.player, 2); ev->copySubscriptions(this);
+	m_map.setCellEvent({4,4}, ev); 
 
 	std::vector<Map::Events::CellData> data_gates = {
 		{{-2, -1}, Map::Cell(Map::TileType::GRASS)},
@@ -219,7 +227,7 @@ void GameCore::setMapEvents() {
 	m_map.setCell({4,6}, m);
 
 	Map::Cell w = Map::Cell(Map::TileType::DIRT);
-	ev = new Map::Events::WinStateEvent(m_state);
+	ev = new Map::Events::WinStateEvent(*m_map.state);
 	ev->copySubscriptions(this);
 	w.setEvent(ev);
 	m_map.setCell({-1,-1}, w);

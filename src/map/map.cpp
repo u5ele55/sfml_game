@@ -14,8 +14,8 @@ namespace Map
     const int baseWidth = 15;
     FieldMap::FieldMap() : FieldMap(baseWidth, baseHeight) {}
 
-    FieldMap::FieldMap(unsigned int width, unsigned int height) 
-    : m_width(width), m_height(height) 
+    FieldMap::FieldMap(unsigned int width, unsigned int height, Common::Vector2D<int> startPlayerPosition) 
+    : m_width(width), m_height(height), state(new GameState(GameState::PLAYING)), player(new Common::CreatureWrapper{startPlayerPosition, Objects::Player()})
     {
         if (m_width > 200 || m_height > 200 ||  m_height < 6) {
             throw std::invalid_argument("Sizes of a map must be positive and less than 200, also height should be at least 6!");
@@ -27,7 +27,9 @@ namespace Map
         
     }
 
-    FieldMap::FieldMap(const FieldMap& other) : m_height(other.m_height), m_width(other.m_width) {
+    FieldMap::FieldMap(const FieldMap& other) 
+    : m_height(other.m_height), m_width(other.m_width), state(other.state), player(other.player)
+    {
         m_field = std::vector< std::vector<Map::Cell> >(
             m_height, std::vector<Map::Cell>(m_width, Cell())
             );
@@ -37,7 +39,9 @@ namespace Map
             }
     }
 
-    FieldMap::FieldMap(FieldMap&& other) : m_height(other.m_height), m_width(other.m_width) {
+    FieldMap::FieldMap(FieldMap&& other) 
+    : m_height(other.m_height), m_width(other.m_width), state(other.state), player(other.player)
+    {
         m_field = std::vector< std::vector<Map::Cell> >(
             m_height, std::vector<Map::Cell>(m_width, Cell())
             );
@@ -60,6 +64,8 @@ namespace Map
                     m_field[i].push_back(other.m_field[i][j].copy());
                 }
             }
+            state = other.state;
+            player = other.player;
         }
         return *this;
     }
@@ -77,6 +83,8 @@ namespace Map
                     std::swap(m_field[i][j], other.m_field[i][j]);
                 }
             }
+            state = other.state;
+            player = other.player;
         }
         return *this;
     }
@@ -146,5 +154,6 @@ namespace Map
     }
 
     FieldMap::~FieldMap() {
+        
     }
 } // namespace Map
