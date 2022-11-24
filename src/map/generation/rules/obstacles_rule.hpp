@@ -26,6 +26,11 @@ namespace Map
                     field.setCell({i,(int)size.y-1}, Cell(TileType::STONE, true));
                 }
 
+                for(int i = 0; i < size.x; i ++) {
+                    if (i != size.x / 2)
+                    field.setCell({i,(int)size.y/2}, Cell(TileType::STONE, true));
+                }
+
             } 
             else if (variant == ObstaclesVariant::SPIRAL) {
                 

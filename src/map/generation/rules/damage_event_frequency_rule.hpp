@@ -17,7 +17,8 @@ namespace Map
             for(int i = 0; i < size.y; i ++) 
                 for (int j = 0; j < size.x; j ++) 
                     if (rand() % 100 < probability) {
-                        field.setCellEvent({j,i}, new Events::DamagePlayerEvent(*field.player, damage));
+                        if (!field.cellHasEvent(j, i))
+                            field.setCellEvent({j,i}, new Events::DamagePlayerEvent(*field.player, damage));
                     }
             
         }

@@ -52,6 +52,9 @@ namespace Map
         bool getCellSolidity(int x, int y) const;
         bool getCellSolidity(const Common::Vector2D<int> &position) const;
 
+        bool cellHasEvent(int x, int y) const;
+        bool cellHasEvent(const Common::Vector2D<int> &position) const;
+
         TileType getCellType(int x, int y) const;
         TileType getCellType(const Common::Vector2D<int> &position) const;
 

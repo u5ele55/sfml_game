@@ -11,8 +11,11 @@ namespace Map
         typedef char YesType[1];
         typedef char NoType[2];
 
-        template <typename C> static YesType& test( decltype(&C::createMap) ) ;
-        template <typename C> static NoType& test(...);
+        template <typename C> 
+        static YesType& test( decltype(&C::createMap) ) ;
+        
+        template <typename C> 
+        static NoType& test(...);
 
     public:
         enum { value = sizeof(test<T>(0)) == sizeof(YesType) };

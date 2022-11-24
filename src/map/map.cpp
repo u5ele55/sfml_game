@@ -129,6 +129,14 @@ namespace Map
         return getCellType(position.x, position.y);
     }
 
+    bool FieldMap::cellHasEvent(int x, int y) const {
+        const auto &pos = getCoords(x,y);
+        return m_field[pos.y][pos.x].hasEvent();
+    }
+    bool FieldMap::cellHasEvent(const Common::Vector2D<int> &position) const {
+        return cellHasEvent(position.x, position.y);
+    }
+
     Common::Vector2D<unsigned int> FieldMap::getSize() const { return Common::Vector2D<unsigned int>{m_width, m_height}; }
 
     void FieldMap::setCell(int x, int y, const Cell &cell) {

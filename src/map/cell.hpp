@@ -22,6 +22,7 @@ namespace Map
         void triggerEvent();
 
         bool isSolid() const;
+        bool hasEvent() const;
         void setSolidity(bool solid);
         Cell copy() const;
 

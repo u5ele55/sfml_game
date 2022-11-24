@@ -42,14 +42,13 @@ void GameCore::start() {
 			Map::MapGenerator<
 				Map::ObstaclesRule<Map::ObstaclesVariant::ROOMS>,
 				Map::FieldSizeRule<10,10>,
-				Map::DamageEventFrequencyRule<50, 5>,
-				Map::WinEventPositionRule<-2,-2>,
+				Map::WinEventPositionRule<-3,-2>,
+				Map::DamageEventFrequencyRule<100, 5>,
 				Map::PlayerPositionRule<2,2>
 				> mg;
-			m_map = mg.generate();
+			m_map = mg.generate(); 
 		}
 		else if (mapType == Map::MapType::Overworld) {
-			
 			Map::MapGenerator<
 				Map::ObstaclesRule<Map::ObstaclesVariant::SPIRAL>,
 				Map::FieldSizeRule<8,12>, 

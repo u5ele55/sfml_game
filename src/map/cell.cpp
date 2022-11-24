@@ -23,9 +23,13 @@ namespace Map
     }
 
     void Cell::triggerEvent() { 
-        if (m_event != nullptr) {
+        if (hasEvent()) {
             m_event->trigger(); 
         }
+    }
+
+    bool Cell::hasEvent() const {
+        return m_event != nullptr;
     }
     
     bool Cell::isSolid() const {return m_isSolid;}
