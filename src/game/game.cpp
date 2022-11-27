@@ -44,7 +44,7 @@ void GameCore::start() {
 				Map::FieldSizeRule<10,10>,
 				Map::WinEventPositionRule<-3,-2>,
 				Map::DamageEventFrequencyRule<100, 5>,
-				Map::PlayerPositionRule<2,2>
+				Map::PlayerPositionRule<0,1>
 				> mg;
 			m_map = mg.generate(); 
 		}

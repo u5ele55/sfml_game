@@ -9,6 +9,7 @@ namespace Map
     class PlayerPositionRule {
     public:
         static void changeMap(FieldMap &field) {
+            // TODO: Place player on the nearest non-solid cell
             field.player->position = {x,y};
         }
     };
