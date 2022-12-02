@@ -19,7 +19,9 @@ public:
 private:
 	void closeWindow();
 	void updateScene(const sf::Time&);
-	void setMapEvents();
+
+	void saveMapProcess();
+	void loadMapProcess();
 
 	sf::RenderWindow *m_window;
 

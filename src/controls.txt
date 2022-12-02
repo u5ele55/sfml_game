@@ -4,3 +4,5 @@ right: d
 down: s
 esc: e
 use: p
+load: l
+save: m

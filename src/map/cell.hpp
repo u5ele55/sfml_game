@@ -28,6 +28,7 @@ namespace Map
 
         friend std::ostream &operator<<(std::ostream &stream, const Cell &cell);
         std::string toString() const;
+        Cell fromString(const std::string& data) const; 
 
         ~Cell();
     protected:

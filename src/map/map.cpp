@@ -164,12 +164,13 @@ namespace Map
 
     std::string FieldMap::toString() const {
         std::stringstream sstr;
-        sstr << "{Field}\n";
+        sstr << "{Field " << m_width << " " << m_height << "}\n";
+
         for(int i = 0; i < m_height; i ++) {
             for(int j = 0; j < m_width; j ++)
                 sstr << i << " " << j << " " << m_field[i][j].toString() << '\n';
         }
-        sstr << "{Player}\n" << player->creature << '\n' << player->position.x << " " << player->position.y << '\n';
+        sstr << "{Player "  << player->position.x << " " << player->position.y << "}\n" << player->creature << '\n';
 
         return sstr.str();
     }

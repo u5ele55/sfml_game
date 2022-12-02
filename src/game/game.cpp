@@ -20,6 +20,9 @@
 #include "../map/generation/rules/win_position_rule.hpp"
 #include "../map/generation/rules/damage_event_frequency_rule.hpp"
 
+#include "../map/save/save_file_loader.hpp"
+#include "../map/save/file_map_saver.hpp"
+
 #include "../log/console_logger.hpp"
 #include "../log/logger_pool.hpp"
 #include "../log/messages/player_messages.hpp"
@@ -47,7 +50,6 @@ void GameCore::start() {
 				Map::PlayerPositionRule<1,1>
 				> mg;
 			m_map = mg.generate(); 
-			std::cout << m_map.toString();
 		}
 		else if (mapType == Map::MapType::Overworld) {
 			Map::MapGenerator<
@@ -107,6 +109,7 @@ void GameCore::updateScene(const sf::Time &elapsedTime) {
 void GameCore::onEvent(const UserEvent &event) {
 	bool wantToGo = false;
 	auto prevFacing = m_map.player->creature.getFacing();
+	
 	switch (event)
 	{
 	case UserEvent::UP:
@@ -126,6 +129,12 @@ void GameCore::onEvent(const UserEvent &event) {
 		wantToGo = true;
 		break;
 	case UserEvent::USE:
+		break;
+	case UserEvent::SAVE_GAME:
+		saveMapProcess();
+		break;
+	case UserEvent::LOAD_GAME:
+		loadMapProcess();
 		break;
 	case UserEvent::ESC:
 		closeWindow();
@@ -167,68 +176,23 @@ void GameCore::onEvent(const UserEvent &event) {
 	}
 }
 
+void GameCore::saveMapProcess() {
+	Map::FileMapSaver saver;
+	std::string name;
+	std::cout << "Enter name of save: ";
+	std::cin >> name;
+	saver.saveMap(m_map, name);
+}
+
+void GameCore::loadMapProcess() {
+	std::string filename;
+	std::cout << "Enter name of save: ";
+	std::cin >> filename;
+	Map::SaveFileLoader loader(filename);
+	m_map = loader.loadMap();
+}
+
 void GameCore::closeWindow() {
 	m_window->close();
 	notify(Log::GameStateMessages::windowClosed());
-}
-
-void GameCore::setMapEvents() {
-	Map::Events::Event *ev;
-
-	Map::Cell b = Map::Cell(Map::TileType::STONE, true);
-	std::vector<Map::Events::CellData> data = {
-		{{2,1}, b},
-		{{2,3}, b},
-		{{3,1}, b},
-		{{3,3}, b},
-		{{1,2}, b},
-		{{4,2}, b},
-		{{2,2}, Map::Cell(Map::TileType::DIRT)}
-	};
-
-	ev = new Map::Events::ChangeCellsEvent(m_map, data); ev->copySubscriptions(this);
-	m_map.setCellEvent({2,2}, ev);
-
-	ev = new Map::Events::DamagePlayerEvent(*m_map.player, 20); ev->copySubscriptions(this);
-	m_map.setCellEvent({3,2}, ev);
-	
-	Map::FieldMap newMap = Map::FieldMap(6,8);
-	Map::Cell d = Map::Cell(Map::TileType::STONE);
-
-	newMap.setCell({3,3}, d);
-	ev = new Map::Events::PlayerSpeedMultiplierEvent(*m_map.player, 2); ev->copySubscriptions(this);
-	newMap.setCellEvent({3,3}, ev);
-
-	ev = new Map::Events::ChangeMapEvent(*m_map.player, {1,2}, m_map, newMap); ev->copySubscriptions(this);
-	m_map.setCellEvent({3,4}, ev);
-	
-	m_map.setCell({4,4}, Map::Cell(Map::TileType::GRASS));
-	ev = new Map::Events::PlayerSpeedMultiplierEvent(*m_map.player, 2); ev->copySubscriptions(this);
-	m_map.setCellEvent({4,4}, ev); 
-
-	std::vector<Map::Events::CellData> data_gates = {
-		{{-2, -1}, Map::Cell(Map::TileType::GRASS)},
-		{{-1, -2}, Map::Cell(Map::TileType::GRASS)},
-		{{ 0, -1}, Map::Cell(Map::TileType::GRASS)},
-		{{-1,  0}, Map::Cell(Map::TileType::GRASS)},
-	};
-
-	for (auto cellData : data_gates) {
-		Map::Cell cell = cellData.cell;
-		cell.setSolidity(true);
-		cell.setTileType(Map::TileType::STONE);
-		m_map.setCell(cellData.position, cell);
-	}
-
-	Map::Cell m = Map::Cell(Map::TileType::GRASS);
-	ev = new Map::Events::ChangeCellsEvent(m_map, data_gates);
-	ev->copySubscriptions(this);
-	m.setEvent(ev);
-	m_map.setCell({4,6}, m);
-
-	Map::Cell w = Map::Cell(Map::TileType::DIRT);
-	ev = new Map::Events::WinStateEvent(*m_map.state);
-	ev->copySubscriptions(this);
-	w.setEvent(ev);
-	m_map.setCell({-1,-1}, w);
 }

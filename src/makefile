@@ -32,6 +32,8 @@ SOURCES = main.cpp   \
 	  map\events\change_cell_event.cpp  \
 	  map\events\damage_player_event.cpp \
 	  map\events\player_speed_multiplier_event.cpp \
+	  map\save\save_file_loader.cpp \
+	  map\save\file_map_saver.cpp \
 	  log\message.cpp \
 	  log\logger.cpp   \
 	  log\observable.cpp \
@@ -40,7 +42,8 @@ SOURCES = main.cpp   \
 	  log\console_logger.cpp \
 	  log\messages\event_messages.cpp \
 	  log\messages\player_messages.cpp \
-	  log\messages\game_states_messages.cpp
+	  log\messages\game_states_messages.cpp \
+	  utilities\string_utilities.cpp
 
 
 OBJECTS = $(SOURCES:.cpp=.o)

@@ -10,7 +10,7 @@ namespace Controls
     /// Standart configuration (WASD E Q)
     ControlsStorage::ControlsStorage() {
         std::vector<std::string> config = {
-            "up: w", "down: s", "right: d", "left: a", "use: e", "esc: q"
+            "up: w", "down: s", "right: d", "left: a", "use: e", "esc: q", "load: l", "save: m"
         };
         for (std::string line : config) {
             auto p = process(line);
@@ -52,6 +52,8 @@ namespace Controls
             {"left", UserEvent::LEFT},
             {"use", UserEvent::USE},
             {"esc", UserEvent::ESC},
+            {"load", UserEvent::LOAD_GAME},
+            {"save", UserEvent::SAVE_GAME}
         }; 
 
         std::string name = "";

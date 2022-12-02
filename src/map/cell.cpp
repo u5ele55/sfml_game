@@ -44,9 +44,13 @@ namespace Map
     Cell::~Cell() {}
     std::string Cell::toString() const {
         std::stringstream stream;
-        stream << "<Cell type=" << (int)getTileType() << " solid=" << isSolid() 
-               << " contains_event={" << m_event->toString() << "}" << ">";
+        stream << "<Cell type={" << (int)getTileType() << "} solid={" << isSolid() 
+               << "} contains_event={" << (m_event == nullptr ? "null" : m_event->toString()) << "}" << ">";
         return stream.str();
+    }
+
+    Cell Cell::fromString(const std::string& data) const {
+
     }
 
     std::ostream &operator<<(std::ostream &stream, const Cell &cell) {
