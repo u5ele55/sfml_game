@@ -3,6 +3,7 @@
 
 #include "../objects/object.hpp"
 #include "events/event.hpp"
+#include "../common/saveable_component.hpp"
 #include <iostream>
 
 namespace Map
@@ -11,12 +12,11 @@ namespace Map
         DIRT, STONE, GRASS
     };
 
-    class Cell : public Objects::Object {
+    class Cell : public Objects::Object, public SaveableComponent {
     public:
         Cell();
         Cell( TileType type, bool isSolid = false);
         TileType getTileType() const;
-        Events::Event *getEvent() const;
         void setTileType(const TileType&);
         void setEvent(Events::Event *event);
         void triggerEvent();
@@ -27,6 +27,7 @@ namespace Map
         Cell copy() const;
 
         friend std::ostream &operator<<(std::ostream &stream, const Cell &cell);
+        std::string toString() const;
 
         ~Cell();
     protected:

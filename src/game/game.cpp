@@ -41,12 +41,13 @@ void GameCore::start() {
 		if (mapType == Map::MapType::Dungeon) {
 			Map::MapGenerator<
 				Map::ObstaclesRule<Map::ObstaclesVariant::ROOMS>,
-				Map::FieldSizeRule<10,10>,
+				Map::FieldSizeRule<6,6>,
 				Map::WinEventPositionRule<-3,-2>,
 				Map::DamageEventFrequencyRule<100, 5>,
-				Map::PlayerPositionRule<0,1>
+				Map::PlayerPositionRule<1,1>
 				> mg;
 			m_map = mg.generate(); 
+			std::cout << m_map.toString();
 		}
 		else if (mapType == Map::MapType::Overworld) {
 			Map::MapGenerator<

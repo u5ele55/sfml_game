@@ -1,5 +1,6 @@
 #include "creature.hpp"
 #include <iostream>
+#include <sstream>
 
 namespace Objects {
 
@@ -62,12 +63,18 @@ namespace Objects {
     }
 
     std::ostream &operator<<(std::ostream &stream, const Creature& creature) {
-        stream << "<Creature type=" << (int)creature.m_type 
-            << " hp: " << creature.m_currentHp << "/" << creature.m_maxHp 
-            << " mana: " << creature.m_currentMana << "/" << creature.m_maxMana
-            << " facing=" << (int)creature.m_facing
-            << " speed=" << creature.m_speed
-               << ">"; 
+        stream << creature.toString();
         return stream;
+    }
+
+    std::string Creature::toString() const {
+        std::stringstream stream;
+        stream << "<Creature type=" << (int)m_type 
+            << " hp: " << m_currentHp << "/" << m_maxHp 
+            << " mana: " << m_currentMana << "/" << m_maxMana
+            << " facing=" << (int)m_facing
+            << " speed=" << m_speed
+            << ">"; 
+        return stream.str();
     }
 }

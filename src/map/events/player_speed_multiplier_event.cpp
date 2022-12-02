@@ -15,5 +15,10 @@ namespace Map::Events
         m_player.creature.setSpeed(newSpeed);
         notify(Log::EventMessages::playerSpeed(newSpeed));
     }
+    std::string PlayerSpeedMultiplierEvent::toString() const {
+        std::stringstream stream;
+        stream << "speed_multiplier " << m_mlt;
+        return stream.str();
+    }
     PlayerSpeedMultiplierEvent::~PlayerSpeedMultiplierEvent() {}
 } // namespace Map::Events

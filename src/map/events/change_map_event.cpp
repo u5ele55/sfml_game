@@ -14,6 +14,11 @@ namespace Map::Events
         
         notify(Log::EventMessages::changeMap());
     }
+    std::string ChangeMapEvent::toString() const {
+        std::stringstream stream;
+        stream << "change_map";
+        return stream.str();
+    }
     
     ChangeMapEvent::~ChangeMapEvent() {}
 } // namespace Map::Events

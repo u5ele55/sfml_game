@@ -10,6 +10,7 @@ namespace Map::Events
         PlayerHealEvent(Common::CreatureWrapper &player);
         ~PlayerHealEvent();
         void trigger() final;
+        std::string toString() const;
     };
 } // namespace Map::Events
 

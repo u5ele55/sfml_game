@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../log/console_logger.hpp"
+#include <sstream>
 
 namespace Map
 {
@@ -159,6 +160,18 @@ namespace Map
         stream << "<FieldMap " << map.m_height << " x " << map.m_width << ">";
 
         return stream;
+    }
+
+    std::string FieldMap::toString() const {
+        std::stringstream sstr;
+        sstr << "{Field}\n";
+        for(int i = 0; i < m_height; i ++) {
+            for(int j = 0; j < m_width; j ++)
+                sstr << i << " " << j << " " << m_field[i][j].toString() << '\n';
+        }
+        sstr << "{Player}\n" << player->creature << '\n' << player->position.x << " " << player->position.y << '\n';
+
+        return sstr.str();
     }
 
     FieldMap::~FieldMap() {

@@ -2,6 +2,7 @@
 #define CREATURE_HPP
 
 #include "object.hpp"
+#include "../common/saveable_component.hpp"
 
 namespace Objects {
     enum class Direction {
@@ -12,7 +13,7 @@ namespace Objects {
         PLAYER, DOG
     };
     
-    class Creature : public Object {
+    class Creature : public Object, public SaveableComponent {
     public:
         Creature() = delete;
         Creature( CreatureType type,
@@ -49,6 +50,7 @@ namespace Objects {
         void makeStep();
 
         friend std::ostream &operator<<(std::ostream &stream, const Creature& creature);
+        std::string toString() const;
     
     protected:
         int m_currentHp;

@@ -4,6 +4,7 @@
 #include "events/change_cell_event.hpp"
 
 #include <iostream>
+#include <sstream>
 
 namespace Map
 {
@@ -16,10 +17,6 @@ namespace Map
 
     void Cell::setEvent(Events::Event *event) { 
         m_event = event;
-    }
-
-    Events::Event *Cell::getEvent() const {
-        return m_event;
     }
 
     void Cell::triggerEvent() { 
@@ -45,11 +42,15 @@ namespace Map
     }
 
     Cell::~Cell() {}
+    std::string Cell::toString() const {
+        std::stringstream stream;
+        stream << "<Cell type=" << (int)getTileType() << " solid=" << isSolid() 
+               << " contains_event={" << m_event->toString() << "}" << ">";
+        return stream.str();
+    }
 
     std::ostream &operator<<(std::ostream &stream, const Cell &cell) {
-
-        stream << "<Cell type=" << (int)cell.getTileType() << " solid=" << cell.isSolid() 
-               << " contains_event=" << !(cell.getEvent() == nullptr) << ">";
+        stream << cell.toString();
 
         return stream;
     }

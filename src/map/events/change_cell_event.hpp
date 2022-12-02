@@ -17,6 +17,7 @@ namespace Map::Events
         ChangeCellsEvent(FieldMap &map, const std::vector<CellData> &newCells);
         ~ChangeCellsEvent();
         void trigger() final;
+        std::string toString() const;
     private:
         std::vector<CellData> m_newCells;
     };

@@ -10,6 +10,7 @@ namespace Map::Events
         PlayerSpeedMultiplierEvent(Common::CreatureWrapper &player, double multiplier);
         ~PlayerSpeedMultiplierEvent();
         void trigger() final;
+        std::string toString() const; 
     private:
         double m_mlt;
     };

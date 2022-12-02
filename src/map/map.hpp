@@ -19,7 +19,7 @@ namespace Map
 
     extern const MapType existingMapTypes[EXISTING_MAP_TYPES];
 
-    class FieldMap {
+    class FieldMap : public SaveableComponent {
     public:
         GameState *state;
         Common::CreatureWrapper *player;
@@ -65,13 +65,13 @@ namespace Map
         void setCellEvent(const Common::Vector2D<int> &position, Events::Event *event);
 
         friend std::ostream &operator<<(std::ostream &stream, const FieldMap &map);
+        std::string toString() const;
 
         ~FieldMap();
     private:
         unsigned int m_width;
         unsigned int m_height;
         std::vector<std::vector<Cell>> m_field;
-        
     };
 
 } // namespace Map

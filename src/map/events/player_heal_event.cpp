@@ -10,5 +10,8 @@ namespace Map::Events
             m_player.creature.setHp(maxHp);
         notify(Log::EventMessages::healPlayer());
     }
+    std::string PlayerHealEvent::toString() const {
+        return "heal";
+    }
     PlayerHealEvent::~PlayerHealEvent() {}
 } // namespace Map::Events
