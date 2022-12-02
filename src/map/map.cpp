@@ -168,7 +168,7 @@ namespace Map
 
         for(int i = 0; i < m_height; i ++) {
             for(int j = 0; j < m_width; j ++)
-                sstr << i << " " << j << " " << m_field[i][j].toString() << '\n';
+                sstr << j << " " << i << " " << m_field[i][j].toString() << '\n';
         }
         sstr << "{Player "  << player->position.x << " " << player->position.y << "}\n" << player->creature << '\n';
 

@@ -2,6 +2,7 @@
 #include "../objects/object.hpp"
 #include "events/event.hpp"
 #include "events/change_cell_event.hpp"
+#include "../utilities/string_utilities.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -49,8 +50,13 @@ namespace Map
         return stream.str();
     }
 
-    Cell Cell::fromString(const std::string& data) const {
-
+    Cell Cell::fromString(const std::string& data) {
+        auto mp = StringUtilities::slonToMap(data);
+        Cell obj;
+        obj.m_isSolid = mp["solid"] == "1";
+        obj.m_type = static_cast<TileType>(stoi(mp["type"]));
+        // TODO : event
+        return obj;
     }
 
     std::ostream &operator<<(std::ostream &stream, const Cell &cell) {

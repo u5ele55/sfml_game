@@ -22,13 +22,21 @@ namespace Map
         FieldMap result;
 
         while (std::getline(file, line)) {
-            if (line.substr(0, 7) == "{Field ") {
+            if (!fieldCreated && line.substr(0, 7) == "{Field ") {
                 auto fSize = StringUtilities::findTwoInts(line);
+                std::cout << fSize.first << " " << fSize.second << '\n';
                 result = FieldMap( fSize.first, fSize.second );
                 std::cout << result;
                 fieldCreated = true;
             }
-            else if (!fieldCreated) continue;
+            else if (fieldCreated) {
+                if (line[0] == '{')
+                    break;
+                auto cellPos = StringUtilities::findTwoInts(line);
+                std::cout << cellPos.first << " " << cellPos.second << '\n';
+                Cell cell = Cell::fromString(line.substr(line.find('<')));
+                result.setCell(cellPos.first, cellPos.second, cell);
+            }
         }
 
         if (!fieldCreated) throw std::runtime_error("Field wasn't created: no field data found in file.");
