@@ -162,13 +162,13 @@ namespace Map
         return stream;
     }
 
-    std::string FieldMap::toString() const {
+    std::string FieldMap::toSlon() const {
         std::stringstream sstr;
         sstr << "{Field " << m_width << " " << m_height << "}\n";
 
         for(int i = 0; i < m_height; i ++) {
             for(int j = 0; j < m_width; j ++)
-                sstr << j << " " << i << " " << m_field[i][j].toString() << '\n';
+                sstr << j << " " << i << " " << m_field[i][j].toSlon() << '\n';
         }
         sstr << "{Player "  << player->position.x << " " << player->position.y << "}\n" << player->creature << '\n';
 

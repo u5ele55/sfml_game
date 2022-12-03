@@ -11,7 +11,7 @@ namespace Map::Events
         WinStateEvent(GameState &state);
         ~WinStateEvent();
         void trigger() final;
-        std::string toString() const;
+        std::string toSlon() const;
     };
 } // namespace Map::Events
 

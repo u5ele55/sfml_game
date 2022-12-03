@@ -7,7 +7,7 @@
 
 class SaveableComponent {
 public:
-    virtual std::string toString() const = 0;
+    virtual std::string toSlon() const = 0;
 };
 
 #endif

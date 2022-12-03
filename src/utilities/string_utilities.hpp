@@ -14,6 +14,7 @@ public:
     /// @brief 
     /// @param slon SLavik Object Notation - string like <Name param1={data1} param2={data2}>
     /// @return Map with keys param1, param2 and values data1, data2
+    /// @throws std::invalid_argument - if string is not slon formatted
     /// @return 
     static std::map<std::string, std::string> slonToMap(const std::string& slon);
 

@@ -1,6 +1,8 @@
 #include "creature.hpp"
 #include <iostream>
+#include <map>
 #include <sstream>
+#include "../utilities/string_utilities.hpp"
 
 namespace Objects {
 
@@ -63,18 +65,33 @@ namespace Objects {
     }
 
     std::ostream &operator<<(std::ostream &stream, const Creature& creature) {
-        stream << creature.toString();
+        stream << creature.toSlon();
         return stream;
     }
 
-    std::string Creature::toString() const {
+    std::string Creature::toSlon() const {
         std::stringstream stream;
-        stream << "<Creature type=" << (int)m_type 
-            << " hp: " << m_currentHp << "/" << m_maxHp 
-            << " mana: " << m_currentMana << "/" << m_maxMana
-            << " facing=" << (int)m_facing
-            << " speed=" << m_speed
-            << ">"; 
+        stream << "<Creature type={" << (int)m_type 
+            << "} hp={" << m_currentHp << "/" << m_maxHp 
+            << "} mana={" << m_currentMana << "/" << m_maxMana
+            << "} facing={" << (int)m_facing
+            << "} speed={" << m_speed
+            << "}>"; 
         return stream.str();
+    }
+
+    Creature Creature::fromSlon(std::string slon) {
+        std::map<std::string, std::string> mp = StringUtilities::slonToMap(slon);
+        CreatureType type = static_cast<CreatureType>(stoi(mp["type"]));
+        auto hps = StringUtilities::findTwoInts(mp["hp"]);
+        auto manas = StringUtilities::findTwoInts(mp["mana"]);
+        Direction facing = static_cast<Direction>(stoi(mp["facing"]));
+        double speed = stoi(mp["speed"]);
+
+        Creature result(type, hps.second, manas.second, 10, 10, speed, facing);
+        result.setHp(hps.first);
+        result.setMana(manas.first);
+
+        return result;
     }
 }

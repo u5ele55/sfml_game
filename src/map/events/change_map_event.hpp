@@ -14,7 +14,7 @@ namespace Map::Events
             Map::FieldMap &map, const Map::FieldMap &newMap);
         ~ChangeMapEvent();
         void trigger() final;
-        std::string toString() const;
+        std::string toSlon() const;
     private:
         Common::CreatureWrapper &m_player;
         Common::Vector2D<int> m_playerPosition;

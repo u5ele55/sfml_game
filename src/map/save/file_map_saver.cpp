@@ -5,7 +5,7 @@ namespace Map
 {
     void FileMapSaver::saveMap(const FieldMap &map, const std::string& saveName) {
         std::ofstream file(saveName + ".txt");
-        file << map.toString();
+        file << map.toSlon();
         file.close();
     }
 } // namespace Map

@@ -3,6 +3,7 @@
 
 #include "../objects/object.hpp"
 #include "events/event.hpp"
+#include "events/event_creator.hpp"
 #include "../common/saveable_component.hpp"
 #include <iostream>
 
@@ -27,8 +28,8 @@ namespace Map
         Cell copy() const;
 
         friend std::ostream &operator<<(std::ostream &stream, const Cell &cell);
-        std::string toString() const;
-        static Cell fromString(const std::string& data); 
+        std::string toSlon() const;
+        static Cell fromString(const std::string& data, EventCreator* eventCreator); 
 
         ~Cell();
     protected:

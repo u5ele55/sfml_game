@@ -65,7 +65,7 @@ namespace Map
         void setCellEvent(const Common::Vector2D<int> &position, Events::Event *event);
 
         friend std::ostream &operator<<(std::ostream &stream, const FieldMap &map);
-        std::string toString() const;
+        std::string toSlon() const;
 
         ~FieldMap();
     private:

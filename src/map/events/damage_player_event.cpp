@@ -11,9 +11,9 @@ namespace Map::Events
       m_player.creature.setHp(newHp);
       notify(Log::EventMessages::damagePlayer(newHp));
     }
-    std::string DamagePlayerEvent::toString() const {
+    std::string DamagePlayerEvent::toSlon() const {
         std::stringstream stream;
-        stream << "damage " << m_damage;
+        stream << "<Event name={DamagePlayer} damage={" << m_damage << "}>";
         return stream.str();
     }
     DamagePlayerEvent::~DamagePlayerEvent() {}

@@ -14,9 +14,9 @@ namespace Map::Events
         
         notify(Log::EventMessages::changeMap());
     }
-    std::string ChangeMapEvent::toString() const {
+    std::string ChangeMapEvent::toSlon() const {
         std::stringstream stream;
-        stream << "change_map";
+        stream << "<Event name={ChangeMap}>";
         return stream.str();
     }
     

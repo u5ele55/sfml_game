@@ -50,7 +50,9 @@ namespace Objects {
         void makeStep();
 
         friend std::ostream &operator<<(std::ostream &stream, const Creature& creature);
-        std::string toString() const;
+        std::string toSlon() const;
+
+        static Creature fromSlon(std::string slon);
     
     protected:
         int m_currentHp;

@@ -43,24 +43,25 @@ namespace Map
     }
 
     Cell::~Cell() {}
-    std::string Cell::toString() const {
+    std::string Cell::toSlon() const {
         std::stringstream stream;
         stream << "<Cell type={" << (int)getTileType() << "} solid={" << isSolid() 
-               << "} contains_event={" << (m_event == nullptr ? "null" : m_event->toString()) << "}" << ">";
+               << "} contains_event={" << (m_event == nullptr ? "null" : m_event->toSlon()) << "}" << ">";
         return stream.str();
     }
 
-    Cell Cell::fromString(const std::string& data) {
+    Cell Cell::fromString(const std::string& data, EventCreator* eventCreator) {
         auto mp = StringUtilities::slonToMap(data);
         Cell obj;
         obj.m_isSolid = mp["solid"] == "1";
         obj.m_type = static_cast<TileType>(stoi(mp["type"]));
-        // TODO : event
+        obj.m_event = eventCreator->fromSlon( mp["contains_event"] );
+        
         return obj;
     }
 
     std::ostream &operator<<(std::ostream &stream, const Cell &cell) {
-        stream << cell.toString();
+        stream << cell.toSlon();
 
         return stream;
     }

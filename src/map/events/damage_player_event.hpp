@@ -12,7 +12,7 @@ namespace Map::Events
         DamagePlayerEvent(Common::CreatureWrapper &, int);
         ~DamagePlayerEvent();
         void trigger() final;
-        std::string toString() const;
+        std::string toSlon() const;
     private:
         int m_damage;
     };

@@ -10,8 +10,8 @@ namespace Map::Events
         m_state = GameState::WIN;
         notify(Log::EventMessages::win());
     }
-    std::string WinStateEvent::toString() const {
-        return "win";
+    std::string WinStateEvent::toSlon() const {
+        return "<Event name={Win}>";
     }
     WinStateEvent::~WinStateEvent() {}
 } // namespace Map::Events

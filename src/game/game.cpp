@@ -186,7 +186,7 @@ void GameCore::saveMapProcess() {
 
 void GameCore::loadMapProcess() {
 	std::string filename;
-	std::cout << "Enter name of save: ";
+	std::cout << "Enter save filename: ";
 	std::cin >> filename;
 	Map::SaveFileLoader loader(filename);
 	m_map = loader.loadMap();

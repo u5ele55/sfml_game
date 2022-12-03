@@ -12,9 +12,9 @@ namespace Map::Events
         }
         notify(Log::EventMessages::changeCells());
     }
-    std::string ChangeCellsEvent::toString() const {
+    std::string ChangeCellsEvent::toSlon() const {
         std::stringstream stream;
-        stream << "change_cells";
+        stream << "<Event name={ChangeCells}>";
         return stream.str();
     }
     ChangeCellsEvent::~ChangeCellsEvent() {}
