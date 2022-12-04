@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include "save_loader.hpp"
+#include "../../exceptions/loading_map_exception.hpp"
 
 namespace Map
 {

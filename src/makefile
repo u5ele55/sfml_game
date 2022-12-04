@@ -44,7 +44,9 @@ SOURCES = main.cpp   \
 	  log\messages\event_messages.cpp \
 	  log\messages\player_messages.cpp \
 	  log\messages\game_states_messages.cpp \
-	  utilities\string_utilities.cpp
+	  utilities\string_utilities.cpp \
+	  exceptions\slon_exception.cpp \
+	  exceptions\loading_map_exception.cpp
 
 
 OBJECTS = $(SOURCES:.cpp=.o)

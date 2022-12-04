@@ -188,8 +188,12 @@ void GameCore::loadMapProcess() {
 	std::string filename;
 	std::cout << "Enter save filename: ";
 	std::cin >> filename;
-	Map::SaveFileLoader loader(filename);
-	m_map = loader.loadMap();
+	try {
+		Map::SaveFileLoader loader(filename);
+		m_map = loader.loadMap();
+	} catch (const Exceptions::LoadingMapException& exc) {
+		notify(Log::Message(Log::LogType::CriticalState, exc.what()));
+	}
 }
 
 void GameCore::closeWindow() {

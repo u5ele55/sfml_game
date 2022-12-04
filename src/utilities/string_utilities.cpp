@@ -1,6 +1,7 @@
 #include "string_utilities.hpp"
 #include <iostream>
 #include <stack>
+#include "../exceptions/slon_exception.hpp"
 
 std::pair<int, int> StringUtilities::findTwoInts(std::string str) {
     str += " ";
@@ -28,8 +29,8 @@ std::pair<int, int> StringUtilities::findTwoInts(std::string str) {
 }
 
 std::map<std::string, std::string> StringUtilities::slonToMap(const std::string& slon) {
-    if (slon[0] != '<' || slon[slon.size()-1] != '<') throw std::invalid_argument("Input string is not of Slon format!");
-
+    if (slon[0] != '<') throw Exceptions::SlonException(0);
+    if (slon[slon.size()-1] != '>') throw Exceptions::SlonException(slon.size()-1);
     std::map<std::string, std::string> result;
     std::string curKey;
     std::string curValue;
@@ -44,6 +45,7 @@ std::map<std::string, std::string> StringUtilities::slonToMap(const std::string&
         }
 
     bool paramClosed = true; int innerSlon = 0;
+    int lastParamOpen = -1;
     
     for(int i = paramStart; i < slon.size()-1; i ++) {
         char sym = slon[i];
@@ -51,6 +53,7 @@ std::map<std::string, std::string> StringUtilities::slonToMap(const std::string&
         
         if (sym == '{' && !innerSlon) {
             paramClosed = false;
+            lastParamOpen = i;
             continue;
         }
         if (!paramClosed) {
@@ -75,7 +78,7 @@ std::map<std::string, std::string> StringUtilities::slonToMap(const std::string&
 
     if (paramClosed) return result;
 
-    throw std::invalid_argument("Input string is not of Slon format!");
+    throw Exceptions::SlonException(lastParamOpen);
 }
 
 bool StringUtilities::isNumber(std::string s) {

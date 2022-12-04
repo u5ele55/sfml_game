@@ -3,12 +3,15 @@
 #include "../../utilities/string_utilities.hpp"
 #include "../events/test_event_creator.hpp"
 
+
 namespace Map
 {
     SaveFileLoader::SaveFileLoader(const std::string &filename) {
         file.open(filename);
         if (file.fail()) {
-            throw std::invalid_argument("File with provided name does not exist!");
+            throw Exceptions::LoadingMapException(
+                Exceptions::LoadingMapException::Step::Undefined, 
+                Exceptions::LoadingMapException::Reason::NoFile);
         }
     }
 
@@ -18,42 +21,69 @@ namespace Map
 
     FieldMap SaveFileLoader::loadMap() {
         std::string line;
-        bool fieldCreated = false, cellsPlaced = false;
+        bool fieldCreated = false, cellsPlaced = false, playerCreated = false;
 
         FieldMap result;
         TestEventCreator* eventCreator = new TestEventCreator(result);
 
         while (std::getline(file, line)) {
             if (!fieldCreated && line.substr(0, 7) == "{Field ") {
-                auto fSize = StringUtilities::findTwoInts(line);
-                result = FieldMap( fSize.first, fSize.second );
-                std::cout << result;
+                try {
+                    auto fSize = StringUtilities::findTwoInts(line);
+                    result = FieldMap( fSize.first, fSize.second );
+                } catch (...) {
+                    throw Exceptions::LoadingMapException(
+                        Exceptions::LoadingMapException::Step::FieldCreation, 
+                        Exceptions::LoadingMapException::Reason::FileDataIncorrect);
+                }
                 fieldCreated = true;
             }
             else if (fieldCreated && !cellsPlaced) {
-                if (line[0] == '{') {
+                if (line.substr(0, 8) == "{Player ") {
                     // player
-                    std::cout << "PP";
                     cellsPlaced = true;
-                    auto playerPos = StringUtilities::findTwoInts(line);
-                    std::cout << "Layer"; 
-                    result.player->position = {playerPos.first, playerPos.second};
-                    std::cout << "Position";
+                    try {
+                        auto playerPos = StringUtilities::findTwoInts(line);
+                        result.player->position = {playerPos.first, playerPos.second};
+                    } catch (...) {
+                        throw Exceptions::LoadingMapException(
+                            Exceptions::LoadingMapException::Step::PlayerCreation, 
+                            Exceptions::LoadingMapException::Reason::FileDataIncorrect);
+                    }
                     continue;
                 }
-                auto cellPos = StringUtilities::findTwoInts(line);
-                Cell cell = Cell::fromString(line.substr(line.find('<')), eventCreator);
-                result.setCell(cellPos.first, cellPos.second, cell);
+                try {
+                    auto cellPos = StringUtilities::findTwoInts(line);
+                    Cell cell = Cell::fromString(line.substr(line.find('<')), eventCreator);
+                    result.setCell(cellPos.first, cellPos.second, cell);
+                } catch (...) {
+                    throw Exceptions::LoadingMapException(
+                        Exceptions::LoadingMapException::Step::CellCreation, 
+                        Exceptions::LoadingMapException::Reason::FileDataIncorrect);
+                }
             }
             else if (cellsPlaced) {
-                std::cout << " go ";
-                result.player->creature = Objects::Player::fromSlon(line);
-                std::cout << result.player->creature;
+                try {
+                    result.player->creature = Objects::Player::fromSlon(line);
+                    playerCreated = true;
+                } catch (...) {
+                    throw Exceptions::LoadingMapException(
+                        Exceptions::LoadingMapException::Step::PlayerCreation, 
+                        Exceptions::LoadingMapException::Reason::FileDataIncorrect);
+                }
+                
             }
         }
 
-        if (!fieldCreated) throw std::runtime_error("Field wasn't created: no field data found in file.");
-
+        if (!fieldCreated) 
+            throw Exceptions::LoadingMapException(
+                Exceptions::LoadingMapException::Step::FieldCreation, 
+                Exceptions::LoadingMapException::Reason::FileDataIncorrect);
+        if (!playerCreated) 
+            throw Exceptions::LoadingMapException(
+                Exceptions::LoadingMapException::Step::PlayerCreation, 
+                Exceptions::LoadingMapException::Reason::FileDataIncorrect);
+            
         return result;
     }
 } // namespace Map
