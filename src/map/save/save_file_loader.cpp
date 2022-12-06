@@ -26,7 +26,12 @@ namespace Map
         FieldMap result;
         TestEventCreator* eventCreator = new TestEventCreator(result);
 
+        std::getline(file, line);
+        std::string fileHash = line;
+        std::string actualHash;
+
         while (std::getline(file, line)) {
+            actualHash += line+'\n';
             if (!fieldCreated && line.substr(0, 7) == "{Field ") {
                 try {
                     auto fSize = StringUtilities::findTwoInts(line);
@@ -74,6 +79,11 @@ namespace Map
                 
             }
         }
+
+        if (std::to_string(StringUtilities::hash(actualHash)) != fileHash)
+            throw Exceptions::LoadingMapException(
+                Exceptions::LoadingMapException::Step::Undefined, 
+                Exceptions::LoadingMapException::Reason::FileChanged);
 
         if (!fieldCreated) 
             throw Exceptions::LoadingMapException(

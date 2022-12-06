@@ -13,6 +13,7 @@ namespace Exceptions
             {Step::CellCreation, "Cell creation"},
             {Step::FieldCreation, "Field creation"},
             {Step::PlayerCreation, "Player creation"},
+            {Step::Undefined, "unknown step"},
         };
         std::map<Reason, std::string> reasons = {
             {Reason::FileChanged, "File is changed"},

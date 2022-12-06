@@ -37,38 +37,8 @@ GameCore::GameCore(GameMediator *notifier)
 
 void GameCore::start() {
 	notify(Log::GameStateMessages::gameStarted());
-	Graphics::ChooseMapDialog chooseDialog;
-	Map::MapType mapType = chooseDialog.showDialog();
-	notify(Log::GameStateMessages::mapChoosen());
-	try {
-		if (mapType == Map::MapType::Dungeon) {
-			Map::MapGenerator<
-				Map::ObstaclesRule<Map::ObstaclesVariant::ROOMS>,
-				Map::FieldSizeRule<6,6>,
-				Map::WinEventPositionRule<-3,-2>,
-				Map::DamageEventFrequencyRule<100, 5>,
-				Map::PlayerPositionRule<1,1>
-				> mg;
-			m_map = mg.generate(); 
-		}
-		else if (mapType == Map::MapType::Overworld) {
-			Map::MapGenerator<
-				Map::ObstaclesRule<Map::ObstaclesVariant::SPIRAL>,
-				Map::FieldSizeRule<8,12>, 
-				Map::WinEventPositionRule<(8-1)/2,12/2>,
-				Map::PlayerPositionRule<1,1>
-				> mg; 
-			m_map = mg.generate();
-		}
-	} catch(std::invalid_argument e) {
-		notify(Log::GameStateMessages::errorOnMapChoice(e.what()));
-		return;
-	} catch (...) {
-        notify(Log::GameStateMessages::wrongMapChoice());
-		return;
-	}
-	
-	//setMapEvents();
+
+	configureField();
 
 	m_window = new sf::RenderWindow(
 		sf::VideoMode(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT), "LitterBox", sf::Style::Close
@@ -176,23 +146,69 @@ void GameCore::onEvent(const UserEvent &event) {
 	}
 }
 
+void GameCore::configureField() {
+
+	char fieldLoadingChoice = '\0';
+	while (!fieldLoadingChoice) {
+		std::cout << "Enter 's' if you want to start from save: ";
+	
+		std::cin >> fieldLoadingChoice;
+		if (fieldLoadingChoice == 's') {
+			loadMapProcess(&fieldLoadingChoice);
+		}
+	}
+	if (fieldLoadingChoice == 's') return;
+
+	Graphics::ChooseMapDialog chooseDialog;
+	Map::MapType mapType = chooseDialog.showDialog();
+	notify(Log::GameStateMessages::mapChoosen());
+	try {
+		if (mapType == Map::MapType::Dungeon) {
+			Map::MapGenerator<
+				Map::ObstaclesRule<Map::ObstaclesVariant::ROOMS>,
+				Map::FieldSizeRule<6,6>,
+				Map::WinEventPositionRule<-3,-2>,
+				Map::DamageEventFrequencyRule<100, 5>,
+				Map::PlayerPositionRule<1,1>
+				> mg;
+			m_map = mg.generate(); 
+		}
+		else if (mapType == Map::MapType::Overworld) {
+			Map::MapGenerator<
+				Map::ObstaclesRule<Map::ObstaclesVariant::SPIRAL>,
+				Map::FieldSizeRule<8,12>, 
+				Map::WinEventPositionRule<(8-1)/2,12/2>,
+				Map::PlayerPositionRule<1,1>
+				> mg; 
+			m_map = mg.generate();
+		}
+	} catch(std::invalid_argument e) {
+		notify(Log::GameStateMessages::errorOnMapChoice(e.what()));
+		return;
+	} catch (...) {
+        notify(Log::GameStateMessages::wrongMapChoice());
+		return;
+	}
+}
+
 void GameCore::saveMapProcess() {
 	Map::FileMapSaver saver;
 	std::string name;
-	std::cout << "Enter name of save: ";
+	std::cout << "Enter the name of the save: ";
 	std::cin >> name;
 	saver.saveMap(m_map, name);
 }
 
-void GameCore::loadMapProcess() {
+void GameCore::loadMapProcess(char *choice) {
 	std::string filename;
-	std::cout << "Enter save filename: ";
+	std::cout << "Enter the name of the file with the save: ";
 	std::cin >> filename;
 	try {
 		Map::SaveFileLoader loader(filename);
 		m_map = loader.loadMap();
 	} catch (const Exceptions::LoadingMapException& exc) {
 		notify(Log::Message(Log::LogType::CriticalState, exc.what()));
+		if (choice != nullptr) *choice = '\0';
 	}
 }
 

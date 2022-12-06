@@ -15,7 +15,6 @@ namespace Exceptions
     private:
         Step m_step;
         Reason m_reason;
-
     };
 } // namespace Exceptions
 

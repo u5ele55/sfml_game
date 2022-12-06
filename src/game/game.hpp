@@ -20,8 +20,9 @@ private:
 	void closeWindow();
 	void updateScene(const sf::Time&);
 
+	void configureField();
 	void saveMapProcess();
-	void loadMapProcess();
+	void loadMapProcess(char *choice = nullptr);
 
 	sf::RenderWindow *m_window;
 

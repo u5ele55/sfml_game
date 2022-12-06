@@ -3,6 +3,7 @@
 #include "events/event.hpp"
 #include "events/change_cell_event.hpp"
 #include "../utilities/string_utilities.hpp"
+#include "../exceptions/slon_exception.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -55,8 +56,11 @@ namespace Map
         Cell obj;
         obj.m_isSolid = mp["solid"] == "1";
         obj.m_type = static_cast<TileType>(stoi(mp["type"]));
-        obj.m_event = eventCreator->fromSlon( mp["contains_event"] );
-        
+        try {
+            obj.m_event = eventCreator->fromSlon( mp["contains_event"] );
+        } catch(const Exceptions::SlonException& ex) {
+            obj.m_event = nullptr;
+        }
         return obj;
     }
 

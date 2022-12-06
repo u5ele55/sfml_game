@@ -20,6 +20,8 @@ public:
 
     static bool isNumber(std::string s);
     static bool isDigit(char sym);
+
+    static int hash(const std::string& str, int x = 101, int p = 15485863);
 };
 
 

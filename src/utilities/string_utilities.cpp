@@ -1,6 +1,7 @@
 #include "string_utilities.hpp"
 #include <iostream>
 #include <stack>
+#include <math.h>
 #include "../exceptions/slon_exception.hpp"
 
 std::pair<int, int> StringUtilities::findTwoInts(std::string str) {
@@ -65,7 +66,7 @@ std::map<std::string, std::string> StringUtilities::slonToMap(const std::string&
         if (sym == '}' && !innerSlon) {
             paramClosed = true;
             result[curKey.substr(0, curKey.size()-1)] = curValue;
-            std::cout << curKey << ": -" << curValue << "-\n";
+            //std::cout << curKey << ": -" << curValue << "-\n";
             curKey = ""; curValue = "";
             continue;
         }
@@ -79,6 +80,21 @@ std::map<std::string, std::string> StringUtilities::slonToMap(const std::string&
     if (paramClosed) return result;
 
     throw Exceptions::SlonException(lastParamOpen);
+}
+
+int StringUtilities::hash(const std::string& str, int x, int p) {
+    long long h = 0;
+
+    long long xpow = 1;
+
+    for(int i = 0; i < str.size(); i ++) {
+        h += str[i] * xpow % p;
+        xpow *= x;
+        xpow %= p;
+        h %= p;
+    }
+
+    return h;
 }
 
 bool StringUtilities::isNumber(std::string s) {
