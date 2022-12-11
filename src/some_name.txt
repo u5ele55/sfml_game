@@ -1,4 +1,4 @@
-7445701
+9642757
 {Field 6 6}
 0 0 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 1 0 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
@@ -36,5 +36,5 @@
 3 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 4 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 5 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
-{Player 4 1}
-<Creature type={0} hp={45/100} mana={100/100} facing={0} speed={200}>
+{Player 1 2}
+<Creature type={0} hp={45/100} mana={100/100} facing={1} speed={200}>

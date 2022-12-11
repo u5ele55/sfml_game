@@ -1,4 +1,4 @@
-7445701
+12282817
 {Field 6 6}
 0 0 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 1 0 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
@@ -29,12 +29,9 @@
 2 4 <Cell type={0} solid={0} contains_event={<Event name={DamagePlayer} damage={5}>}>
 3 4 <Cell type={0} solid={0} contains_event={<Event name={Win}>}>
 4 4 <Cell type={0} solid={0} contains_event={<Event name={DamagePlayer} damage={5}>}>
-5 4 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
-0 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
-1 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 2 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 3 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 4 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
 5 5 <Cell type={1} solid={1} contains_event={<Event name={DamagePlayer} damage={5}>}>
-{Player 4 1}
-<Creature type={0} hp={45/100} mana={100/100} facing={0} speed={200}>
+{Player 3 1}
+<Creature type={0} hp={85/100} mana={100/100} facing={3} speed={200}>

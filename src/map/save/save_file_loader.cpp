@@ -28,10 +28,10 @@ namespace Map
 
         std::getline(file, line);
         std::string fileHash = line;
-        std::string actualHash;
+        std::string fileContent;
 
         while (std::getline(file, line)) {
-            actualHash += line+'\n';
+            fileContent += line+'\n';
             if (!fieldCreated && line.substr(0, 7) == "{Field ") {
                 try {
                     auto fSize = StringUtilities::findTwoInts(line);
@@ -76,11 +76,10 @@ namespace Map
                         Exceptions::LoadingMapException::Step::PlayerCreation, 
                         Exceptions::LoadingMapException::Reason::FileDataIncorrect);
                 }
-                
             }
         }
 
-        if (std::to_string(StringUtilities::hash(actualHash)) != fileHash)
+        if (std::to_string(StringUtilities::hash(fileContent)) != fileHash)
             throw Exceptions::LoadingMapException(
                 Exceptions::LoadingMapException::Step::Undefined, 
                 Exceptions::LoadingMapException::Reason::FileChanged);
